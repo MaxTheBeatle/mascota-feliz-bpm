@@ -1,0 +1,57 @@
+{% extends 'veterinaria/base.html' %}
+
+{% block title %}Mis Mascotas - Mascota Feliz{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-md-8">
+        <h2>Mis Mascotas</h2>
+    </div>
+    <div class="col-md-4 text-end">
+        <a href="{% url 'mascota_create' %}" class="btn btn-primary">
+            <i class="fas fa-plus"></i> Nueva Mascota
+        </a>
+    </div>
+</div>
+
+{% if mascotas %}
+    <div class="row">
+        {% for mascota in mascotas %}
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    {% if mascota.foto %}
+                        <img src="{{ mascota.foto.url }}" class="card-img-top" alt="{{ mascota.nombre }}" style="height: 200px; object-fit: cover;">
+                    {% else %}
+                        <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
+                            <i class="fas fa-paw fa-4x text-muted"></i>
+                        </div>
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ mascota.nombre }}</h5>
+                        <p class="card-text">
+                            <strong>Especie:</strong> {{ mascota.get_especie_display }}<br>
+                            <strong>Raza:</strong> {{ mascota.raza }}<br>
+                            <strong>Edad:</strong> {{ mascota.fecha_nacimiento|timesince }}<br>
+                            <strong>Peso:</strong> {{ mascota.peso }} kg
+                        </p>
+                    </div>
+                    <div class="card-footer bg-transparent">
+                        <div class="btn-group w-100">
+                            <a href="{% url 'mascota_update' mascota.pk %}" class="btn btn-outline-primary">
+                                <i class="fas fa-edit"></i> Editar
+                            </a>
+                            <a href="{% url 'mascota_delete' mascota.pk %}" class="btn btn-outline-danger">
+                                <i class="fas fa-trash"></i> Eliminar
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <div class="alert alert-info">
+        <i class="fas fa-info-circle"></i> No tienes mascotas registradas. ¡Agrega una nueva mascota para comenzar!
+    </div>
+{% endif %}
+{% endblock %} 

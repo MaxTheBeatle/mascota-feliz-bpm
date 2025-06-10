@@ -1,0 +1,79 @@
+{% extends 'veterinaria/base.html' %}
+
+{% block title %}Detalle de Pedido #{{ pedido.id }} - Mascota Feliz{% endblock %}
+
+{% block content %}
+<div class="container">
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'mis_pedidos' %}">Mis Pedidos</a></li>
+            <li class="breadcrumb-item active">Pedido #{{ pedido.id }}</li>
+        </ol>
+    </nav>
+
+    <div class="card mb-4">
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">Pedido #{{ pedido.id }}</h5>
+            <span class="badge {% if pedido.estado == 'pendiente' %}bg-warning
+                             {% elif pedido.estado == 'procesando' %}bg-info
+                             {% elif pedido.estado == 'enviado' %}bg-primary
+                             {% elif pedido.estado == 'entregado' %}bg-success
+                             {% else %}bg-danger{% endif %}">
+                {{ pedido.get_estado_display }}
+            </span>
+        </div>
+        <div class="card-body">
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <h6 class="text-muted">Información del Pedido</h6>
+                    <p><strong>Fecha:</strong> {{ pedido.fecha_pedido|date:"d/m/Y H:i" }}</p>
+                    <p><strong>Estado:</strong> {{ pedido.get_estado_display }}</p>
+                    <p><strong>Total:</strong> ${{ pedido.total }}</p>
+                </div>
+                <div class="col-md-6">
+                    <h6 class="text-muted">Información de Envío</h6>
+                    <p><strong>Dirección:</strong> {{ pedido.direccion_envio }}</p>
+                    <p><strong>Teléfono:</strong> {{ pedido.telefono }}</p>
+                    {% if pedido.notas %}
+                        <p><strong>Notas:</strong> {{ pedido.notas }}</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <h6 class="text-muted mb-3">Productos</h6>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Producto</th>
+                            <th class="text-center">Cantidad</th>
+                            <th class="text-end">Precio Unitario</th>
+                            <th class="text-end">Subtotal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in pedido.items.all %}
+                            <tr>
+                                <td>{{ item.producto.nombre }}</td>
+                                <td class="text-center">{{ item.cantidad }}</td>
+                                <td class="text-end">${{ item.precio_unitario }}</td>
+                                <td class="text-end">${{ item.subtotal }}</td>
+                            </tr>
+                        {% endfor %}
+                        <tr>
+                            <td colspan="3" class="text-end"><strong>Total:</strong></td>
+                            <td class="text-end"><strong>${{ pedido.total }}</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center">
+        <a href="{% url 'mis_pedidos' %}" class="btn btn-secondary">
+            <i class="fas fa-arrow-left"></i> Volver a Mis Pedidos
+        </a>
+    </div>
+</div>
+{% endblock %} 

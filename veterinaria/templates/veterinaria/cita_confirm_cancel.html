@@ -1,0 +1,32 @@
+{% extends 'veterinaria/base.html' %}
+
+{% block title %}Cancelar Cita - Mascota Feliz{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+        <div class="card">
+            <div class="card-header bg-danger text-white">
+                <h4 class="mb-0">Cancelar Cita</h4>
+            </div>
+            <div class="card-body">
+                <p class="lead">¿Estás seguro que deseas cancelar la siguiente cita?</p>
+                <ul class="list-unstyled">
+                    <li><strong>Mascota:</strong> {{ cita.mascota.nombre }}</li>
+                    <li><strong>Fecha:</strong> {{ cita.fecha|date:"d/m/Y H:i" }}</li>
+                    <li><strong>Tipo:</strong> {{ cita.get_tipo_cita_display }}</li>
+                </ul>
+                <form method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">
+                        <i class="fas fa-times"></i> Sí, Cancelar Cita
+                    </button>
+                    <a href="{% url 'cita_list' %}" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left"></i> Volver
+                    </a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

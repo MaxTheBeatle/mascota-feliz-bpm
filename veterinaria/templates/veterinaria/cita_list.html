@@ -1,0 +1,62 @@
+{% extends 'veterinaria/base.html' %}
+
+{% block title %}Mis Citas - Mascota Feliz{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-md-8">
+        <h2>Mis Citas</h2>
+    </div>
+    <div class="col-md-4 text-end">
+        <a href="{% url 'cita_create' %}" class="btn btn-primary">
+            <i class="fas fa-calendar-plus"></i> Nueva Cita
+        </a>
+    </div>
+</div>
+
+{% if citas %}
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Mascota</th>
+                    <th>Fecha</th>
+                    <th>Tipo</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for cita in citas %}
+                    <tr>
+                        <td>{{ cita.mascota.nombre }}</td>
+                        <td>{{ cita.fecha|date:"d/m/Y H:i" }}</td>
+                        <td>{{ cita.get_tipo_cita_display }}</td>
+                        <td>
+                            <span class="badge {% if cita.estado == 'pendiente' %}bg-warning{% elif cita.estado == 'confirmada' %}bg-success{% elif cita.estado == 'completada' %}bg-info{% else %}bg-danger{% endif %}">
+                                {{ cita.get_estado_display }}
+                            </span>
+                        </td>
+                        <td>
+                            <div class="btn-group">
+                                {% if cita.estado == 'pendiente' or cita.estado == 'confirmada' %}
+                                    <a href="{% url 'cita_update' cita.pk %}" class="btn btn-sm btn-outline-primary">
+                                        <i class="fas fa-edit"></i> Editar
+                                    </a>
+                                    <a href="{% url 'cita_cancel' cita.pk %}" class="btn btn-sm btn-outline-danger">
+                                        <i class="fas fa-times"></i> Cancelar
+                                    </a>
+                                {% endif %}
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% else %}
+    <div class="alert alert-info">
+        <i class="fas fa-info-circle"></i> No tienes citas programadas. ¡Agenda una nueva cita para comenzar!
+    </div>
+{% endif %}
+{% endblock %} 

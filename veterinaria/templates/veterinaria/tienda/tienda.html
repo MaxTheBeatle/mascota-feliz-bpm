@@ -1,0 +1,98 @@
+{% extends 'veterinaria/base.html' %}
+
+{% block title %}Tienda - Mascota Feliz{% endblock %}
+
+{% block content %}
+<div class="container">
+    <!-- Productos Destacados -->
+    {% if destacados %}
+        <section class="mb-5">
+            <h2 class="mb-4">Productos Destacados</h2>
+            <div class="row">
+                {% for producto in destacados %}
+                    <div class="col-md-3 mb-4">
+                        <div class="card h-100">
+                            {% if producto.imagen %}
+                                <img src="{{ producto.imagen.url }}" class="card-img-top" alt="{{ producto.nombre }}" style="height: 200px; object-fit: cover;">
+                            {% else %}
+                                <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
+                                    <i class="fas fa-box fa-3x text-muted"></i>
+                                </div>
+                            {% endif %}
+                            <div class="card-body">
+                                <h5 class="card-title">{{ producto.nombre }}</h5>
+                                <p class="card-text text-success fw-bold">${{ producto.precio }}</p>
+                            </div>
+                            <div class="card-footer bg-transparent border-top-0">
+                                <a href="{% url 'producto_detalle' producto.pk %}" class="btn btn-primary w-100">Ver Detalles</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+    {% endif %}
+
+    <div class="row">
+        <!-- Filtro de Categorías -->
+        <div class="col-md-3">
+            <div class="card mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="card-title mb-0">Categorías</h5>
+                </div>
+                <div class="list-group list-group-flush">
+                    <a href="{% url 'tienda' %}" class="list-group-item list-group-item-action {% if not categoria_actual %}active{% endif %}">
+                        Todas las categorías
+                    </a>
+                    {% for categoria in categorias %}
+                        <a href="{% url 'tienda' %}?categoria={{ categoria.id }}" 
+                           class="list-group-item list-group-item-action {% if categoria_actual == categoria.id|stringformat:'s' %}active{% endif %}">
+                            {{ categoria.nombre }}
+                        </a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Lista de Productos -->
+        <div class="col-md-9">
+            <div class="row">
+                {% for producto in productos %}
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100">
+                            {% if producto.imagen %}
+                                <img src="{{ producto.imagen.url }}" class="card-img-top" alt="{{ producto.nombre }}" style="height: 200px; object-fit: cover;">
+                            {% else %}
+                                <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
+                                    <i class="fas fa-box fa-3x text-muted"></i>
+                                </div>
+                            {% endif %}
+                            <div class="card-body">
+                                <h5 class="card-title">{{ producto.nombre }}</h5>
+                                <p class="card-text">
+                                    <small class="text-muted">{{ producto.categoria.nombre }}</small>
+                                </p>
+                                <p class="card-text text-success fw-bold">${{ producto.precio }}</p>
+                                {% if producto.stock > 0 %}
+                                    <p class="card-text"><small class="text-success">Stock disponible: {{ producto.stock }}</small></p>
+                                {% else %}
+                                    <p class="card-text"><small class="text-danger">Sin stock</small></p>
+                                {% endif %}
+                            </div>
+                            <div class="card-footer bg-transparent border-top-0">
+                                <a href="{% url 'producto_detalle' producto.pk %}" class="btn btn-primary w-100">Ver Detalles</a>
+                            </div>
+                        </div>
+                    </div>
+                {% empty %}
+                    <div class="col-12">
+                        <div class="alert alert-info">
+                            No hay productos disponibles en esta categoría.
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 
