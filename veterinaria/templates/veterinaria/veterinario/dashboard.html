@@ -1,0 +1,204 @@
+{% extends 'veterinaria/base.html' %}
+
+{% block title %}Panel Veterinario - Mascota Feliz{% endblock %}
+
+{% block content %}
+<div class="container-fluid mt-4">
+    <!-- Header del Dashboard -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h2><i class="fas fa-user-md text-primary me-2"></i>Panel de Veterinario</h2>
+                    <p class="text-muted mb-0">Bienvenido, Dr. {{ veterinario.user.first_name }} {{ veterinario.user.last_name }}</p>
+                </div>
+                <div>
+                    <a href="{% url 'veterinario_profile' %}" class="btn btn-outline-primary me-2">
+                        <i class="fas fa-user-edit me-1"></i>Mi Perfil
+                    </a>
+                    <a href="{% url 'veterinario_citas' %}" class="btn btn-primary">
+                        <i class="fas fa-calendar-alt me-1"></i>Ver Todas las Citas
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Estadísticas -->
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="card bg-primary text-white">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h4>{{ citas_hoy|length }}</h4>
+                            <p class="mb-0">Citas Hoy</p>
+                        </div>
+                        <div class="align-self-center">
+                            <i class="fas fa-calendar-day fa-2x"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-success text-white">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h4>{{ total_citas_mes }}</h4>
+                            <p class="mb-0">Citas Este Mes</p>
+                        </div>
+                        <div class="align-self-center">
+                            <i class="fas fa-calendar-alt fa-2x"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-info text-white">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h4>{{ citas_completadas_mes }}</h4>
+                            <p class="mb-0">Completadas</p>
+                        </div>
+                        <div class="align-self-center">
+                            <i class="fas fa-check-circle fa-2x"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-warning text-white">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h4>{{ citas_sin_asignar|length }}</h4>
+                            <p class="mb-0">Sin Asignar</p>
+                        </div>
+                        <div class="align-self-center">
+                            <i class="fas fa-exclamation-triangle fa-2x"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Citas de Hoy -->
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0"><i class="fas fa-calendar-day me-2"></i>Citas de Hoy</h5>
+                </div>
+                <div class="card-body">
+                    {% if citas_hoy %}
+                        <div class="list-group list-group-flush">
+                            {% for cita in citas_hoy %}
+                                <div class="list-group-item d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h6 class="mb-1">{{ cita.hora }} - {{ cita.mascota.nombre }}</h6>
+                                        <p class="mb-1 text-muted">{{ cita.motivo|truncatechars:50 }}</p>
+                                        <small class="text-muted">Dueño: {{ cita.mascota.propietario.get_full_name }}</small>
+                                    </div>
+                                    <div>
+                                        <span class="badge bg-{% if cita.estado == 'programada' %}warning{% elif cita.estado == 'confirmada' %}info{% elif cita.estado == 'en_curso' %}primary{% else %}success{% endif %}">
+                                            {{ cita.get_estado_display }}
+                                        </span>
+                                        <a href="{% url 'veterinario_cita_detalle' cita.id %}" class="btn btn-sm btn-outline-primary ms-2">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <div class="text-center py-4">
+                            <i class="fas fa-calendar-times fa-3x text-muted mb-3"></i>
+                            <p class="text-muted">No tienes citas programadas para hoy</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Próximas Citas -->
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0"><i class="fas fa-calendar-plus me-2"></i>Próximas Citas</h5>
+                </div>
+                <div class="card-body">
+                    {% if proximas_citas %}
+                        <div class="list-group list-group-flush">
+                            {% for cita in proximas_citas %}
+                                <div class="list-group-item d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h6 class="mb-1">{{ cita.fecha }} - {{ cita.hora }}</h6>
+                                        <p class="mb-1">{{ cita.mascota.nombre }}</p>
+                                        <small class="text-muted">{{ cita.motivo|truncatechars:40 }}</small>
+                                    </div>
+                                    <div>
+                                        <span class="badge bg-info">{{ cita.get_estado_display }}</span>
+                                        <a href="{% url 'veterinario_cita_detalle' cita.id %}" class="btn btn-sm btn-outline-primary ms-2">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <div class="text-center py-4">
+                            <i class="fas fa-calendar-check fa-3x text-muted mb-3"></i>
+                            <p class="text-muted">No tienes próximas citas programadas</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Citas Sin Asignar -->
+    {% if citas_sin_asignar %}
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header bg-warning text-dark">
+                    <h5 class="mb-0"><i class="fas fa-hand-paper me-2"></i>Citas Disponibles para Tomar</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        {% for cita in citas_sin_asignar %}
+                            <div class="col-md-6 col-lg-4 mb-3">
+                                <div class="card border-warning">
+                                    <div class="card-body">
+                                        <h6 class="card-title">{{ cita.mascota.nombre }}</h6>
+                                        <p class="card-text">
+                                            <strong>Fecha:</strong> {{ cita.fecha }}<br>
+                                            <strong>Hora:</strong> {{ cita.hora }}<br>
+                                            <strong>Motivo:</strong> {{ cita.motivo|truncatechars:30 }}
+                                        </p>
+                                        <div class="d-flex justify-content-between">
+                                            <a href="{% url 'veterinario_tomar_cita' cita.id %}" class="btn btn-warning btn-sm">
+                                                <i class="fas fa-hand-paper me-1"></i>Tomar Cita
+                                            </a>
+                                            <small class="text-muted align-self-center">
+                                                {{ cita.mascota.propietario.get_full_name }}
+                                            </small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %} 

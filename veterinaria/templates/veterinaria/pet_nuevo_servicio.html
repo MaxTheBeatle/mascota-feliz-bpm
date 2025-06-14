@@ -1,0 +1,127 @@
+{% extends 'veterinaria/base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">
+                    <i class="fas fa-plus me-2"></i>Nuevo Servicio para {{ pet.name }}
+                </h4>
+            </div>
+            <div class="card-body">
+                <div class="alert alert-info mb-4">
+                    <div class="d-flex align-items-center">
+                        <div class="me-3">
+                            {% if pet.species == 'Perro' %}
+                                <i class="fas fa-dog fa-2x text-primary"></i>
+                            {% elif pet.species == 'Gato' %}
+                                <i class="fas fa-cat fa-2x text-primary"></i>
+                            {% else %}
+                                <i class="fas fa-paw fa-2x text-primary"></i>
+                            {% endif %}
+                        </div>
+                        <div>
+                            <h6 class="mb-1">{{ pet.name }}</h6>
+                            <small class="text-muted">{{ pet.species }} - {{ pet.breed }}</small>
+                        </div>
+                    </div>
+                </div>
+
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="service_type" class="form-label">
+                                <i class="fas fa-stethoscope me-1"></i>Tipo de Servicio
+                            </label>
+                            <select class="form-select" id="service_type" name="service_type" required>
+                                <option value="">Selecciona un servicio...</option>
+                                {% for service_type in service_types %}
+                                    <option value="{{ service_type }}">
+                                        {% if service_type == 'Veterinario' %}
+                                            <i class="fas fa-stethoscope"></i> {{ service_type }}
+                                        {% elif service_type == 'Peluquería' %}
+                                            <i class="fas fa-cut"></i> {{ service_type }}
+                                        {% else %}
+                                            {{ service_type }}
+                                        {% endif %}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="reservation_type" class="form-label">
+                                <i class="fas fa-calendar-alt me-1"></i>Tipo de Reserva
+                            </label>
+                            <select class="form-select" id="reservation_type" name="reservation_type" required>
+                                <option value="">Selecciona el tipo...</option>
+                                {% for reservation_type in reservation_types %}
+                                    <option value="{{ reservation_type }}">
+                                        {% if reservation_type == 'Online' %}
+                                            <i class="fas fa-laptop"></i> {{ reservation_type }}
+                                        {% else %}
+                                            <i class="fas fa-building"></i> {{ reservation_type }}
+                                        {% endif %}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="date" class="form-label">
+                            <i class="fas fa-calendar me-1"></i>Fecha del Servicio
+                        </label>
+                        <input type="date" class="form-control" id="date" name="date" required>
+                        <div class="form-text">
+                            Selecciona la fecha en que se realizó o se realizará el servicio.
+                        </div>
+                    </div>
+
+                    <div class="alert alert-warning">
+                        <i class="fas fa-info-circle me-2"></i>
+                        <strong>Nota:</strong> Este servicio se agregará al historial de {{ pet.name }}. 
+                        Para citas médicas futuras, utiliza la opción "Agendar Cita".
+                    </div>
+                    
+                    <div class="d-flex justify-content-between">
+                        <a href="{% url 'pet_detail' pet.id %}" class="btn btn-outline-secondary">
+                            <i class="fas fa-arrow-left me-2"></i>Cancelar
+                        </a>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-plus me-2"></i>Agregar Servicio
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Configurar fecha máxima como hoy (para servicios ya realizados)
+    const dateInput = document.getElementById('date');
+    if (dateInput) {
+        const today = new Date().toISOString().split('T')[0];
+        dateInput.setAttribute('max', today);
+        dateInput.value = today; // Valor por defecto
+    }
+    
+    // Agregar iconos a las opciones cuando se seleccionan
+    const serviceSelect = document.getElementById('service_type');
+    const reservationSelect = document.getElementById('reservation_type');
+    
+    serviceSelect.addEventListener('change', function() {
+        const selectedOption = this.options[this.selectedIndex];
+        console.log('Servicio seleccionado:', selectedOption.value);
+    });
+    
+    reservationSelect.addEventListener('change', function() {
+        const selectedOption = this.options[this.selectedIndex];
+        console.log('Tipo de reserva seleccionado:', selectedOption.value);
+    });
+});
+</script>
+{% endblock %} 

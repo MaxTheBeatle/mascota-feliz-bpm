@@ -1,0 +1,214 @@
+{% extends 'veterinaria/base.html' %}
+
+{% block title %}Editar Receta #{{ receta.id }} - Panel Veterinario{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2><i class="fas fa-prescription text-success me-2"></i>Receta #{{ receta.id }}</h2>
+            <p class="text-muted mb-0">{{ receta.mascota.nombre }} - {{ receta.fecha_emision|date:"d/m/Y" }}</p>
+        </div>
+        <div>
+            <a href="{% url 'veterinario_cita_detalle' receta.cita.id %}" class="btn btn-outline-primary">
+                <i class="fas fa-arrow-left me-1"></i>Volver a la Cita
+            </a>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Información de la Receta -->
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-header bg-info text-white">
+                    <h5 class="mb-0"><i class="fas fa-info-circle me-2"></i>Información</h5>
+                </div>
+                <div class="card-body">
+                    <p><strong>Mascota:</strong> {{ receta.mascota.nombre }}</p>
+                    <p><strong>Propietario:</strong> {{ receta.mascota.propietario.get_full_name }}</p>
+                    <p><strong>Veterinario:</strong> {{ receta.veterinario.user.get_full_name }}</p>
+                    <p><strong>Fecha Emisión:</strong> {{ receta.fecha_emision|date:"d/m/Y H:i" }}</p>
+                    <p><strong>Vence:</strong> {{ receta.fecha_vencimiento|date:"d/m/Y" }}</p>
+                    <p><strong>Estado:</strong> 
+                        <span class="badge bg-{{ receta.estado|yesno:'success,warning' }}">
+                            {{ receta.get_estado_display }}
+                        </span>
+                    </p>
+                </div>
+            </div>
+
+            <div class="card mb-4">
+                <div class="card-header bg-secondary text-white">
+                    <h6 class="mb-0"><i class="fas fa-stethoscope me-2"></i>Diagnóstico</h6>
+                </div>
+                <div class="card-body">
+                    <p>{{ receta.diagnostico }}</p>
+                    {% if receta.observaciones %}
+                        <hr>
+                        <h6>Observaciones:</h6>
+                        <p>{{ receta.observaciones }}</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Medicamentos y Formulario -->
+        <div class="col-md-8">
+            <!-- Agregar Medicamento -->
+            <div class="card mb-4">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0"><i class="fas fa-plus me-2"></i>Agregar Medicamento</h5>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="agregar_medicamento" value="1">
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="{{ item_form.medicamento.id_for_label }}" class="form-label">
+                                    <i class="fas fa-pills me-1"></i>{{ item_form.medicamento.label }}
+                                </label>
+                                {{ item_form.medicamento }}
+                                {% if item_form.medicamento.errors %}
+                                    <div class="text-danger small">{{ item_form.medicamento.errors }}</div>
+                                {% endif %}
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="{{ item_form.cantidad.id_for_label }}" class="form-label">
+                                    <i class="fas fa-hashtag me-1"></i>{{ item_form.cantidad.label }}
+                                </label>
+                                {{ item_form.cantidad }}
+                                {% if item_form.cantidad.errors %}
+                                    <div class="text-danger small">{{ item_form.cantidad.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="{{ item_form.dosis.id_for_label }}" class="form-label">
+                                    <i class="fas fa-clock me-1"></i>{{ item_form.dosis.label }}
+                                </label>
+                                {{ item_form.dosis }}
+                                {% if item_form.dosis.errors %}
+                                    <div class="text-danger small">{{ item_form.dosis.errors }}</div>
+                                {% endif %}
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="{{ item_form.duracion.id_for_label }}" class="form-label">
+                                    <i class="fas fa-calendar-alt me-1"></i>{{ item_form.duracion.label }}
+                                </label>
+                                {{ item_form.duracion }}
+                                {% if item_form.duracion.errors %}
+                                    <div class="text-danger small">{{ item_form.duracion.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="{{ item_form.instrucciones.id_for_label }}" class="form-label">
+                                <i class="fas fa-notes-medical me-1"></i>{{ item_form.instrucciones.label }}
+                            </label>
+                            {{ item_form.instrucciones }}
+                            {% if item_form.instrucciones.errors %}
+                                <div class="text-danger small">{{ item_form.instrucciones.errors }}</div>
+                            {% endif %}
+                        </div>
+
+                        <button type="submit" class="btn btn-success">
+                            <i class="fas fa-plus me-1"></i>Agregar Medicamento
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Lista de Medicamentos -->
+            <div class="card">
+                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0"><i class="fas fa-list me-2"></i>Medicamentos Recetados</h5>
+                    <span class="badge bg-light text-dark">{{ receta.items.count }} medicamento{{ receta.items.count|pluralize }}</span>
+                </div>
+                <div class="card-body">
+                    {% if receta.items.exists %}
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Medicamento</th>
+                                        <th>Cantidad</th>
+                                        <th>Dosis</th>
+                                        <th>Duración</th>
+                                        <th>Precio</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for item in receta.items.all %}
+                                        <tr>
+                                            <td>
+                                                <strong>{{ item.medicamento.nombre }}</strong><br>
+                                                <small class="text-muted">{{ item.medicamento.concentracion }}</small>
+                                                {% if item.instrucciones %}
+                                                    <br><small class="text-info">{{ item.instrucciones }}</small>
+                                                {% endif %}
+                                            </td>
+                                            <td>{{ item.cantidad }}</td>
+                                            <td>{{ item.dosis }}</td>
+                                            <td>{{ item.duracion }}</td>
+                                            <td>${{ item.subtotal|floatformat:0 }} CLP</td>
+                                            <td>
+                                                <a href="{% url 'eliminar_item_receta' item.id %}" 
+                                                   class="btn btn-sm btn-outline-danger"
+                                                   onclick="return confirm('¿Estás seguro de eliminar este medicamento?')">
+                                                    <i class="fas fa-trash"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                                <tfoot>
+                                    <tr class="table-info">
+                                        <th colspan="4">Total</th>
+                                        <th>${{ receta.total_precio|floatformat:0 }} CLP</th>
+                                        <th></th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+
+                                                 <!-- Finalizar Receta -->
+                        <div class="mt-4">
+                            <div class="alert alert-info mb-3">
+                                <i class="fas fa-info-circle me-2"></i>
+                                Al finalizar, <strong>{{ receta.mascota.propietario.get_full_name }}</strong> 
+                                podrá ver esta receta en su perfil y reservar los medicamentos desde la farmacia.
+                            </div>
+                            <form method="post" class="d-inline">
+                                {% csrf_token %}
+                                <input type="hidden" name="finalizar_receta" value="1">
+                                <button type="submit" class="btn btn-primary btn-lg">
+                                    <i class="fas fa-check me-2"></i>Finalizar Receta
+                                </button>
+                            </form>
+                        </div>
+                    {% else %}
+                        <div class="text-center py-4">
+                            <i class="fas fa-pills fa-3x text-muted mb-3"></i>
+                            <h5 class="text-muted">No hay medicamentos en esta receta</h5>
+                            <p class="text-muted">Agrega medicamentos usando el formulario de arriba.</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.table-hover tbody tr:hover {
+    background-color: rgba(0,123,255,.075);
+}
+</style>
+{% endblock %} 

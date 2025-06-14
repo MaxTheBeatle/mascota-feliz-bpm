@@ -1,50 +1,42 @@
 from django.contrib import admin
-from .models import Veterinario, Mascota, Cita, Categoria, Producto, Pedido, PedidoItem, CarritoItem
+from django.contrib.auth.admin import UserAdmin
+from .models import User, Pet, Service, Veterinario, Mascota, Cita, Producto, Categoria, CarritoItem, Pedido, PedidoItem
 
-@admin.register(Veterinario)
-class VeterinarioAdmin(admin.ModelAdmin):
-    list_display = ('user', 'especialidad', 'telefono')
-    search_fields = ('user__username', 'user__first_name', 'user__last_name', 'especialidad')
+class CustomUserAdmin(UserAdmin):
+    list_display = ('username', 'email', 'is_admin', 'region', 'phone')
+    list_filter = ('is_admin', 'region')
+    fieldsets = UserAdmin.fieldsets + (
+        ('Información adicional', {'fields': ('is_admin', 'region', 'phone')}),
+    )
 
-@admin.register(Mascota)
-class MascotaAdmin(admin.ModelAdmin):
-    list_display = ('nombre', 'propietario', 'especie', 'raza', 'fecha_nacimiento', 'peso')
-    list_filter = ('especie',)
-    search_fields = ('nombre', 'propietario__username', 'raza')
+class ServiceInline(admin.TabularInline):
+    model = Service
+    extra = 1
 
-@admin.register(Cita)
-class CitaAdmin(admin.ModelAdmin):
-    list_display = ('mascota', 'veterinario', 'fecha', 'tipo_cita', 'estado')
-    list_filter = ('estado', 'tipo_cita', 'fecha')
-    search_fields = ('mascota__nombre', 'veterinario__user__username', 'motivo')
-    date_hierarchy = 'fecha'
+@admin.register(Pet)
+class PetAdmin(admin.ModelAdmin):
+    list_display = ('id', 'name', 'owner', 'species', 'breed', 'condition', 'get_age')
+    list_filter = ('species', 'condition', 'sex')
+    search_fields = ('name', 'owner__username', 'breed')
+    inlines = [ServiceInline]
 
-@admin.register(Categoria)
-class CategoriaAdmin(admin.ModelAdmin):
-    list_display = ('nombre',)
-    search_fields = ('nombre',)
+    def get_age(self, obj):
+        return f"{obj.age_years} años {obj.age_months} meses"
+    get_age.short_description = 'Edad'
 
-@admin.register(Producto)
-class ProductoAdmin(admin.ModelAdmin):
-    list_display = ('nombre', 'categoria', 'precio', 'stock', 'es_destacado')
-    list_filter = ('categoria', 'es_destacado')
-    search_fields = ('nombre', 'descripcion')
-    list_editable = ('precio', 'stock', 'es_destacado')
+@admin.register(Service)
+class ServiceAdmin(admin.ModelAdmin):
+    list_display = ('pet', 'service_type', 'reservation_type', 'date')
+    list_filter = ('service_type', 'reservation_type', 'date')
+    search_fields = ('pet__name', 'service_type')
+    date_hierarchy = 'date'
 
-class PedidoItemInline(admin.TabularInline):
-    model = PedidoItem
-    extra = 0
-    readonly_fields = ('subtotal',)
-
-@admin.register(Pedido)
-class PedidoAdmin(admin.ModelAdmin):
-    list_display = ('id', 'usuario', 'fecha_pedido', 'estado', 'total')
-    list_filter = ('estado', 'fecha_pedido')
-    search_fields = ('usuario__username', 'direccion_envio')
-    inlines = [PedidoItemInline]
-
-@admin.register(CarritoItem)
-class CarritoItemAdmin(admin.ModelAdmin):
-    list_display = ('usuario', 'producto', 'cantidad', 'fecha_agregado')
-    list_filter = ('fecha_agregado',)
-    search_fields = ('usuario__username', 'producto__nombre')
+admin.site.register(User, CustomUserAdmin)
+admin.site.register(Veterinario)
+admin.site.register(Mascota)
+admin.site.register(Cita)
+admin.site.register(Producto)
+admin.site.register(Categoria)
+admin.site.register(CarritoItem)
+admin.site.register(Pedido)
+admin.site.register(PedidoItem)

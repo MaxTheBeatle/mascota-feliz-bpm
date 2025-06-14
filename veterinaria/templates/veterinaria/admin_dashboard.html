@@ -1,0 +1,99 @@
+{% extends 'veterinaria/base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Panel de Administración</h2>
+    
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Estadísticas Generales</h5>
+                    <p><strong>Total de Mascotas:</strong> {{ total_pets }}</p>
+                    <p><strong>Total de Servicios:</strong> {{ total_services }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Mascotas Registradas</h5>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Nombre</th>
+                                    <th>Dueño</th>
+                                    <th>Especie</th>
+                                    <th>Estado</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for pet in pets %}
+                                <tr>
+                                    <td>{{ pet.id }}</td>
+                                    <td>{{ pet.name }}</td>
+                                    <td>{{ pet.owner.username }}</td>
+                                    <td>{{ pet.species }}</td>
+                                    <td>{{ pet.condition }}</td>
+                                    <td>
+                                        <a href="{% url 'pet_detail' pet.id %}" class="btn btn-sm btn-info">Ver detalles</a>
+                                    </td>
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="6">No hay mascotas registradas</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Servicios Recientes</h5>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Fecha</th>
+                                    <th>Mascota</th>
+                                    <th>Dueño</th>
+                                    <th>Tipo de Servicio</th>
+                                    <th>Tipo de Reserva</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for service in services %}
+                                <tr>
+                                    <td>{{ service.date }}</td>
+                                    <td>{{ service.pet.name }}</td>
+                                    <td>{{ service.pet.owner.username }}</td>
+                                    <td>{{ service.service_type }}</td>
+                                    <td>{{ service.reservation_type }}</td>
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="5">No hay servicios registrados</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

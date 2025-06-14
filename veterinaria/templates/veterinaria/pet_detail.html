@@ -1,0 +1,335 @@
+{% extends 'veterinaria/base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-4 mb-4">
+        <div class="card">
+            <div class="card-body text-center">
+                <div class="mb-4">
+                    {% if pet.species == 'Perro' %}
+                        <i class="fas fa-dog fa-5x text-primary"></i>
+                    {% elif pet.species == 'Gato' %}
+                        <i class="fas fa-cat fa-5x text-primary"></i>
+                    {% else %}
+                        <i class="fas fa-paw fa-5x text-primary"></i>
+                    {% endif %}
+                </div>
+                <h3 class="card-title mb-3">{{ pet.name }}</h3>
+                <span class="badge {% if pet.condition == 'Normal' %}bg-success{% elif pet.condition == 'Enfermo' %}bg-warning{% else %}bg-info{% endif %} mb-3">
+                    {{ pet.condition }}
+                </span>
+                <p class="text-muted mb-4">
+                    <i class="fas fa-user me-2"></i>Dueño: {{ pet.owner.get_full_name|default:pet.owner.username }}
+                </p>
+                <div class="d-grid gap-2">
+                    <a href="{% url 'pet_edit' pet.id %}" class="btn btn-primary">
+                        <i class="fas fa-edit me-2"></i>Editar Información
+                    </a>
+                    <a href="{% url 'pet_agendar_cita' pet.id %}" class="btn btn-outline-primary">
+                        <i class="fas fa-calendar-plus me-2"></i>Agendar Cita
+                    </a>
+                    <a href="{% url 'descargar_ficha_medica' pet.id %}" class="btn btn-outline-success">
+                        <i class="fas fa-file-medical me-2"></i>Descargar Ficha Médica
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-body">
+                <h5 class="card-title mb-4">
+                    <i class="fas fa-info-circle me-2"></i>Información Detallada
+                </h5>
+                <ul class="list-unstyled">
+                    <li class="mb-3">
+                        <i class="fas fa-fingerprint me-2 text-primary"></i>
+                        <strong>ID:</strong> {{ pet.id }}
+                    </li>
+                    <li class="mb-3">
+                        <i class="fas fa-paw me-2 text-primary"></i>
+                        <strong>Especie:</strong> {{ pet.species }}
+                    </li>
+                    <li class="mb-3">
+                        <i class="fas fa-tag me-2 text-primary"></i>
+                        <strong>Raza:</strong> {{ pet.breed }}
+                    </li>
+                    <li class="mb-3">
+                        <i class="fas fa-palette me-2 text-primary"></i>
+                        <strong>Color:</strong> {{ pet.base_color }}
+                    </li>
+                    <li class="mb-3">
+                        <i class="fas fa-birthday-cake me-2 text-primary"></i>
+                        <strong>Edad:</strong> {{ pet.age_years }} años {{ pet.age_months }} meses
+                    </li>
+                    <li class="mb-3">
+                        <i class="fas fa-venus-mars me-2 text-primary"></i>
+                        <strong>Sexo:</strong> {{ pet.sex }}
+                    </li>
+                </ul>
+                <hr>
+                <div class="text-center">
+                    <a href="{% url 'descargar_ficha_medica' pet.id %}" class="btn btn-success btn-sm">
+                        <i class="fas fa-download me-2"></i>Descargar Ficha Médica PDF
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h4 class="card-title mb-0">
+                        <i class="fas fa-history me-2"></i>Historial de Servicios
+                    </h4>
+                    <a href="{% url 'pet_nuevo_servicio' pet.id %}" class="btn btn-primary">
+                        <i class="fas fa-plus me-2"></i>Nuevo Servicio
+                    </a>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Fecha</th>
+                                <th>Tipo de Servicio</th>
+                                <th>Tipo de Reserva</th>
+                                <th>Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for service in services %}
+                            <tr>
+                                <td>{{ service.date }}</td>
+                                <td>
+                                    <i class="fas {% if service.service_type == 'Veterinario' %}fa-stethoscope{% elif service.service_type == 'Peluquería' %}fa-cut{% else %}fa-clipboard-list{% endif %} me-2"></i>
+                                    {{ service.service_type }}
+                                </td>
+                                <td>{{ service.reservation_type }}</td>
+                                <td>
+                                    <span class="badge {% if service.reservation_type == 'Online' %}bg-success{% else %}bg-primary{% endif %}">
+                                        {{ service.reservation_type }}
+                                    </span>
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="4" class="text-center">
+                                    <div class="alert alert-info mb-0">
+                                        <i class="fas fa-info-circle me-2"></i>No hay servicios registrados
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recetas Médicas -->
+        <div class="card mt-4">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h4 class="card-title mb-0">
+                        <i class="fas fa-prescription-bottle-alt me-2"></i>Recetas Médicas
+                    </h4>
+                    <span class="badge bg-primary">{{ recetas|length }}</span>
+                </div>
+
+                {% if recetas %}
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Fecha</th>
+                                    <th>Veterinario</th>
+                                    <th>Diagnóstico</th>
+                                    <th>Estado</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for receta in recetas %}
+                                <tr>
+                                    <td>{{ receta.fecha_emision|date:"d/m/Y" }}</td>
+                                    <td>{{ receta.veterinario.user.get_full_name }}</td>
+                                    <td>{{ receta.diagnostico|truncatechars:50 }}</td>
+                                    <td>
+                                        <span class="badge {% if receta.estado == 'activa' %}bg-success{% elif receta.estado == 'vencida' %}bg-danger{% else %}bg-warning{% endif %}">
+                                            {{ receta.get_estado_display }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <a href="{% url 'detalle_receta' receta.id %}" class="btn btn-sm btn-outline-primary">
+                                            <i class="fas fa-eye me-1"></i>Ver
+                                        </a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% else %}
+                    <div class="alert alert-info mb-0">
+                        <i class="fas fa-info-circle me-2"></i>No hay recetas médicas registradas para esta mascota.
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Reservas de Medicamentos -->
+        <div class="card mt-4">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h4 class="card-title mb-0">
+                        <i class="fas fa-calendar-check me-2"></i>Reservas de Medicamentos
+                    </h4>
+                    <span class="badge bg-info">{{ reservas|length }}</span>
+                </div>
+
+                {% if reservas %}
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Número</th>
+                                    <th>Fecha</th>
+                                    <th>Tipo</th>
+                                    <th>Estado</th>
+                                    <th>Total</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for reserva in reservas %}
+                                <tr>
+                                    <td>{{ reserva.numero_reserva }}</td>
+                                    <td>{{ reserva.fecha_reserva|date:"d/m/Y" }}</td>
+                                    <td>
+                                        <span class="badge {% if reserva.tipo == 'receta' %}bg-primary{% else %}bg-secondary{% endif %}">
+                                            {{ reserva.get_tipo_display }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span class="badge {% if reserva.estado == 'pendiente' %}bg-warning{% elif reserva.estado == 'confirmada' %}bg-info{% elif reserva.estado == 'lista' %}bg-success{% elif reserva.estado == 'entregada' %}bg-dark{% else %}bg-danger{% endif %}">
+                                            {{ reserva.get_estado_display }}
+                                        </span>
+                                    </td>
+                                    <td>${{ reserva.total|floatformat:0 }}</td>
+                                    <td>
+                                        <a href="{% url 'detalle_reserva' reserva.id %}" class="btn btn-sm btn-outline-info">
+                                            <i class="fas fa-eye me-1"></i>Ver
+                                        </a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% else %}
+                    <div class="alert alert-info mb-0">
+                        <i class="fas fa-info-circle me-2"></i>No hay reservas de medicamentos para esta mascota.
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Citas Médicas -->
+        <div class="card mt-4">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h4 class="card-title mb-0">
+                        <i class="fas fa-calendar-alt me-2"></i>Historial de Citas
+                    </h4>
+                    <span class="badge bg-secondary">{{ citas|length }}</span>
+                </div>
+
+                {% if citas %}
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Fecha</th>
+                                    <th>Hora</th>
+                                    <th>Estado</th>
+                                    <th>Veterinario</th>
+                                    <th>Motivo</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for cita in citas|slice:":10" %}
+                                <tr>
+                                    <td>{{ cita.fecha|date:"d/m/Y" }}</td>
+                                    <td>{{ cita.hora|time:"H:i" }}</td>
+                                    <td>
+                                        <span class="badge {% if cita.estado == 'completada' %}bg-success{% elif cita.estado == 'programada' %}bg-primary{% elif cita.estado == 'cancelada' %}bg-danger{% else %}bg-warning{% endif %}">
+                                            {{ cita.get_estado_display }}
+                                        </span>
+                                    </td>
+                                    <td>{{ cita.veterinario.user.get_full_name|default:"No asignado" }}</td>
+                                    <td>{{ cita.motivo|truncatechars:40 }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% else %}
+                    <div class="alert alert-info mb-0">
+                        <i class="fas fa-info-circle me-2"></i>No hay citas médicas registradas para esta mascota.
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-body">
+                <h4 class="card-title mb-4">
+                    <i class="fas fa-chart-line me-2"></i>Estadísticas
+                </h4>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="card bg-primary text-white">
+                            <div class="card-body text-center">
+                                <h6 class="mb-2">Total Servicios</h6>
+                                <h2 class="mb-0">{{ services|length }}</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card bg-success text-white">
+                            <div class="card-body text-center">
+                                <h6 class="mb-2">Servicios Online</h6>
+                                <h2 class="mb-0">{{ online_services_count }}</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card bg-info text-white">
+                            <div class="card-body text-center">
+                                <h6 class="mb-2">Recetas Médicas</h6>
+                                <h2 class="mb-0">{{ recetas|length }}</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card bg-warning text-white">
+                            <div class="card-body text-center">
+                                <h6 class="mb-2">Reservas</h6>
+                                <h2 class="mb-0">{{ reservas|length }}</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="mt-4">
+    <a href="{% url 'profile' %}" class="btn btn-outline-secondary">
+        <i class="fas fa-arrow-left me-2"></i>Volver al Perfil
+    </a>
+</div>
+{% endblock %} 

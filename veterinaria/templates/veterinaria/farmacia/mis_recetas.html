@@ -1,0 +1,210 @@
+{% extends 'veterinaria/base.html' %}
+
+{% block title %}Mis Recetas Médicas - Mascota Feliz{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2><i class="fas fa-file-prescription text-primary me-2"></i>Mis Recetas Médicas</h2>
+            <p class="text-muted mb-0">Historial de recetas de tus mascotas</p>
+        </div>
+        <div>
+            <a href="{% url 'farmacia_catalogo' %}" class="btn btn-outline-primary me-2">
+                <i class="fas fa-pills me-1"></i>Ver Farmacia
+            </a>
+            <a href="{% url 'mis_reservas' %}" class="btn btn-outline-success">
+                <i class="fas fa-calendar-check me-1"></i>Mis Reservas
+            </a>
+        </div>
+    </div>
+
+    {% if recetas %}
+        <!-- Estadísticas -->
+        <div class="row mb-4">
+            <div class="col-md-3">
+                <div class="card bg-primary text-white">
+                    <div class="card-body text-center">
+                        <i class="fas fa-file-prescription fa-2x mb-2"></i>
+                        <h4>{{ recetas|length }}</h4>
+                        <p class="mb-0">Total Recetas</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card bg-success text-white">
+                    <div class="card-body text-center">
+                        <i class="fas fa-check-circle fa-2x mb-2"></i>
+                        <h4>{{ recetas|length }}</h4>
+                        <p class="mb-0">Activas</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card bg-warning text-white">
+                    <div class="card-body text-center">
+                        <i class="fas fa-clock fa-2x mb-2"></i>
+                        <h4>0</h4>
+                        <p class="mb-0">Por Vencer</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card bg-danger text-white">
+                    <div class="card-body text-center">
+                        <i class="fas fa-times-circle fa-2x mb-2"></i>
+                        <h4>0</h4>
+                        <p class="mb-0">Vencidas</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lista de Recetas -->
+        <div class="row">
+            {% for receta in recetas %}
+                <div class="col-lg-6 mb-4">
+                    <div class="card h-100">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <div>
+                                <h5 class="mb-0">Receta #{{ receta.id }}</h5>
+                                <small class="text-muted">{{ receta.fecha_emision|date:"d/m/Y H:i" }}</small>
+                            </div>
+                            <div>
+                                {% if receta.esta_vencida %}
+                                    <span class="badge bg-danger">
+                                        <i class="fas fa-times-circle me-1"></i>Vencida
+                                    </span>
+                                {% else %}
+                                    <span class="badge bg-success">
+                                        <i class="fas fa-check-circle me-1"></i>{{ receta.get_estado_display }}
+                                    </span>
+                                {% endif %}
+                            </div>
+                        </div>
+                        
+                        <div class="card-body">
+                            <!-- Información de la Mascota -->
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="me-3">
+                                    <i class="fas fa-paw fa-2x text-primary"></i>
+                                </div>
+                                <div>
+                                    <h6 class="mb-0">{{ receta.mascota.nombre }}</h6>
+                                    <small class="text-muted">{{ receta.mascota.get_especie_display }} - {{ receta.mascota.raza }}</small>
+                                </div>
+                            </div>
+
+                            <!-- Veterinario -->
+                            <div class="mb-3">
+                                <strong><i class="fas fa-user-md me-1"></i>Veterinario:</strong>
+                                <span>{{ receta.veterinario.user.get_full_name }}</span>
+                                {% if receta.veterinario.especialidad %}
+                                    <br><small class="text-muted">{{ receta.veterinario.especialidad }}</small>
+                                {% endif %}
+                            </div>
+
+                            <!-- Diagnóstico -->
+                            <div class="mb-3">
+                                <strong><i class="fas fa-stethoscope me-1"></i>Diagnóstico:</strong>
+                                <p class="mb-0">{{ receta.diagnostico|truncatechars:100 }}</p>
+                            </div>
+
+                            <!-- Información de Medicamentos -->
+                            <div class="mb-3">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span><strong><i class="fas fa-pills me-1"></i>Medicamentos:</strong></span>
+                                    <span class="badge bg-primary">{{ receta.total_medicamentos }}</span>
+                                </div>
+                                {% if receta.items.exists %}
+                                    <ul class="list-unstyled mt-2 mb-0">
+                                        {% for item in receta.items.all|slice:":3" %}
+                                            <li class="small">
+                                                <i class="fas fa-capsules me-1 text-muted"></i>
+                                                {{ item.medicamento.nombre }} ({{ item.cantidad }})
+                                            </li>
+                                        {% endfor %}
+                                        {% if receta.items.count > 3 %}
+                                            <li class="small text-muted">
+                                                <i class="fas fa-ellipsis-h me-1"></i>
+                                                y {{ receta.items.count|add:"-3" }} más...
+                                            </li>
+                                        {% endif %}
+                                    </ul>
+                                {% endif %}
+                            </div>
+
+                            <!-- Fechas -->
+                            <div class="row text-center">
+                                <div class="col-6">
+                                    <small class="text-muted">Emitida</small><br>
+                                    <strong>{{ receta.fecha_emision|date:"d/m/Y" }}</strong>
+                                </div>
+                                <div class="col-6">
+                                    <small class="text-muted">Vence</small><br>
+                                    <strong class="{% if receta.esta_vencida %}text-danger{% endif %}">
+                                        {{ receta.fecha_vencimiento|date:"d/m/Y" }}
+                                    </strong>
+                                </div>
+                            </div>
+
+                            {% if receta.total_precio > 0 %}
+                                <div class="mt-3 text-center">
+                                    <span class="h5 text-success">${{ receta.total_precio|floatformat:0 }} CLP</span>
+                                </div>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="card-footer">
+                            <div class="d-grid gap-2">
+                                <a href="{% url 'detalle_receta' receta.id %}" class="btn btn-outline-primary">
+                                    <i class="fas fa-eye me-1"></i>Ver Detalles
+                                </a>
+                                {% if not receta.esta_vencida and receta.items.exists %}
+                                    <a href="{% url 'reservar_medicamentos_receta' receta.id %}" class="btn btn-success">
+                                        <i class="fas fa-calendar-plus me-1"></i>Reservar Medicamentos
+                                    </a>
+                                {% elif receta.esta_vencida %}
+                                    <button class="btn btn-secondary" disabled>
+                                        <i class="fas fa-times me-1"></i>Receta Vencida
+                                    </button>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <!-- Estado Vacío -->
+        <div class="text-center py-5">
+            <i class="fas fa-file-prescription fa-4x text-muted mb-4"></i>
+            <h4 class="text-muted">No tienes recetas médicas</h4>
+            <p class="text-muted mb-4">Las recetas aparecerán aquí después de tus consultas veterinarias.</p>
+            <div>
+                <a href="{% url 'cita_create' %}" class="btn btn-primary me-2">
+                    <i class="fas fa-calendar-plus me-1"></i>Agendar Cita
+                </a>
+                <a href="{% url 'farmacia_catalogo' %}" class="btn btn-outline-primary">
+                    <i class="fas fa-pills me-1"></i>Ver Farmacia
+                </a>
+            </div>
+        </div>
+    {% endif %}
+</div>
+
+<style>
+.card {
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+}
+
+.badge {
+    font-size: 0.75em;
+}
+</style>
+{% endblock %} 

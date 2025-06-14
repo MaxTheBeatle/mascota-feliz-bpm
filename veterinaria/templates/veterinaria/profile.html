@@ -1,0 +1,152 @@
+{% extends 'veterinaria/base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-4 mb-4">
+        <div class="card">
+            <div class="card-body text-center">
+                <div class="mb-4">
+                    <i class="fas fa-user-circle fa-5x text-primary"></i>
+                </div>
+                <h4 class="card-title mb-3">{{ user.get_full_name|default:user.username }}</h4>
+                <p class="text-muted mb-4">
+                    <i class="fas fa-map-marker-alt me-2"></i>{{ user.region }}
+                </p>
+                <div class="d-flex justify-content-center mb-3">
+                    <div class="px-3 border-end">
+                        <h5 class="mb-0">{{ pets.count }}</h5>
+                        <small class="text-muted">Mascotas</small>
+                    </div>
+                    <div class="px-3">
+                        <h5 class="mb-0">{{ user.phone }}</h5>
+                        <small class="text-muted">Teléfono</small>
+                    </div>
+                </div>
+                <div class="d-grid">
+                    <button class="btn btn-primary">
+                        <i class="fas fa-edit me-2"></i>Editar Perfil
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-body">
+                <h5 class="card-title">
+                    <i class="fas fa-info-circle me-2"></i>Información de Contacto
+                </h5>
+                <ul class="list-unstyled">
+                    <li class="mb-2">
+                        <i class="fas fa-envelope me-2 text-primary"></i>{{ user.email }}
+                    </li>
+                    <li class="mb-2">
+                        <i class="fas fa-phone me-2 text-primary"></i>{{ user.phone }}
+                    </li>
+                    <li>
+                        <i class="fas fa-map-marker-alt me-2 text-primary"></i>{{ user.region }}
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h4 class="card-title mb-0">
+                        <i class="fas fa-paw me-2"></i>Mis Mascotas
+                    </h4>
+                    <a href="{% url 'mascota_create' %}" class="btn btn-primary">
+                        <i class="fas fa-plus me-2"></i>Nueva Mascota
+                    </a>
+                </div>
+
+                <div class="row">
+                    {% for pet in pets %}
+                    <div class="col-md-6 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <h5 class="card-title mb-0">{{ pet.name }}</h5>
+                                    <span class="badge {% if pet.condition == 'Normal' %}bg-success{% elif pet.condition == 'Enfermo' %}bg-warning{% else %}bg-info{% endif %}">
+                                        {{ pet.condition }}
+                                    </span>
+                                </div>
+                                <div class="pet-info">
+                                    <p class="mb-2">
+                                        <i class="fas fa-dog me-2 text-primary"></i>
+                                        <strong>Especie:</strong> {{ pet.species }}
+                                    </p>
+                                    <p class="mb-2">
+                                        <i class="fas fa-tag me-2 text-primary"></i>
+                                        <strong>Raza:</strong> {{ pet.breed }}
+                                    </p>
+                                    <p class="mb-2">
+                                        <i class="fas fa-birthday-cake me-2 text-primary"></i>
+                                        <strong>Edad:</strong> {{ pet.age_years }} años {{ pet.age_months }} meses
+                                    </p>
+                                    <p class="mb-0">
+                                        <i class="fas fa-venus-mars me-2 text-primary"></i>
+                                        <strong>Sexo:</strong> {{ pet.sex }}
+                                    </p>
+                                </div>
+                                <div class="mt-3 d-grid">
+                                    <a href="{% url 'pet_detail' pet.id %}" class="btn btn-outline-primary">
+                                        <i class="fas fa-eye me-2"></i>Ver Detalles
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <div class="col-12">
+                        <div class="alert alert-info" role="alert">
+                            <i class="fas fa-info-circle me-2"></i>
+                            No tienes mascotas registradas.
+                            <a href="{% url 'mascota_create' %}" class="alert-link">¡Registra tu primera mascota!</a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-body">
+                <h4 class="card-title mb-4">
+                    <i class="fas fa-calendar-check me-2"></i>Próximas Citas
+                </h4>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Mascota</th>
+                                <th>Fecha</th>
+                                <th>Servicio</th>
+                                <th>Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for service in user.pet_set.all %}
+                            <tr>
+                                <td>{{ service.pet.name }}</td>
+                                <td>{{ service.date }}</td>
+                                <td>{{ service.service_type }}</td>
+                                <td>
+                                    <span class="badge bg-primary">{{ service.reservation_type }}</span>
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="4" class="text-center">No hay citas programadas</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

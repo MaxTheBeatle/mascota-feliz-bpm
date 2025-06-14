@@ -1,0 +1,228 @@
+{% extends 'veterinaria/base.html' %}
+
+{% block title %}Farmacia Veterinaria - Mascota Feliz{% endblock %}
+
+{% block content %}
+<div class="container-fluid mt-4">
+    <!-- Header -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="text-center">
+                <h1><i class="fas fa-pills text-primary me-3"></i>Farmacia Veterinaria</h1>
+                <p class="lead text-muted">Medicamentos de calidad para el cuidado de tu mascota</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Filtros de Búsqueda -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0"><i class="fas fa-search me-2"></i>Buscar Medicamentos</h5>
+                </div>
+                <div class="card-body">
+                    <form method="get" class="row g-3">
+                        <div class="col-md-3">
+                            {{ form.busqueda.label_tag }}
+                            {{ form.busqueda }}
+                        </div>
+                        <div class="col-md-2">
+                            {{ form.categoria.label_tag }}
+                            {{ form.categoria }}
+                        </div>
+                        <div class="col-md-2">
+                            {{ form.tipo.label_tag }}
+                            {{ form.tipo }}
+                        </div>
+                        <div class="col-md-2">
+                            {{ form.requiere_receta.label_tag }}
+                            {{ form.requiere_receta }}
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-check mt-4">
+                                {{ form.disponible }}
+                                {{ form.disponible.label_tag }}
+                            </div>
+                        </div>
+                        <div class="col-md-1">
+                            <button type="submit" class="btn btn-primary mt-4">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Categorías Destacadas -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <h3><i class="fas fa-th-large me-2"></i>Categorías</h3>
+            <div class="row">
+                {% for categoria in categorias %}
+                    <div class="col-md-2 col-sm-4 col-6 mb-3">
+                        <div class="card h-100 categoria-card">
+                            <div class="card-body text-center">
+                                <i class="{{ categoria.icono }} fa-2x text-primary mb-2"></i>
+                                <h6 class="card-title">{{ categoria.nombre }}</h6>
+                                <small class="text-muted">{{ categoria.medicamento_set.count }} productos</small>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Lista de Medicamentos -->
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h3><i class="fas fa-capsules me-2"></i>Medicamentos ({{ medicamentos|length }} resultados)</h3>
+                {% if user.is_authenticated and not user.veterinario %}
+                    <div>
+                        <a href="{% url 'mis_recetas' %}" class="btn btn-outline-primary me-2">
+                            <i class="fas fa-file-prescription me-1"></i>Mis Recetas
+                        </a>
+                        <a href="{% url 'mis_reservas' %}" class="btn btn-outline-success">
+                            <i class="fas fa-calendar-check me-1"></i>Mis Reservas
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
+            
+            {% if medicamentos %}
+                <div class="row">
+                    {% for medicamento in medicamentos %}
+                        <div class="col-lg-4 col-md-6 mb-4">
+                            <div class="card h-100 medicamento-card">
+                                <div class="card-header d-flex justify-content-between align-items-center">
+                                    <span class="badge bg-{{ medicamento.categoria.nombre|slugify }}">
+                                        <i class="{{ medicamento.categoria.icono }} me-1"></i>
+                                        {{ medicamento.categoria.nombre }}
+                                    </span>
+                                    {% if medicamento.requiere_receta %}
+                                        <span class="badge bg-warning">
+                                            <i class="fas fa-prescription me-1"></i>Con Receta
+                                        </span>
+                                    {% else %}
+                                        <span class="badge bg-success">
+                                            <i class="fas fa-shopping-cart me-1"></i>Venta Libre
+                                        </span>
+                                    {% endif %}
+                                </div>
+                                
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ medicamento.nombre }}</h5>
+                                    {% if medicamento.nombre_generico %}
+                                        <p class="text-muted small mb-2">
+                                            <strong>Genérico:</strong> {{ medicamento.nombre_generico }}
+                                        </p>
+                                    {% endif %}
+                                    
+                                    <div class="mb-2">
+                                        <span class="badge bg-secondary">{{ medicamento.get_tipo_display }}</span>
+                                        <span class="badge bg-info">{{ medicamento.get_presentacion_display }}</span>
+                                        <span class="badge bg-dark">{{ medicamento.concentracion }}</span>
+                                    </div>
+                                    
+                                    <p class="card-text">{{ medicamento.descripcion|truncatechars:100 }}</p>
+                                    
+                                    <div class="mb-2">
+                                        <small class="text-muted">
+                                            <strong>Laboratorio:</strong> {{ medicamento.laboratorio }}
+                                        </small>
+                                    </div>
+                                    
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <span class="h5 text-primary mb-0">${{ medicamento.precio|floatformat:0 }} CLP</span>
+                                        <div>
+                                            {% if medicamento.stock > 0 %}
+                                                {% if medicamento.stock_bajo %}
+                                                    <span class="badge bg-warning">
+                                                        <i class="fas fa-exclamation-triangle me-1"></i>Stock Bajo ({{ medicamento.stock }})
+                                                    </span>
+                                                {% else %}
+                                                    <span class="badge bg-success">
+                                                        <i class="fas fa-check me-1"></i>Disponible ({{ medicamento.stock }})
+                                                    </span>
+                                                {% endif %}
+                                            {% else %}
+                                                <span class="badge bg-danger">
+                                                    <i class="fas fa-times me-1"></i>Sin Stock
+                                                </span>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="card-footer">
+                                    <div class="d-grid gap-2">
+                                        <a href="{% url 'medicamento_detalle' medicamento.id %}" class="btn btn-outline-primary">
+                                            <i class="fas fa-info-circle me-1"></i>Ver Detalles
+                                        </a>
+                                        {% if user.is_authenticated and medicamento.disponible and not medicamento.requiere_receta %}
+                                            <a href="{% url 'reservar_medicamento_libre' medicamento.id %}" class="btn btn-success">
+                                                <i class="fas fa-calendar-plus me-1"></i>Reservar
+                                            </a>
+                                        {% elif medicamento.requiere_receta %}
+                                            <button class="btn btn-warning" disabled>
+                                                <i class="fas fa-prescription me-1"></i>Requiere Receta
+                                            </button>
+                                        {% elif not medicamento.disponible %}
+                                            <button class="btn btn-secondary" disabled>
+                                                <i class="fas fa-times me-1"></i>No Disponible
+                                            </button>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="text-center py-5">
+                    <i class="fas fa-search fa-4x text-muted mb-3"></i>
+                    <h4 class="text-muted">No se encontraron medicamentos</h4>
+                    <p class="text-muted">Intenta ajustar los filtros de búsqueda.</p>
+                    <a href="{% url 'farmacia_catalogo' %}" class="btn btn-primary">
+                        <i class="fas fa-refresh me-1"></i>Ver Todos los Medicamentos
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<style>
+.categoria-card {
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+
+.categoria-card:hover {
+    transform: translateY(-5px);
+}
+
+.medicamento-card {
+    transition: transform 0.3s ease;
+}
+
+.medicamento-card:hover {
+    transform: translateY(-3px);
+}
+
+.badge.bg-antibióticos { background-color: #dc3545 !important; }
+.badge.bg-analgésicos { background-color: #28a745 !important; }
+.badge.bg-antiinflamatorios { background-color: #ffc107 !important; color: #000; }
+.badge.bg-antiparasitarios { background-color: #17a2b8 !important; }
+.badge.bg-vitaminas-y-suplementos { background-color: #6f42c1 !important; }
+.badge.bg-vacunas { background-color: #fd7e14 !important; }
+.badge.bg-dermatológicos { background-color: #e83e8c !important; }
+.badge.bg-cardiológicos { background-color: #20c997 !important; }
+.badge.bg-digestivos { background-color: #6c757d !important; }
+.badge.bg-oftálmicos { background-color: #007bff !important; }
+</style>
+{% endblock %} 

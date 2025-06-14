@@ -3,55 +3,98 @@
 {% block title %}Mis Mascotas - Mascota Feliz{% endblock %}
 
 {% block content %}
-<div class="row mb-4">
-    <div class="col-md-8">
-        <h2>Mis Mascotas</h2>
+<div class="container">
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <h2><i class="fas fa-paw me-2"></i>Mis Mascotas</h2>
+        </div>
+        <div class="col-md-4 text-end">
+            <a href="{% url 'mascota_create' %}" class="btn btn-primary btn-hover-effect">
+                <i class="fas fa-plus me-2"></i>Nueva Mascota
+            </a>
+        </div>
     </div>
-    <div class="col-md-4 text-end">
-        <a href="{% url 'mascota_create' %}" class="btn btn-primary">
-            <i class="fas fa-plus"></i> Nueva Mascota
-        </a>
-    </div>
-</div>
 
-{% if mascotas %}
-    <div class="row">
-        {% for mascota in mascotas %}
-            <div class="col-md-4 mb-4">
-                <div class="card h-100">
-                    {% if mascota.foto %}
-                        <img src="{{ mascota.foto.url }}" class="card-img-top" alt="{{ mascota.nombre }}" style="height: 200px; object-fit: cover;">
-                    {% else %}
-                        <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
-                            <i class="fas fa-paw fa-4x text-muted"></i>
-                        </div>
-                    {% endif %}
-                    <div class="card-body">
-                        <h5 class="card-title">{{ mascota.nombre }}</h5>
-                        <p class="card-text">
-                            <strong>Especie:</strong> {{ mascota.get_especie_display }}<br>
-                            <strong>Raza:</strong> {{ mascota.raza }}<br>
-                            <strong>Edad:</strong> {{ mascota.fecha_nacimiento|timesince }}<br>
-                            <strong>Peso:</strong> {{ mascota.peso }} kg
-                        </p>
-                    </div>
-                    <div class="card-footer bg-transparent">
-                        <div class="btn-group w-100">
-                            <a href="{% url 'mascota_update' mascota.pk %}" class="btn btn-outline-primary">
-                                <i class="fas fa-edit"></i> Editar
-                            </a>
-                            <a href="{% url 'mascota_delete' mascota.pk %}" class="btn btn-outline-danger">
-                                <i class="fas fa-trash"></i> Eliminar
-                            </a>
+    {% if mascotas %}
+        <div class="row">
+            {% for mascota in mascotas %}
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 shadow-sm pet-card">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h5 class="card-title mb-0">{{ mascota.name }}</h5>
+                                <span class="badge {% if mascota.condition == 'Normal' %}bg-success{% elif mascota.condition == 'Enfermo' %}bg-warning{% else %}bg-info{% endif %}">
+                                    {{ mascota.condition }}
+                                </span>
+                            </div>
+                            <div class="pet-info">
+                                <p class="mb-2">
+                                    <i class="fas fa-dog me-2 text-primary"></i>
+                                    <strong>Especie:</strong> {{ mascota.species }}
+                                </p>
+                                <p class="mb-2">
+                                    <i class="fas fa-tag me-2 text-primary"></i>
+                                    <strong>Raza:</strong> {{ mascota.breed }}
+                                </p>
+                                <p class="mb-2">
+                                    <i class="fas fa-birthday-cake me-2 text-primary"></i>
+                                    <strong>Edad:</strong> {{ mascota.age_years }} años {{ mascota.age_months }} meses
+                                </p>
+                                <p class="mb-2">
+                                    <i class="fas fa-palette me-2 text-primary"></i>
+                                    <strong>Color:</strong> {{ mascota.base_color }}
+                                </p>
+                                <p class="mb-0">
+                                    <i class="fas fa-venus-mars me-2 text-primary"></i>
+                                    <strong>Sexo:</strong> {{ mascota.sex }}
+                                </p>
+                            </div>
+                            <div class="mt-3">
+                                <a href="{% url 'pet_detail' mascota.id %}" class="btn btn-outline-primary btn-block btn-hover-effect">
+                                    <i class="fas fa-eye me-2"></i>Ver Detalles
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        {% endfor %}
-    </div>
-{% else %}
-    <div class="alert alert-info">
-        <i class="fas fa-info-circle"></i> No tienes mascotas registradas. ¡Agrega una nueva mascota para comenzar!
-    </div>
-{% endif %}
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="alert alert-info" role="alert">
+            <i class="fas fa-info-circle me-2"></i>
+            No tienes mascotas registradas. 
+            <a href="{% url 'mascota_create' %}" class="alert-link">¡Registra tu primera mascota!</a>
+        </div>
+    {% endif %}
+</div>
+
+<style>
+.btn-hover-effect {
+    transition: all 0.3s ease;
+}
+
+.btn-hover-effect:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.pet-card {
+    transition: all 0.3s ease;
+    border-radius: 15px;
+}
+
+.pet-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.pet-info i {
+    width: 20px;
+}
+
+.badge {
+    padding: 8px 12px;
+    border-radius: 20px;
+}
+</style>
 {% endblock %} 

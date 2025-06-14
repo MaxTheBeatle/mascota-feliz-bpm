@@ -6,75 +6,973 @@
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'veterinaria/css/home.css' %}">
 <style>
-    .carousel-background {
-        background-size: cover;
-        background-position: center;
+    /* Estilos específicos para el carrusel de servicios */
+    #servicesCarousel .carousel-slide {
+        min-height: 600px;
+    }
+
+    #servicesCarousel .display-4 {
+        font-size: 3.5rem;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+    }
+
+    #servicesCarousel .lead {
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+    }
+
+    #servicesCarousel .btn-primary {
+        background: linear-gradient(45deg, #4169E1, #6c5ce7);
+        border: none;
+        border-radius: 50px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(65, 105, 225, 0.3);
+    }
+
+    #servicesCarousel .btn-primary:hover {
+        background: linear-gradient(45deg, #3157d1, #5b4cdb);
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(65, 105, 225, 0.4);
+    }
+
+    #servicesCarousel .carousel-indicators {
+        bottom: 20px;
+    }
+
+    #servicesCarousel .carousel-indicators button {
+        width: 15px;
+        height: 15px;
+        border-radius: 50%;
+        margin: 0 8px;
+        background-color: rgba(255, 255, 255, 0.5);
+        border: 2px solid white;
+    }
+
+    #servicesCarousel .carousel-indicators button.active {
+        background-color: white;
+    }
+
+    @media (max-width: 768px) {
+        #servicesCarousel .carousel-slide {
+            min-height: 500px;
+        }
+        
+        #servicesCarousel .display-4 {
+            font-size: 2.5rem;
+        }
+        
+        #servicesCarousel .fs-3 {
+            font-size: 1.3rem !important;
+        }
+        
+        #servicesCarousel .fs-4 {
+            font-size: 1.1rem !important;
+        }
+    }
+
+    /* Estilos para las tarjetas de citas */
+    .border-left-primary {
+        border-left: 4px solid #4169E1 !important;
+    }
+
+    .border-left-info {
+        border-left: 4px solid #36b9cc !important;
+    }
+
+    .text-xs {
+        font-size: 0.875rem;
+    }
+
+    .font-weight-bold {
+        font-weight: 700;
+    }
+
+    .text-gray-800 {
+        color: #5a5c69;
+    }
+
+    .text-gray-600 {
+        color: #858796;
+    }
+
+    .header-section {
+        position: relative;
+        margin-bottom: 2rem;
+        text-align: center;
+        padding: 2rem 0;
+        background-color: #f8f9fa;
+    }
+
+    .header-content {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 0 1rem;
+    }
+
+    .header-content h1 {
+        color: #2c3e50;
+        margin-bottom: 1rem;
+    }
+
+    .header-content p {
+        color: #34495e;
+        margin-bottom: 1.5rem;
+    }
+
+    .header-buttons {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+    }
+
+    /* Estilos del Carrusel */
+    .carousel-section {
+        margin-bottom: 3rem;
+    }
+
+    .carousel-item::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4));
+    }
+
+    .carousel-caption {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 90%;
+        max-width: 450px;
+        background: rgba(0, 0, 0, 0.7);
+        padding: 2rem;
+        border-radius: 15px;
+        text-align: center;
+    }
+
+    .carousel-caption h3 {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+
+    .carousel-caption p {
+        font-size: 1.2rem;
+        margin-bottom: 2rem;
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+    }
+
+    .carousel-caption .btn {
+        font-size: 1.1rem;
+        padding: 0.5rem 1.5rem;
+        background-color: #0d6efd;
+        border: none;
+        transition: all 0.3s ease;
+    }
+
+    .carousel-caption .btn:hover {
+        background-color: #0b5ed7;
+        transform: translateY(-2px);
+    }
+
+    .carousel-indicators {
+        bottom: 20px;
+    }
+
+    .carousel-indicators button {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        margin: 0 5px;
+    }
+
+    .carousel-indicators button.active {
+        background-color: #ffffff;
+    }
+
+    .carousel-control-prev,
+    .carousel:hover .carousel-control-next {
+        opacity: 1;
+    }
+
+    .carousel-control-prev-icon,
+    .carousel-control-next-icon {
+        background-color: rgba(0,0,0,0.5);
+        border-radius: 50%;
+        padding: 20px;
+    }
+
+    @media (max-width: 768px) {
+        .carousel-caption {
+            padding: 1.5rem;
+        }
+        
+        .carousel-caption h3 {
+            font-size: 1.8rem;
+        }
+        
+        .carousel-caption p {
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+        }
+    }
+
+    .btn-hover-effect {
+        transition: all 0.3s ease;
+    }
+
+    .btn-hover-effect:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+
+    .service-card {
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+
+    .service-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .service-card i {
+        transition: all 0.3s ease;
+    }
+
+    .service-card:hover i {
+        transform: scale(1.2);
+    }
+
+    /* Estilos para las tarjetas de productos */
+    .product-card {
+        transition: all 0.3s ease;
+        border-radius: 15px;
+        overflow: hidden;
+    }
+
+    .product-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+    }
+
+    .product-card .card-img-top {
+        transition: all 0.3s ease;
+    }
+
+    .product-card:hover .card-img-top {
+        transform: scale(1.05);
+    }
+
+    .products-section {
+        border-radius: 20px;
+    }
+
+    .products-section .btn-hover-effect {
+        transition: all 0.3s ease;
+        border-radius: 25px;
+    }
+
+    .products-section .btn-hover-effect:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(65, 105, 225, 0.3);
+    }
+
+    .animate__animated {
+        animation-duration: 1s;
+    }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translate3d(0, 40px, 0);
+        }
+        to {
+            opacity: 1;
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+    @keyframes fadeInDown {
+        from {
+            opacity: 0;
+            transform: translate3d(0, -40px, 0);
+        }
+        to {
+            opacity: 1;
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+
+    .hero-section {
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        transition: all 0.3s ease;
+    }
+
+    .hero-section:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+    }
+
+    @keyframes float {
+        0% {
+            transform: translateY(0px);
+        }
+        50% {
+            transform: translateY(-10px);
+        }
+        100% {
+            transform: translateY(0px);
+        }
+    }
+
+    .animate__fadeInDown {
+        animation-duration: 1.2s;
+    }
+
+    .animate__fadeInUp {
+        animation-duration: 1.5s;
+    }
+
+    .animate__fadeIn {
+        animation-duration: 2s;
+    }
+
+    .carousel {
+        position: relative;
+        margin-bottom: 4rem;
+    }
+
+    .carousel-item {
         height: 600px;
     }
-    .slide1-bg {
-        background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)), 
-            url("https://images.unsplash.com/photo-1587764379873-97837921fd44?auto=format&fit=crop&w=1920&q=80");
+
+    .carousel-slide {
+        position: relative;
+        height: 100%;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
-    .slide2-bg {
-        background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)), 
-            url("https://images.unsplash.com/photo-1601758228041-f3b2795255f1?auto=format&fit=crop&w=1920&q=80");
+
+    .carousel-slide::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5));
+        z-index: 1;
     }
-    .slide3-bg {
-        background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)), 
-            url("https://images.unsplash.com/photo-1576201836106-db1758fd1c97?auto=format&fit=crop&w=1920&q=80");
+
+    .carousel-content {
+        position: relative;
+        z-index: 2;
+        text-align: center;
+        color: white;
+        max-width: 800px;
+        width: 90%;
+        padding: 2rem;
+    }
+
+    .carousel-title {
+        font-size: 3.5rem;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    }
+
+    .carousel-text {
+        font-size: 1.3rem;
+        margin-bottom: 2rem;
+        text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+    }
+
+    .btn-primary {
+        background-color: #4169E1;
+        border: none;
+        padding: 1rem 2.5rem;
+        font-size: 1.1rem;
+        border-radius: 50px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        transition: all 0.3s ease;
+        font-weight: 600;
+    }
+
+    .btn-primary:hover {
+        background-color: #3157d1;
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    }
+
+    @media (max-width: 768px) {
+        .carousel-title {
+            font-size: 2.5rem;
+        }
+        .carousel-text {
+            font-size: 1.1rem;
+        }
+        .btn-primary {
+            padding: 0.8rem 2rem;
+            font-size: 1rem;
+        }
+    }
+
+    /* Reset container styles */
+    .container {
+        padding: 0 !important;
+        margin: 0 !important;
+        max-width: 100% !important;
+    }
+
+    /* Carousel specific styles */
+    #mainCarousel {
+        margin-top: -1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .carousel-item {
+        height: 800px !important;
+        position: relative;
+    }
+
+    .carousel-slide {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-size: cover !important;
+        background-position: center !important;
+    }
+
+    .carousel-slide::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 1;
+    }
+
+    .carousel-content {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 2;
+        width: 90%;
+        max-width: 1000px;
+        text-align: center;
+        padding: 3rem;
+    }
+
+    .carousel-title {
+        color: white;
+        font-size: 4.5rem !important;
+        font-weight: 800 !important;
+        margin-bottom: 2rem !important;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        line-height: 1.2;
+    }
+
+    .carousel-text {
+        color: white;
+        font-size: 1.8rem !important;
+        margin-bottom: 3rem !important;
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+        line-height: 1.4;
+    }
+
+    .carousel .btn-primary {
+        background: #4169E1 !important;
+        border: none !important;
+        padding: 1.5rem 3.5rem !important;
+        font-size: 1.4rem !important;
+        border-radius: 50px !important;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+
+    .carousel .btn-primary:hover {
+        background: #3157d1 !important;
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .carousel-control-prev-icon,
+    .carousel-control-next-icon {
+        width: 4rem !important;
+        height: 4rem !important;
+    }
+
+    @media (max-width: 1200px) {
+        .carousel-title {
+            font-size: 4rem !important;
+        }
+        .carousel-text {
+            font-size: 1.8rem !important;
+        }
+        .carousel .btn-primary {
+            padding: 1.2rem 3rem !important;
+            font-size: 1.4rem !important;
+        }
+    }
+
+    @media (max-width: 768px) {
+        #mainCarousel .carousel-inner,
+        #mainCarousel .carousel-item {
+            height: 70vh !important;
+            min-height: 600px !important;
+        }
+        .carousel-title {
+            font-size: 3rem !important;
+        }
+        .carousel-text {
+            font-size: 1.4rem !important;
+        }
+        .carousel .btn-primary {
+            padding: 1rem 2.5rem !important;
+            font-size: 1.2rem !important;
+        }
+    }
+
+    /* Reset específico para el carrusel */
+    #mainCarousel.carousel {
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 100% !important;
+        height: 700px !important;
+        background: #000 !important;
+    }
+
+    #mainCarousel .carousel-inner {
+        height: 100% !important;
+    }
+
+    #mainCarousel .carousel-item {
+        height: 700px !important;
+        position: relative !important;
+        overflow: hidden !important;
+    }
+
+    #mainCarousel .carousel-image {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+        object-position: center !important;
+        opacity: 0.8 !important;
+    }
+
+    #mainCarousel .carousel-overlay {
+        position: absolute !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        bottom: 0 !important;
+        background: rgba(0, 0, 0, 0.4) !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        z-index: 2 !important;
+    }
+
+    #mainCarousel .carousel-content {
+        max-width: 800px !important;
+        text-align: center !important;
+        padding: 20px !important;
+        color: white !important;
+    }
+
+    #mainCarousel .carousel-title {
+        font-size: 3.5rem !important;
+        font-weight: bold !important;
+        margin-bottom: 20px !important;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5) !important;
+        color: white !important;
+    }
+
+    #mainCarousel .carousel-description {
+        font-size: 1.5rem !important;
+        margin-bottom: 30px !important;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5) !important;
+        color: white !important;
+    }
+
+    #mainCarousel .carousel-btn {
+        display: inline-block !important;
+        padding: 15px 40px !important;
+        font-size: 1.2rem !important;
+        color: white !important;
+        background-color: #4169E1 !important;
+        border-radius: 50px !important;
+        text-decoration: none !important;
+        transition: all 0.3s !important;
+        border: none !important;
+    }
+
+    #mainCarousel .carousel-btn:hover {
+        background-color: #3157d1 !important;
+        color: white !important;
+        transform: translateY(-2px) !important;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2) !important;
+    }
+
+    #mainCarousel .carousel-control-prev,
+    #mainCarousel .carousel-control-next {
+        width: 10% !important;
+        opacity: 0.8 !important;
+        z-index: 3 !important;
+    }
+
+    #mainCarousel .carousel-control-prev-icon,
+    #mainCarousel .carousel-control-next-icon {
+        width: 3rem !important;
+        height: 3rem !important;
+    }
+
+    @media (max-width: 768px) {
+        #mainCarousel.carousel,
+        #mainCarousel .carousel-item,
+        #mainCarousel .carousel-image {
+            height: 500px !important;
+        }
+        
+        #mainCarousel .carousel-title {
+            font-size: 2.5rem !important;
+        }
+        
+        #mainCarousel .carousel-description {
+            font-size: 1.2rem !important;
+        }
+        
+        #mainCarousel .carousel-btn {
+            padding: 12px 30px !important;
+            font-size: 1rem !important;
+        }
     }
 </style>
 {% endblock %}
 
 {% block content %}
-<!-- Carousel Principal -->
-<div id="mainCarousel" class="carousel slide" data-bs-ride="carousel">
-    <div class="carousel-indicators">
-        <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-        <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
-        <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+<div class="hero-section text-center py-5 mb-5 animate__animated animate__fadeIn" style="background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1450778869180-41d0601e046e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1950&q=80') center/cover; min-height: 500px; display: flex; align-items: center; justify-content: center; color: white; border-radius: 15px; position: relative; overflow: hidden;">
+    <div class="container position-relative" style="z-index: 2;">
+        <h1 class="display-4 fw-bold mb-4 animate__animated animate__fadeInDown" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">Bienvenido a Mascota Feliz</h1>
+        <p class="lead mb-4 animate__animated animate__fadeInUp" style="text-shadow: 1px 1px 2px rgba(0,0,0,0.5); font-size: 1.4rem;">Tu clínica veterinaria de confianza, donde el cuidado de tu mascota es nuestra prioridad</p>
+        <div class="mt-4 animate__animated animate__fadeInUp">
+            {% if user.is_authenticated %}
+                {% if user.is_admin %}
+                    <p class="h5 mb-4" style="text-shadow: 1px 1px 2px rgba(0,0,0,0.5);">Como administrador, puedes:</p>
+                    <div class="row justify-content-center">
+                        <div class="col-md-8">
+                            <div class="d-grid gap-3">
+                                <a href="{% url 'admin_dashboard' %}" class="btn btn-light btn-lg btn-hover-effect">
+                                    <i class="fas fa-chart-line me-2"></i>Ver Panel de Administración
+                                </a>
+                                <a href="{% url 'admin:index' %}" class="btn btn-outline-light btn-lg btn-hover-effect">
+                                    <i class="fas fa-cog me-2"></i>Acceder al Admin de Django
+                                </a>
+                                <a href="{% url 'admin:veterinaria_pet_changelist' %}" class="btn btn-outline-light btn-lg btn-hover-effect">
+                                    <i class="fas fa-paw me-2"></i>Gestionar Mascotas
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="row justify-content-center">
+                        <div class="col-md-8">
+                            <div class="d-grid gap-3">
+                                <a href="{% url 'cita_create' %}" class="btn btn-light btn-lg btn-hover-effect">
+                                    <i class="fas fa-calendar-plus me-2"></i>Agendar Cita
+                                </a>
+                                <a href="{% url 'tienda' %}" class="btn btn-outline-light btn-lg btn-hover-effect">
+                                    <i class="fas fa-shopping-cart me-2"></i>Visitar Tienda
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            {% else %}
+                <div class="d-grid gap-3 col-md-6 mx-auto">
+                    <a href="{% url 'login' %}" class="btn btn-light btn-lg btn-hover-effect">
+                        <i class="fas fa-sign-in-alt me-2"></i>Iniciar Sesión
+                    </a>
+                    <a href="{% url 'register' %}" class="btn btn-outline-light btn-lg btn-hover-effect">
+                        <i class="fas fa-user-plus me-2"></i>Registrarse
+                    </a>
+                </div>
+            {% endif %}
+        </div>
     </div>
-    <div class="carousel-inner">
-        <div class="carousel-item active">
-            <div class="carousel-background slide1-bg"></div>
-            <div class="carousel-caption d-none d-md-block">
-                <h1 class="display-4 fw-bold mb-4">Bienvenido a Mascota Feliz</h1>
-                <p class="lead mb-4">Tu clínica veterinaria de confianza, donde el cuidado de tu mascota es nuestra prioridad</p>
-                <a href="{% url 'cita_create' %}" class="btn btn-primary btn-lg px-5 py-3">
-                    <i class="fas fa-calendar-plus me-2"></i>Agendar Cita
-                </a>
-            </div>
-        </div>
-        <div class="carousel-item">
-            <div class="carousel-background slide2-bg"></div>
-            <div class="carousel-caption d-none d-md-block">
-                <h1 class="display-4 fw-bold mb-4">Tienda de Alimentos y Accesorios</h1>
-                <p class="lead mb-4">Encuentra todo lo que tu mascota necesita en un solo lugar</p>
-                <a href="{% url 'tienda' %}" class="btn btn-primary btn-lg px-5 py-3">
-                    <i class="fas fa-shopping-cart me-2"></i>Visitar Tienda
-                </a>
-            </div>
-        </div>
-        <div class="carousel-item">
-            <div class="carousel-background slide3-bg"></div>
-            <div class="carousel-caption d-none d-md-block">
-                <h1 class="display-4 fw-bold mb-4">Servicios Profesionales</h1>
-                <p class="lead mb-4">Cuidado experto y personalizado para cada mascota</p>
-                <a href="#servicios" class="btn btn-primary btn-lg px-5 py-3">
-                    <i class="fas fa-stethoscope me-2"></i>Ver Servicios
-                </a>
-            </div>
-        </div>
-    </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#mainCarousel" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Anterior</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#mainCarousel" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Siguiente</span>
-    </button>
+    <div class="hero-overlay" style="position: absolute; bottom: 0; left: 0; right: 0; height: 100px; background: linear-gradient(transparent, rgba(0,0,0,0.3));"></div>
 </div>
+
+<div class="row mb-5 animate__animated animate__fadeInUp">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title text-center mb-4">
+                    <i class="fas fa-star me-2"></i>Nuestros Servicios
+                </h3>
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <div class="card h-100 service-card">
+                            <div class="card-body text-center">
+                                <i class="fas fa-stethoscope fa-3x mb-3 text-primary"></i>
+                                <h5 class="card-title">Atención Veterinaria</h5>
+                                <p class="card-text">Consultas y tratamientos profesionales para tu mascota</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="card h-100 service-card">
+                            <div class="card-body text-center">
+                                <i class="fas fa-cut fa-3x mb-3 text-success"></i>
+                                <h5 class="card-title">Peluquería</h5>
+                                <p class="card-text">Servicios de grooming y estética para mascotas</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="card h-100 service-card">
+                            <div class="card-body text-center">
+                                <i class="fas fa-shopping-basket fa-3x mb-3 text-info"></i>
+                                <h5 class="card-title">Tienda</h5>
+                                <p class="card-text">Productos de calidad para el cuidado de tu mascota</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Carrusel de Servicios -->
+<div class="container-fluid p-0 mb-5">
+    <div id="servicesCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="4000">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#servicesCarousel" data-bs-slide-to="0" class="active"></button>
+            <button type="button" data-bs-target="#servicesCarousel" data-bs-slide-to="1"></button>
+            <button type="button" data-bs-target="#servicesCarousel" data-bs-slide-to="2"></button>
+            <button type="button" data-bs-target="#servicesCarousel" data-bs-slide-to="3"></button>
+        </div>
+        
+        <div class="carousel-inner">
+            <!-- Slide 1: Atención Veterinaria -->
+            <div class="carousel-item active">
+                <div class="carousel-slide" style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1576201836106-db1758fd1c97?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80'); height: 600px; background-size: cover; background-position: center; display: flex; align-items: center; justify-content: center;">
+                    <div class="text-center text-white">
+                        <h2 class="display-4 fw-bold mb-4">Atención Veterinaria Profesional</h2>
+                        <p class="lead mb-4 fs-3">Cuidamos la salud de tu mascota con experiencia y dedicación</p>
+                        <a href="{% url 'cita_create' %}" class="btn btn-primary btn-lg px-5 py-3 fs-4">
+                            <i class="fas fa-calendar-plus me-2"></i>Agendar Cita
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 2: Peluquería -->
+            <div class="carousel-item">
+                <div class="carousel-slide" style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1583337130417-3346a1be7dee?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80'); height: 600px; background-size: cover; background-position: center; display: flex; align-items: center; justify-content: center;">
+                    <div class="text-center text-white">
+                        <h2 class="display-4 fw-bold mb-4">Spa y Peluquería Canina</h2>
+                        <p class="lead mb-4 fs-3">Tu mascota merece verse y sentirse increíble</p>
+                        <a href="{% url 'cita_create' %}" class="btn btn-primary btn-lg px-5 py-3 fs-4">
+                            <i class="fas fa-cut me-2"></i>Reservar Sesión
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 3: Tienda -->
+            <div class="carousel-item">
+                <div class="carousel-slide" style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1601758228041-f3b2795255f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80'); height: 600px; background-size: cover; background-position: center; display: flex; align-items: center; justify-content: center;">
+                    <div class="text-center text-white">
+                        <h2 class="display-4 fw-bold mb-4">Todo para tu Mascota</h2>
+                        <p class="lead mb-4 fs-3">Productos premium para el cuidado de tu compañero</p>
+                        <a href="{% url 'tienda' %}" class="btn btn-primary btn-lg px-5 py-3 fs-4">
+                            <i class="fas fa-shopping-cart me-2"></i>Visitar Tienda
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 4: Vacunación -->
+            <div class="carousel-item">
+                <div class="carousel-slide" style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://web.evolucionanimal.cl/wp-content/uploads/2024/03/vacunacion-mascotas-evolucion-animal-veterinaria.jpg'); height: 600px; background-size: cover; background-position: center; display: flex; align-items: center; justify-content: center;">
+                    <div class="text-center text-white">
+                        <h2 class="display-4 fw-bold mb-4">Protección y Prevención</h2>
+                        <p class="lead mb-4 fs-3">Mantén a tu mascota saludable con nuestro programa de vacunación</p>
+                        <a href="{% url 'cita_create' %}" class="btn btn-primary btn-lg px-5 py-3 fs-4">
+                            <i class="fas fa-shield-alt me-2"></i>Programar Vacunas
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Controles -->
+        <button class="carousel-control-prev" type="button" data-bs-target="#servicesCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true" style="width: 3rem; height: 3rem;"></span>
+            <span class="visually-hidden">Anterior</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#servicesCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true" style="width: 3rem; height: 3rem;"></span>
+            <span class="visually-hidden">Siguiente</span>
+        </button>
+    </div>
+</div>
+
+<!-- Sección Unificada: Mascotas y Citas -->
+{% if user.is_authenticated %}
+<div class="container mb-5">
+    <div class="row">
+        <!-- Sección de Mascotas -->
+        <div class="col-lg-6 mb-4">
+            <div class="card shadow h-100">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">
+                        <i class="fas fa-paw me-2"></i>Tus Mascotas
+                    </h4>
+                </div>
+                <div class="card-body">
+                    {% if user_mascotas %}
+                        <div class="row">
+                            {% for mascota in user_mascotas %}
+                                <div class="col-md-6 mb-3">
+                                    <div class="card border-left-primary h-100">
+                                        <div class="card-body text-center">
+                                            <div class="mb-2">
+                                                <i class="fas fa-{% if mascota.especie == 'Perro' %}dog{% else %}cat{% endif %} fa-2x text-primary"></i>
+                                            </div>
+                                            <h6 class="font-weight-bold text-primary mb-1">{{ mascota.nombre }}</h6>
+                                            <div class="text-xs text-gray-800 mb-1">
+                                                <strong>{{ mascota.especie }}</strong>
+                                            </div>
+                                            <div class="text-xs text-gray-600 mb-1">
+                                                {{ mascota.raza }}
+                                            </div>
+                                            <div class="text-xs text-gray-600">
+                                                <i class="fas fa-birthday-cake me-1"></i>{{ mascota.edad }}
+                                            </div>
+                                            <span class="badge bg-{% if mascota.condicion == 'Normal' %}success{% elif mascota.condicion == 'Herido' %}danger{% else %}warning{% endif %} mt-2">
+                                                {{ mascota.condicion }}
+                                            </span>
+                                            <div class="mt-2">
+                                                <a href="{% url 'descargar_ficha_medica' mascota.id %}" class="btn btn-outline-info btn-sm" title="Descargar Ficha Médica">
+                                                    <i class="fas fa-file-medical me-1"></i>Ficha
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <div class="text-center py-4">
+                            <i class="fas fa-paw fa-3x text-muted mb-3"></i>
+                            <h6 class="text-muted">No tienes mascotas registradas</h6>
+                            <p class="text-muted small">¡Registra tu primera mascota!</p>
+                        </div>
+                    {% endif %}
+                    <div class="text-center mt-3">
+                        <a href="{% url 'mascota_list' %}" class="btn btn-outline-primary btn-sm">
+                            <i class="fas fa-list me-1"></i>Ver Todas
+                        </a>
+                        <a href="{% url 'mascota_create' %}" class="btn btn-primary btn-sm ms-2">
+                            <i class="fas fa-plus me-1"></i>Registrar
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sección de Citas -->
+        <div class="col-lg-6 mb-4">
+            <div class="card shadow h-100">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">
+                        <i class="fas fa-calendar-check me-2"></i>Próximas Citas
+                    </h4>
+                </div>
+                <div class="card-body">
+                    {% if proximas_citas %}
+                        <div class="row">
+                            {% for cita in proximas_citas %}
+                                <div class="col-12 mb-3">
+                                    <div class="card border-left-primary h-100">
+                                        <div class="card-body">
+                                            <div class="d-flex align-items-center">
+                                                <div class="me-3">
+                                                    <i class="fas fa-calendar fa-2x text-primary"></i>
+                                                </div>
+                                                <div class="flex-grow-1">
+                                                    <h6 class="font-weight-bold text-primary mb-1">{{ cita.mascota.nombre }}</h6>
+                                                    <div class="text-xs font-weight-bold text-gray-800 mb-1">
+                                                        <i class="fas fa-calendar me-1"></i>{{ cita.fecha|date:"d/m/Y" }}
+                                                    </div>
+                                                    <div class="text-xs text-gray-600 mb-1">
+                                                        <i class="fas fa-clock me-1"></i>{{ cita.hora|time:"H:i" }} - {{ cita.hora_fin|time:"H:i" }}
+                                                    </div>
+                                                    <div class="text-xs text-gray-600 mb-1">
+                                                        <span class="badge bg-{% if cita.estado == 'programada' %}primary{% elif cita.estado == 'confirmada' %}success{% else %}secondary{% endif %} badge-sm">
+                                                            {{ cita.get_estado_display }}
+                                                        </span>
+                                                    </div>
+                                                    {% if cita.motivo %}
+                                                        <div class="text-xs text-muted mt-1">
+                                                            {{ cita.motivo|truncatewords:3 }}
+                                                        </div>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <div class="text-center py-4">
+                            <i class="fas fa-calendar-plus fa-3x text-muted mb-3"></i>
+                            <h6 class="text-muted">No tienes citas programadas</h6>
+                            <p class="text-muted small">¡Agenda una cita para tu mascota!</p>
+                        </div>
+                    {% endif %}
+                    <div class="text-center mt-3">
+                        <a href="{% url 'cita_list' %}" class="btn btn-outline-primary btn-sm">
+                            <i class="fas fa-calendar-alt me-1"></i>Ver Todas
+                        </a>
+                        <a href="{% url 'cita_create' %}" class="btn btn-primary btn-sm ms-2">
+                            <i class="fas fa-calendar-plus me-1"></i>Agendar
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
 
 <!-- Sección de Estadísticas -->
 <section class="stats-section py-5 bg-light rounded shadow mb-5">
@@ -112,75 +1010,89 @@
     </div>
 </section>
 
-<!-- Sección de Servicios -->
-<section id="servicios" class="services-section mb-5">
-    <div class="container">
-        <h2 class="text-center mb-5">Nuestros Servicios</h2>
-        <div class="row">
-            <div class="col-md-4 mb-4">
-                <div class="card h-100">
-                    <div class="card-body text-center">
-                        <i class="fas fa-stethoscope fa-3x text-primary mb-3"></i>
-                        <h4 class="card-title">Consulta General</h4>
-                        <p class="card-text">Exámenes de rutina, vacunación y control de salud para tu mascota.</p>
-                        <a href="{% url 'cita_create' %}" class="btn btn-outline-primary">Agendar</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 mb-4">
-                <div class="card h-100">
-                    <div class="card-body text-center">
-                        <i class="fas fa-tooth fa-3x text-primary mb-3"></i>
-                        <h4 class="card-title">Odontología</h4>
-                        <p class="card-text">Limpieza dental, extracciones y cuidado completo de la salud bucal.</p>
-                        <a href="{% url 'cita_create' %}" class="btn btn-outline-primary">Agendar</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 mb-4">
-                <div class="card h-100">
-                    <div class="card-body text-center">
-                        <i class="fas fa-cut fa-3x text-primary mb-3"></i>
-                        <h4 class="card-title">Peluquería</h4>
-                        <p class="card-text">Baño, corte y cepillado profesional para mantener a tu mascota limpia y feliz.</p>
-                        <a href="{% url 'cita_create' %}" class="btn btn-outline-primary">Agendar</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
 <!-- Sección de Productos Destacados -->
-<section class="featured-products mb-5">
+<section class="products-section py-5 bg-light rounded shadow mb-5">
     <div class="container">
-        <h2 class="text-center mb-5">Productos Destacados</h2>
-        <div class="row">
-            {% for producto in productos_destacados %}
-                <div class="col-md-3 mb-4">
-                    <div class="card h-100">
+        <div class="text-center mb-5">
+            <h2 class="display-5 fw-bold text-primary mb-3">
+                <i class="fas fa-shopping-bag me-2"></i>Productos Destacados
+            </h2>
+            <p class="lead text-muted">Los mejores productos para el cuidado de tu mascota</p>
+        </div>
+        
+        {% if productos_destacados %}
+            <div class="row">
+                {% for producto in productos_destacados %}
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="card h-100 shadow-sm border-0 product-card">
                         {% if producto.imagen %}
-                            <img src="{{ producto.imagen.url }}" class="card-img-top" alt="{{ producto.nombre }}" style="height: 200px; object-fit: cover;">
+                            <div class="position-relative overflow-hidden">
+                                <img src="{{ producto.imagen.url }}" class="card-img-top" alt="{{ producto.nombre }}" style="height: 200px; object-fit: cover;">
+                                {% if producto.es_destacado %}
+                                    <span class="position-absolute top-0 end-0 badge bg-warning text-dark m-2">
+                                        <i class="fas fa-star me-1"></i>Destacado
+                                    </span>
+                                {% endif %}
+                            </div>
                         {% else %}
-                            <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
+                            <div class="card-img-top d-flex align-items-center justify-content-center bg-light" style="height: 200px;">
                                 <i class="fas fa-box fa-3x text-muted"></i>
                             </div>
                         {% endif %}
-                        <div class="card-body">
-                            <h5 class="card-title">{{ producto.nombre }}</h5>
-                            <p class="card-text text-success fw-bold">${{ producto.precio }}</p>
-                            <a href="{% url 'producto_detalle' producto.pk %}" class="btn btn-primary w-100">Ver Detalles</a>
+                        
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title text-primary fw-bold">{{ producto.nombre }}</h5>
+                            <p class="card-text text-muted flex-grow-1">{{ producto.descripcion|truncatewords:15 }}</p>
+                            
+                            <div class="mt-auto">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <span class="h5 text-success fw-bold mb-0">${{ producto.precio|floatformat:0 }} CLP</span>
+                                    {% if producto.stock > 0 %}
+                                        <small class="text-success">
+                                            <i class="fas fa-check-circle me-1"></i>En stock
+                                        </small>
+                                    {% else %}
+                                        <small class="text-danger">
+                                            <i class="fas fa-times-circle me-1"></i>Agotado
+                                        </small>
+                                    {% endif %}
+                                </div>
+                                
+                                <div class="d-grid gap-2">
+                                    <a href="{% url 'producto_detalle' producto.id %}" class="btn btn-primary btn-hover-effect">
+                                        <i class="fas fa-eye me-1"></i>Ver Detalles
+                                    </a>
+                                    {% if user.is_authenticated and producto.stock > 0 %}
+                                        <form method="post" action="{% url 'agregar_al_carrito' producto.id %}" class="d-inline">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="cantidad" value="1">
+                                            <button type="submit" class="btn btn-outline-success btn-sm w-100">
+                                                <i class="fas fa-cart-plus me-1"></i>Agregar al Carrito
+                                            </button>
+                                        </form>
+                                    {% endif %}
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            {% empty %}
-                <div class="col-12 text-center">
-                    <p>No hay productos destacados disponibles.</p>
-                </div>
-            {% endfor %}
-        </div>
-        <div class="text-center mt-4">
-            <a href="{% url 'tienda' %}" class="btn btn-lg btn-primary">Ver Todos los Productos</a>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="text-center py-5">
+                <i class="fas fa-shopping-bag fa-4x text-muted mb-4"></i>
+                <h4 class="text-muted mb-3">No hay productos destacados disponibles</h4>
+                <p class="text-muted mb-4">Pronto tendremos productos increíbles para tu mascota</p>
+                <a href="{% url 'tienda' %}" class="btn btn-primary btn-lg">
+                    <i class="fas fa-store me-2"></i>Explorar Tienda
+                </a>
+            </div>
+        {% endif %}
+        
+        <div class="text-center mt-5">
+            <a href="{% url 'tienda' %}" class="btn btn-primary btn-lg btn-hover-effect">
+                <i class="fas fa-store me-2"></i>Ver Todos los Productos
+            </a>
         </div>
     </div>
 </section>
@@ -263,77 +1175,4 @@
         </div>
     </div>
 </section>
-
-<!-- Estilos adicionales para la página de inicio -->
-<style>
-    .carousel-item {
-        position: relative;
-    }
-    
-    .carousel-background {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-    }
-    
-    .carousel-item::after {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7));
-    }
-
-    .carousel-caption {
-        bottom: 50%;
-        transform: translateY(50%);
-        z-index: 1;
-    }
-
-    .carousel-caption h1 {
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-    }
-
-    .carousel-caption p {
-        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-    }
-
-    .carousel-caption .btn {
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .carousel-caption .btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
-    }
-
-    .stat-item h3 {
-        font-size: 2.5rem;
-        font-weight: bold;
-        margin-bottom: 0.5rem;
-    }
-
-    .services-section .card,
-    .testimonials-section .card {
-        transition: transform 0.3s ease;
-    }
-
-    .services-section .card:hover,
-    .testimonials-section .card:hover {
-        transform: translateY(-10px);
-    }
-
-    .newsletter-section .card {
-        border: none;
-        background: linear-gradient(45deg, var(--primary-color), #2e59d9);
-    }
-</style>
 {% endblock %} 

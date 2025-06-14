@@ -1,0 +1,139 @@
+{% extends 'veterinaria/base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">
+                    <i class="fas fa-calendar-plus me-2"></i>Agendar Cita para {{ pet.name }}
+                </h4>
+            </div>
+            <div class="card-body">
+                <div class="alert alert-info mb-4">
+                    <div class="d-flex align-items-center">
+                        <div class="me-3">
+                            {% if pet.species == 'Perro' %}
+                                <i class="fas fa-dog fa-2x text-primary"></i>
+                            {% elif pet.species == 'Gato' %}
+                                <i class="fas fa-cat fa-2x text-primary"></i>
+                            {% else %}
+                                <i class="fas fa-paw fa-2x text-primary"></i>
+                            {% endif %}
+                        </div>
+                        <div>
+                            <h6 class="mb-1">{{ pet.name }}</h6>
+                            <small class="text-muted">{{ pet.species }} - {{ pet.breed }}</small>
+                        </div>
+                    </div>
+                </div>
+
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label for="{{ form.fecha.id_for_label }}" class="form-label">
+                                <i class="fas fa-calendar me-1"></i>Fecha
+                            </label>
+                            {{ form.fecha }}
+                            {% if form.fecha.errors %}
+                                <div class="text-danger small">{{ form.fecha.errors }}</div>
+                            {% endif %}
+                            <div class="form-text">No se atiende los domingos</div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="{{ form.hora.id_for_label }}" class="form-label">
+                                <i class="fas fa-clock me-1"></i>Hora
+                            </label>
+                            {{ form.hora }}
+                            {% if form.hora.errors %}
+                                <div class="text-danger small">{{ form.hora.errors }}</div>
+                            {% endif %}
+                            <div class="form-text">8:00 AM - 6:00 PM</div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="{{ form.duracion_minutos.id_for_label }}" class="form-label">
+                                <i class="fas fa-hourglass-half me-1"></i>Duración
+                            </label>
+                            {{ form.duracion_minutos }}
+                            {% if form.duracion_minutos.errors %}
+                                <div class="text-danger small">{{ form.duracion_minutos.errors }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-8 mb-3">
+                            <label for="{{ form.motivo.id_for_label }}" class="form-label">
+                                <i class="fas fa-clipboard me-1"></i>Motivo de la Cita
+                            </label>
+                            {{ form.motivo }}
+                            {% if form.motivo.errors %}
+                                <div class="text-danger small">{{ form.motivo.errors }}</div>
+                            {% endif %}
+                            <div class="form-text">
+                                Describe brevemente el motivo de la consulta (ej: vacunación, revisión general, etc.)
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="{{ form.veterinario.id_for_label }}" class="form-label">
+                                <i class="fas fa-user-md me-1"></i>Veterinario
+                            </label>
+                            {{ form.veterinario }}
+                            {% if form.veterinario.errors %}
+                                <div class="text-danger small">{{ form.veterinario.errors }}</div>
+                            {% endif %}
+                            <div class="form-text">Opcional</div>
+                        </div>
+                    </div>
+
+                    <!-- Campo oculto para la mascota -->
+                    {{ form.mascota.as_hidden }}
+                    
+                    <div class="alert alert-info">
+                        <h6><i class="fas fa-info-circle me-2"></i>Información importante:</h6>
+                        <ul class="mb-0 small">
+                            <li><strong>Horario de atención:</strong> Lunes a Sábado de 8:00 AM a 6:00 PM</li>
+                            <li><strong>Intervalos:</strong> Las citas se agendan cada 15 minutos</li>
+                            <li><strong>Duración:</strong> Selecciona el tiempo estimado para la consulta</li>
+                            <li><strong>Conflictos:</strong> El sistema verificará automáticamente la disponibilidad</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between">
+                        <a href="{% url 'pet_detail' pet.id %}" class="btn btn-outline-secondary">
+                            <i class="fas fa-arrow-left me-2"></i>Cancelar
+                        </a>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-calendar-check me-2"></i>Agendar Cita
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Configurar fecha mínima como hoy
+document.addEventListener('DOMContentLoaded', function() {
+    const fechaInput = document.getElementById('{{ form.fecha.id_for_label }}');
+    if (fechaInput) {
+        const today = new Date().toISOString().split('T')[0];
+        fechaInput.setAttribute('min', today);
+        fechaInput.classList.add('form-control');
+    }
+    
+    const horaInput = document.getElementById('{{ form.hora.id_for_label }}');
+    if (horaInput) {
+        horaInput.classList.add('form-control');
+    }
+    
+    const motivoInput = document.getElementById('{{ form.motivo.id_for_label }}');
+    if (motivoInput) {
+        motivoInput.classList.add('form-control');
+        motivoInput.setAttribute('rows', '3');
+    }
+});
+</script>
+{% endblock %} 

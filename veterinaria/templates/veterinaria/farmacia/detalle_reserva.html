@@ -1,0 +1,311 @@
+{% extends 'veterinaria/base.html' %}
+{% load static %}
+
+{% block title %}Detalle de Reserva - Mascota Feliz{% endblock %}
+
+{% block extra_css %}
+<style>
+    .reserva-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border-radius: 15px;
+        padding: 2rem;
+        margin-bottom: 2rem;
+    }
+    
+    .estado-badge {
+        font-size: 1.1rem;
+        padding: 0.5rem 1rem;
+        border-radius: 25px;
+    }
+    
+    .info-card {
+        border: none;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        border-radius: 15px;
+        transition: transform 0.3s ease;
+    }
+    
+    .info-card:hover {
+        transform: translateY(-5px);
+    }
+    
+    .medicamento-item {
+        border-left: 4px solid #007bff;
+        background: #f8f9fa;
+        padding: 1rem;
+        margin-bottom: 1rem;
+        border-radius: 0 10px 10px 0;
+    }
+    
+    .precio-total {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #28a745;
+    }
+    
+    .timeline-item {
+        border-left: 3px solid #007bff;
+        padding-left: 1rem;
+        margin-bottom: 1rem;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <!-- Header de la Reserva -->
+    <div class="reserva-header text-center">
+        <h1 class="mb-3">
+            <i class="fas fa-calendar-check me-3"></i>
+            Reserva {{ reserva.numero_reserva }}
+        </h1>
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="d-flex justify-content-center align-items-center flex-wrap gap-3">
+                    <span class="estado-badge bg-{% if reserva.estado == 'pendiente' %}warning{% elif reserva.estado == 'confirmada' %}info{% elif reserva.estado == 'lista' %}success{% elif reserva.estado == 'entregada' %}dark{% else %}danger{% endif %}">
+                        <i class="fas fa-circle me-2"></i>{{ reserva.get_estado_display }}
+                    </span>
+                    <span class="badge bg-light text-dark fs-6">
+                        <i class="fas fa-calendar me-2"></i>{{ reserva.fecha_reserva|date:"d/m/Y H:i" }}
+                    </span>
+                    <span class="badge bg-light text-dark fs-6">
+                        <i class="fas fa-tag me-2"></i>{{ reserva.get_tipo_display }}
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Información Principal -->
+        <div class="col-lg-8">
+            <!-- Información de la Reserva -->
+            <div class="card info-card mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">
+                        <i class="fas fa-info-circle me-2"></i>Información de la Reserva
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p><strong><i class="fas fa-hashtag me-2 text-primary"></i>Número:</strong> {{ reserva.numero_reserva }}</p>
+                            <p><strong><i class="fas fa-calendar-plus me-2 text-primary"></i>Fecha de Reserva:</strong> {{ reserva.fecha_reserva|date:"d/m/Y H:i" }}</p>
+                            <p><strong><i class="fas fa-calendar-check me-2 text-primary"></i>Fecha de Retiro:</strong> {{ reserva.fecha_retiro|date:"d/m/Y" }}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong><i class="fas fa-tag me-2 text-primary"></i>Tipo:</strong> 
+                                <span class="badge bg-{% if reserva.tipo == 'receta' %}primary{% else %}secondary{% endif %}">
+                                    {{ reserva.get_tipo_display }}
+                                </span>
+                            </p>
+                            <p><strong><i class="fas fa-phone me-2 text-primary"></i>Teléfono:</strong> {{ reserva.telefono_contacto }}</p>
+                            <p><strong><i class="fas fa-dollar-sign me-2 text-primary"></i>Total:</strong> 
+                                <span class="precio-total">${{ reserva.total|floatformat:0 }}</span>
+                            </p>
+                        </div>
+                    </div>
+                    
+                    {% if reserva.notas %}
+                    <hr>
+                    <p><strong><i class="fas fa-sticky-note me-2 text-primary"></i>Notas:</strong></p>
+                    <div class="alert alert-info">
+                        {{ reserva.notas }}
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Receta Asociada (si existe) -->
+            {% if reserva.receta %}
+            <div class="card info-card mb-4">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0">
+                        <i class="fas fa-prescription-bottle-alt me-2"></i>Receta Médica Asociada
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p><strong>Receta #:</strong> {{ reserva.receta.id }}</p>
+                            <p><strong>Fecha de Emisión:</strong> {{ reserva.receta.fecha_emision|date:"d/m/Y" }}</p>
+                            <p><strong>Mascota:</strong> {{ reserva.receta.mascota.nombre }}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>Veterinario:</strong> {{ reserva.receta.veterinario.user.get_full_name }}</p>
+                            <p><strong>Diagnóstico:</strong> {{ reserva.receta.diagnostico|truncatechars:50 }}</p>
+                            <p><strong>Vencimiento:</strong> {{ reserva.receta.fecha_vencimiento|date:"d/m/Y" }}</p>
+                        </div>
+                    </div>
+                    <div class="text-center mt-3">
+                        <a href="{% url 'detalle_receta' reserva.receta.id %}" class="btn btn-outline-success">
+                            <i class="fas fa-eye me-2"></i>Ver Receta Completa
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Medicamentos Reservados -->
+            <div class="card info-card mb-4">
+                <div class="card-header bg-info text-white">
+                    <h5 class="mb-0">
+                        <i class="fas fa-pills me-2"></i>Medicamentos Reservados
+                    </h5>
+                </div>
+                <div class="card-body">
+                    {% for item in reserva.items.all %}
+                    <div class="medicamento-item">
+                        <div class="row align-items-center">
+                            <div class="col-md-8">
+                                <h6 class="mb-2">
+                                    <i class="fas fa-capsules me-2 text-primary"></i>
+                                    {{ item.medicamento.nombre }}
+                                </h6>
+                                <p class="mb-1"><strong>Concentración:</strong> {{ item.medicamento.concentracion }}</p>
+                                <p class="mb-1"><strong>Laboratorio:</strong> {{ item.medicamento.laboratorio }}</p>
+                                <p class="mb-0"><strong>Presentación:</strong> {{ item.medicamento.get_presentacion_display }}</p>
+                            </div>
+                            <div class="col-md-4 text-end">
+                                <p class="mb-1"><strong>Cantidad:</strong> {{ item.cantidad }}</p>
+                                <p class="mb-1"><strong>Precio Unit.:</strong> ${{ item.precio_unitario|floatformat:0 }}</p>
+                                <p class="mb-0"><strong>Subtotal:</strong> <span class="text-success fw-bold">${{ item.subtotal|floatformat:0 }}</span></p>
+                            </div>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <div class="alert alert-warning">
+                        <i class="fas fa-exclamation-triangle me-2"></i>
+                        No hay medicamentos en esta reserva.
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Panel Lateral -->
+        <div class="col-lg-4">
+            <!-- Resumen -->
+            <div class="card info-card mb-4">
+                <div class="card-header bg-dark text-white">
+                    <h5 class="mb-0">
+                        <i class="fas fa-calculator me-2"></i>Resumen
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Items:</span>
+                        <span>{{ reserva.items.count }}</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Subtotal:</span>
+                        <span>${{ reserva.total|floatformat:0 }}</span>
+                    </div>
+                    <hr>
+                    <div class="d-flex justify-content-between">
+                        <strong>Total:</strong>
+                        <strong class="precio-total">${{ reserva.total|floatformat:0 }}</strong>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Estado y Acciones -->
+            <div class="card info-card mb-4">
+                <div class="card-header bg-warning text-dark">
+                    <h5 class="mb-0">
+                        <i class="fas fa-cogs me-2"></i>Estado y Acciones
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="text-center mb-3">
+                        <span class="estado-badge bg-{% if reserva.estado == 'pendiente' %}warning{% elif reserva.estado == 'confirmada' %}info{% elif reserva.estado == 'lista' %}success{% elif reserva.estado == 'entregada' %}dark{% else %}danger{% endif %}">
+                            {{ reserva.get_estado_display }}
+                        </span>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <small class="text-muted">
+                            <i class="fas fa-clock me-2"></i>
+                            Reserva creada el {{ reserva.fecha_reserva|date:"d/m/Y H:i" }}
+                        </small>
+                    </div>
+                    
+                    {% if reserva.estado == 'lista' %}
+                    <div class="alert alert-success">
+                        <i class="fas fa-check-circle me-2"></i>
+                        <strong>¡Tu reserva está lista!</strong><br>
+                        Puedes recogerla en nuestra farmacia.
+                    </div>
+                    {% elif reserva.estado == 'pendiente' %}
+                    <div class="alert alert-info">
+                        <i class="fas fa-hourglass-half me-2"></i>
+                        Tu reserva está siendo procesada.
+                    </div>
+                    {% elif reserva.estado == 'entregada' %}
+                    <div class="alert alert-dark">
+                        <i class="fas fa-check-double me-2"></i>
+                        Reserva entregada exitosamente.
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Información de Contacto -->
+            <div class="card info-card">
+                <div class="card-header bg-secondary text-white">
+                    <h5 class="mb-0">
+                        <i class="fas fa-phone me-2"></i>Contacto
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <p><strong>Farmacia Mascota Feliz</strong></p>
+                    <p><i class="fas fa-map-marker-alt me-2"></i>Av. Principal 123</p>
+                    <p><i class="fas fa-phone me-2"></i>+56 9 1234 5678</p>
+                    <p><i class="fas fa-envelope me-2"></i>farmacia@mascotafeliz.cl</p>
+                    <hr>
+                    <p><strong>Horarios de Atención:</strong></p>
+                    <p class="mb-1">Lun - Vie: 9:00 - 19:00</p>
+                    <p class="mb-0">Sáb: 9:00 - 14:00</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Botones de Acción -->
+    <div class="row mt-4">
+        <div class="col-12 text-center">
+            <a href="{% url 'mis_reservas' %}" class="btn btn-outline-secondary me-3">
+                <i class="fas fa-arrow-left me-2"></i>Volver a Mis Reservas
+            </a>
+            
+            {% if reserva.receta %}
+            <a href="{% url 'detalle_receta' reserva.receta.id %}" class="btn btn-outline-primary me-3">
+                <i class="fas fa-prescription-bottle-alt me-2"></i>Ver Receta
+            </a>
+            {% endif %}
+            
+            <button class="btn btn-primary" onclick="window.print()">
+                <i class="fas fa-print me-2"></i>Imprimir Reserva
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+// Animaciones y efectos
+document.addEventListener('DOMContentLoaded', function() {
+    // Animación de entrada para las cards
+    const cards = document.querySelectorAll('.info-card');
+    cards.forEach((card, index) => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        setTimeout(() => {
+            card.style.transition = 'all 0.5s ease';
+            card.style.opacity = '1';
+            card.style.transform = 'translateY(0)';
+        }, index * 100);
+    });
+});
+</script>
+{% endblock %} 
