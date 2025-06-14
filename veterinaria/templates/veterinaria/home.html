@@ -210,11 +210,11 @@
         .carousel-caption {
             padding: 1.5rem;
         }
-        
+
         .carousel-caption h3 {
             font-size: 1.8rem;
         }
-        
+
         .carousel-caption p {
             font-size: 1rem;
             margin-bottom: 1.5rem;
@@ -703,11 +703,11 @@
                         <div class="col-md-8">
                             <div class="d-grid gap-3">
                                 <a href="{% url 'cita_create' %}" class="btn btn-light btn-lg btn-hover-effect">
-                                    <i class="fas fa-calendar-plus me-2"></i>Agendar Cita
-                                </a>
+                <i class="fas fa-calendar-plus me-2"></i>Agendar Cita
+            </a>
                                 <a href="{% url 'tienda' %}" class="btn btn-outline-light btn-lg btn-hover-effect">
-                                    <i class="fas fa-shopping-cart me-2"></i>Visitar Tienda
-                                </a>
+                <i class="fas fa-shopping-cart me-2"></i>Visitar Tienda
+            </a>
                             </div>
                         </div>
                     </div>
@@ -804,7 +804,7 @@
                     </div>
                 </div>
             </div>
-
+            
             <!-- Slide 3: Tienda -->
             <div class="carousel-item">
                 <div class="carousel-slide" style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1601758228041-f3b2795255f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80'); height: 600px; background-size: cover; background-position: center; display: flex; align-items: center; justify-content: center;">
@@ -817,7 +817,7 @@
                     </div>
                 </div>
             </div>
-
+            
             <!-- Slide 4: Vacunación -->
             <div class="carousel-item">
                 <div class="carousel-slide" style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://web.evolucionanimal.cl/wp-content/uploads/2024/03/vacunacion-mascotas-evolucion-animal-veterinaria.jpg'); height: 600px; background-size: cover; background-position: center; display: flex; align-items: center; justify-content: center;">
@@ -831,7 +831,7 @@
                 </div>
             </div>
         </div>
-
+        
         <!-- Controles -->
         <button class="carousel-control-prev" type="button" data-bs-target="#servicesCarousel" data-bs-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true" style="width: 3rem; height: 3rem;"></span>
@@ -1021,7 +1021,7 @@
         </div>
         
         {% if productos_destacados %}
-            <div class="row">
+    <div class="row">
                 {% for producto in productos_destacados %}
                 <div class="col-lg-3 col-md-6 mb-4">
                     <div class="card h-100 shadow-sm border-0 product-card">
@@ -1071,13 +1071,13 @@
                                             </button>
                                         </form>
                                     {% endif %}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
-                {% endfor %}
             </div>
+        </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
         {% else %}
             <div class="text-center py-5">
                 <i class="fas fa-shopping-bag fa-4x text-muted mb-4"></i>
@@ -1086,9 +1086,9 @@
                 <a href="{% url 'tienda' %}" class="btn btn-primary btn-lg">
                     <i class="fas fa-store me-2"></i>Explorar Tienda
                 </a>
-            </div>
-        {% endif %}
-        
+    </div>
+{% endif %}
+
         <div class="text-center mt-5">
             <a href="{% url 'tienda' %}" class="btn btn-primary btn-lg btn-hover-effect">
                 <i class="fas fa-store me-2"></i>Ver Todos los Productos
