@@ -318,7 +318,11 @@ def detalle_pedido(request, pedido_id):
 @login_required
 def profile(request):
     """Vista mejorada del perfil de usuario con mascotas y opciones de descarga"""
+    # Obtener mascotas del modelo Mascota
     user_mascotas = Mascota.objects.filter(propietario=request.user)
+    
+    # Obtener mascotas del modelo Pet (para compatibilidad con el template)
+    pets = Pet.objects.filter(owner=request.user)
     
     # Obtener próximas citas del usuario
     from datetime import date
@@ -336,6 +340,7 @@ def profile(request):
     
     context = {
         'user_mascotas': user_mascotas,
+        'pets': pets,  # Agregamos pets para el template
         'proximas_citas': proximas_citas,
         'historial_citas': historial_citas,
         'total_mascotas': user_mascotas.count(),
