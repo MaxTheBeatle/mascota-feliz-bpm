@@ -66,9 +66,12 @@ venv\Scripts\activate
 source venv/bin/activate
 ```
 
-3. **Instalar dependencias:**
+3. **Actualizar pip e instalar dependencias:**
 ```bash
-pip install -r requirements.txt
+python.exe -m pip install --upgrade pip
+pip install Pillow --upgrade
+pip install Django==5.0.1 dj-database-url django-crispy-forms crispy-bootstrap4 whitenoise python-decouple
+pip install reportlab requests beautifulsoup4
 ```
 
 4. **Configurar base de datos con datos de ejemplo:**
@@ -103,18 +106,26 @@ El script de configuración carga automáticamente usuarios de ejemplo:
 
 Si prefieres configurar manualmente:
 
-1. **Hacer migraciones:**
+1. **Instalar dependencias manualmente:**
+```bash
+python.exe -m pip install --upgrade pip
+pip install Pillow --upgrade
+pip install Django==5.0.1 dj-database-url django-crispy-forms crispy-bootstrap4 whitenoise python-decouple
+pip install reportlab requests beautifulsoup4
+```
+
+2. **Hacer migraciones:**
 ```bash
 python manage.py makemigrations
 python manage.py migrate
 ```
 
-2. **Crear superusuario:**
+3. **Crear superusuario:**
 ```bash
 python manage.py createsuperuser
 ```
 
-3. **Cargar datos iniciales (opcional):**
+4. **Cargar datos iniciales (opcional):**
 ```bash
 python manage.py loaddata initial_data.json
 ```
