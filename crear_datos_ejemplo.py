@@ -417,6 +417,35 @@ def crear_citas_ejemplo():
     except User.DoesNotExist:
         print("  ⚠️ Cliente no encontrado, saltando creación de citas")
 
+def sincronizar_mascotas_con_pet():
+    """Sincronizar mascotas del modelo Mascota con el modelo Pet"""
+    from veterinaria.models import Mascota, Pet
+    
+    print("🔄 Sincronizando mascotas con modelo Pet...")
+    
+    mascotas = Mascota.objects.all()
+    
+    for mascota in mascotas:
+        # Verificar si ya existe un Pet con este ID
+        if not Pet.objects.filter(id=str(mascota.id)).exists():
+            # Crear objeto Pet correspondiente
+            Pet.objects.create(
+                id=str(mascota.id),
+                owner=mascota.propietario,
+                name=mascota.nombre,
+                species=mascota.especie,
+                breed=mascota.raza,
+                base_color=mascota.color,
+                condition=mascota.condicion,
+                age_years=int(mascota.edad.split()[0]) if mascota.edad.split()[0].isdigit() else 1,
+                age_months=0,  # Por defecto 0 meses
+                sex=mascota.sexo,
+                service_history=[]
+            )
+            print(f"  ✅ Pet creado para {mascota.nombre} (ID: {mascota.id})")
+        else:
+            print(f"  ⚠️ Pet ya existe para {mascota.nombre} (ID: {mascota.id})")
+
 def main():
     """Función principal"""
     print("🐾 Configurando Sistema Veterinario Mascota Feliz con DATOS REALES...")
@@ -440,6 +469,7 @@ def main():
         crear_servicios_peluqueria_reales()
         crear_mascotas_reales()
         crear_citas_ejemplo()
+        sincronizar_mascotas_con_pet()
         
         print("\n🎉 ¡Configuración completada con DATOS REALES!")
         print("=" * 70)
@@ -464,6 +494,7 @@ def main():
         print("   🐕 Mascotas reales del cliente1")
         print("   📅 Próximas citas programadas")
         print("   🖼️ Productos y servicios con imágenes")
+        print("   📄 Fichas médicas descargables")
         
     except Exception as e:
         print(f"❌ Error durante la configuración: {e}")

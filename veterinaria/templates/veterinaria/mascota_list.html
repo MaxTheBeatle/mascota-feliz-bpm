@@ -50,18 +50,70 @@
                                 </p>
                             </div>
                             <div class="mt-3 d-grid gap-2">
-                                <a href="{% url 'mascota_update' mascota.id %}" class="btn btn-outline-primary btn-hover-effect">
-                                    <i class="fas fa-edit me-2"></i>Editar
+                                <a href="{% url 'pet_detail' mascota.id %}" class="btn btn-primary btn-hover-effect">
+                                    <i class="fas fa-eye me-2"></i>Ver Perfil
                                 </a>
-                                <a href="{% url 'cita_create' %}" class="btn btn-success btn-hover-effect">
-                                    <i class="fas fa-calendar-plus me-2"></i>Agendar Cita
-                                </a>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <a href="{% url 'mascota_update' mascota.id %}" class="btn btn-outline-primary btn-hover-effect w-100">
+                                            <i class="fas fa-edit me-2"></i>Editar
+                                        </a>
+                                    </div>
+                                    <div class="col-6">
+                                        <a href="{% url 'cita_create' %}" class="btn btn-success btn-hover-effect w-100">
+                                            <i class="fas fa-calendar-plus me-2"></i>Cita
+                                        </a>
+                                    </div>
+                                </div>
+                                <button type="button" class="btn btn-danger btn-hover-effect" data-bs-toggle="modal" data-bs-target="#deleteModal{{ mascota.id }}">
+                                    <i class="fas fa-trash me-2"></i>Eliminar
+                                </button>
                             </div>
                         </div>
                     </div>
                 </div>
             {% endfor %}
         </div>
+
+        <!-- Modales de confirmación para eliminar -->
+        {% for mascota in mascotas %}
+        <div class="modal fade" id="deleteModal{{ mascota.id }}" tabindex="-1" aria-labelledby="deleteModalLabel{{ mascota.id }}" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header bg-danger text-white">
+                        <h5 class="modal-title" id="deleteModalLabel{{ mascota.id }}">
+                            <i class="fas fa-exclamation-triangle me-2"></i>Confirmar Eliminación
+                        </h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="text-center mb-3">
+                            <i class="fas fa-{% if mascota.especie == 'Perro' %}dog{% else %}cat{% endif %} fa-3x text-danger mb-3"></i>
+                            <h5>¿Estás seguro de que deseas eliminar a <strong>{{ mascota.nombre }}</strong>?</h5>
+                            <p class="text-muted">Esta acción no se puede deshacer. Se eliminarán todos los datos asociados a esta mascota incluyendo:</p>
+                            <ul class="list-unstyled text-start">
+                                <li><i class="fas fa-check text-danger me-2"></i>Historial médico</li>
+                                <li><i class="fas fa-check text-danger me-2"></i>Citas programadas</li>
+                                <li><i class="fas fa-check text-danger me-2"></i>Recetas médicas</li>
+                                <li><i class="fas fa-check text-danger me-2"></i>Servicios registrados</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                            <i class="fas fa-times me-2"></i>Cancelar
+                        </button>
+                        <form method="post" action="{% url 'mascota_delete' mascota.id %}" style="display: inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger">
+                                <i class="fas fa-trash me-2"></i>Sí, Eliminar
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
     {% else %}
         <div class="text-center py-5">
             <i class="fas fa-paw fa-4x text-muted mb-4"></i>
@@ -116,6 +168,22 @@
 
 .pet-info strong {
     color: #34495e;
+}
+
+.modal-header.bg-danger {
+    border-bottom: none;
+}
+
+.modal-content {
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.modal-body ul {
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 10px;
+    margin-top: 10px;
 }
 </style>
 {% endblock %} 

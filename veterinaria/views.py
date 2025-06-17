@@ -98,8 +98,16 @@ def mascota_update(request, pk):
 def mascota_delete(request, pk):
     mascota = get_object_or_404(Mascota, pk=pk, propietario=request.user)
     if request.method == 'POST':
+        # También eliminar el objeto Pet correspondiente si existe
+        try:
+            pet = Pet.objects.get(id=str(pk))
+            pet.delete()
+        except Pet.DoesNotExist:
+            pass
+        
+        mascota_nombre = mascota.nombre
         mascota.delete()
-        messages.success(request, 'Mascota eliminada exitosamente.')
+        messages.success(request, f'Mascota {mascota_nombre} eliminada exitosamente.')
         return redirect('mascota_list')
     return render(request, 'veterinaria/mascota_confirm_delete.html', {'mascota': mascota})
 
