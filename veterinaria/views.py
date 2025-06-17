@@ -38,19 +38,25 @@ def home(request):
     
     # Obtener productos destacados para mostrar en el home
     productos_destacados = Producto.objects.filter(es_destacado=True)[:4]
+    if not productos_destacados.exists():
+        # Si no hay productos destacados, tomar los primeros 4 productos
+        productos_destacados = Producto.objects.all()[:4]
     context['productos_destacados'] = productos_destacados
     
     # Si el usuario está autenticado, obtener sus próximas citas y mascotas
     if request.user.is_authenticated:
         from datetime import date
-        user_pets = Pet.objects.filter(owner=request.user)
-        # Convertir IDs de Pet (string) a int para buscar en Mascota
-        pet_ids = [int(pet.id) for pet in user_pets if pet.id.isdigit()]
-        user_mascotas = Mascota.objects.filter(id__in=pet_ids)
+        
+        # Obtener mascotas del usuario directamente
+        user_mascotas = Mascota.objects.filter(propietario=request.user)
+        
+        # Obtener próximas citas usando mascota__propietario
         proximas_citas = Cita.objects.filter(
-            mascota__in=user_mascotas,
-            fecha__gte=date.today()
+            mascota__propietario=request.user,
+            fecha__gte=date.today(),
+            estado__in=['programada', 'confirmada']
         ).order_by('fecha', 'hora')[:3]  # Solo las próximas 3 citas
+        
         context['proximas_citas'] = proximas_citas
         context['user_mascotas'] = user_mascotas[:4]  # Solo las primeras 4 mascotas
     
