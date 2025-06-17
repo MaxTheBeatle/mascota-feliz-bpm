@@ -69,7 +69,7 @@ urlpatterns = [
     path('peluqueria/mis-citas/', views.mis_citas_peluqueria, name='mis_citas_peluqueria'),
     path('peluqueria/cita/<int:cita_id>/', views.detalle_cita_peluqueria, name='detalle_cita_peluqueria'),
     path('peluqueria/cita/<int:cita_id>/cancelar/', views.cancelar_cita_peluqueria, name='cancelar_cita_peluqueria'),
-    # path('peluqueria/galeria/', views.galeria_peluqueria, name='galeria_peluqueria'),
+    path('peluqueria/galeria/', views.galeria_peluqueria, name='galeria_peluqueria'),
     
     # URLs para peluqueros
     path('peluquero/registro/', views.peluquero_register, name='peluquero_register'),

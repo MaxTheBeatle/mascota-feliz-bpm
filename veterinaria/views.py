@@ -1599,3 +1599,25 @@ def peluquero_profile(request):
     }
     
     return render(request, 'veterinaria/peluqueria/peluquero_profile.html', context)
+
+@login_required
+def galeria_peluqueria(request):
+    """Galería de trabajos de peluquería - fotos antes/después"""
+    from .models import FotosAntesDepues, CitaPeluqueria
+    
+    # Obtener fotos de trabajos completados
+    fotos = FotosAntesDepues.objects.filter(
+        cita__estado='completada'
+    ).order_by('-fecha_subida')[:20]  # Últimas 20 fotos
+    
+    # Estadísticas para mostrar
+    total_trabajos = CitaPeluqueria.objects.filter(estado='completada').count()
+    total_fotos = FotosAntesDepues.objects.count()
+    
+    context = {
+        'fotos': fotos,
+        'total_trabajos': total_trabajos,
+        'total_fotos': total_fotos,
+    }
+    
+    return render(request, 'veterinaria/peluqueria/galeria.html', context)
