@@ -1,0 +1,3656 @@
+[
+{
+  "model": "admin.logentry",
+  "pk": 1,
+  "fields": {
+    "action_time": "2025-06-14T08:03:39.847Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "1",
+    "object_repr": "Comida para perros",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 2,
+  "fields": {
+    "action_time": "2025-06-14T08:04:24.558Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "2",
+    "object_repr": "Comida para gatos",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 3,
+  "fields": {
+    "action_time": "2025-06-14T08:04:32.128Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "3",
+    "object_repr": "Comida para gatos",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 4,
+  "fields": {
+    "action_time": "2025-06-14T08:05:21.816Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "2",
+    "object_repr": "Comida para gatos",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 5,
+  "fields": {
+    "action_time": "2025-06-14T08:07:47.380Z",
+    "user": 1,
+    "content_type": 13,
+    "object_id": "1",
+    "object_repr": "Nómade Adulto Razas Medianas y Grandes 20 kg - $35990",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 6,
+  "fields": {
+    "action_time": "2025-06-14T08:08:40.855Z",
+    "user": 1,
+    "content_type": 13,
+    "object_id": "1",
+    "object_repr": "Nómade Adulto Razas Medianas y Grandes 20 kg - $35990.00",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Imagen\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 7,
+  "fields": {
+    "action_time": "2025-06-14T08:09:43.738Z",
+    "user": 1,
+    "content_type": 13,
+    "object_id": "1",
+    "object_repr": "Nómade Adulto Razas Medianas y Grandes 20 kg - $35990.00",
+    "action_flag": 2,
+    "change_message": "[]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 8,
+  "fields": {
+    "action_time": "2025-06-14T08:30:36.571Z",
+    "user": 1,
+    "content_type": 13,
+    "object_id": "6",
+    "object_repr": "PURINA® DENTALIFE® snacks de salmón para gatos - $8990.00",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Nombre\", \"Descripcion\", \"Imagen\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 9,
+  "fields": {
+    "action_time": "2025-06-14T08:34:50.073Z",
+    "user": 1,
+    "content_type": 13,
+    "object_id": "2",
+    "object_repr": "Pelota porfiada para gatos - $2490",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Nombre\", \"Descripcion\", \"Precio\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 10,
+  "fields": {
+    "action_time": "2025-06-17T02:59:41.997Z",
+    "user": 1,
+    "content_type": 28,
+    "object_id": "1",
+    "object_repr": "Baño Básico - $15,000",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Imagen\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 11,
+  "fields": {
+    "action_time": "2025-06-17T03:00:36.184Z",
+    "user": 1,
+    "content_type": 28,
+    "object_id": "3",
+    "object_repr": "Baño Medicado - $30,000",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Imagen\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 12,
+  "fields": {
+    "action_time": "2025-06-17T03:16:25.770Z",
+    "user": 1,
+    "content_type": 13,
+    "object_id": "5",
+    "object_repr": "Cama Ortopédica para Perros - $45990.00",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Imagen\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 13,
+  "fields": {
+    "action_time": "2025-06-17T03:16:53.864Z",
+    "user": 1,
+    "content_type": 13,
+    "object_id": "4",
+    "object_repr": "Collar GPS Inteligente - $89990.00",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Imagen\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 14,
+  "fields": {
+    "action_time": "2025-06-17T03:17:30.018Z",
+    "user": 1,
+    "content_type": 13,
+    "object_id": "3",
+    "object_repr": "Shampoo Hipoalergénico Premium - $12500.00",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Imagen\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 15,
+  "fields": {
+    "action_time": "2025-06-17T03:17:58.735Z",
+    "user": 1,
+    "content_type": 13,
+    "object_id": "2",
+    "object_repr": "Pelota porfiada para gatos - $2490.00",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Imagen\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 16,
+  "fields": {
+    "action_time": "2025-06-17T03:18:01.483Z",
+    "user": 1,
+    "content_type": 13,
+    "object_id": "1",
+    "object_repr": "Nómade Adulto Razas Medianas y Grandes 20 kg - $28990.00",
+    "action_flag": 2,
+    "change_message": "[]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 17,
+  "fields": {
+    "action_time": "2025-06-17T03:34:54.251Z",
+    "user": 1,
+    "content_type": 28,
+    "object_id": "3",
+    "object_repr": "Baño Medicado - $30,000",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Imagen\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 18,
+  "fields": {
+    "action_time": "2025-06-17T03:35:29.440Z",
+    "user": 1,
+    "content_type": 28,
+    "object_id": "2",
+    "object_repr": "Baño Premium - $25,000",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Imagen\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 19,
+  "fields": {
+    "action_time": "2025-06-17T03:45:09.799Z",
+    "user": 1,
+    "content_type": 28,
+    "object_id": "6",
+    "object_repr": "Corte Creativo - $40,000",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Imagen\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 20,
+  "fields": {
+    "action_time": "2025-06-17T03:45:23.950Z",
+    "user": 1,
+    "content_type": 28,
+    "object_id": "4",
+    "object_repr": "Corte Higiénico - $12,000",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Imagen\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 21,
+  "fields": {
+    "action_time": "2025-06-17T03:45:32.595Z",
+    "user": 1,
+    "content_type": 28,
+    "object_id": "5",
+    "object_repr": "Corte de Raza - $35,000",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Imagen\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 22,
+  "fields": {
+    "action_time": "2025-06-17T03:46:24.961Z",
+    "user": 1,
+    "content_type": 28,
+    "object_id": "7",
+    "object_repr": "Corte de Uñas Básico - $8,000",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Imagen\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 23,
+  "fields": {
+    "action_time": "2025-06-17T03:46:36.529Z",
+    "user": 1,
+    "content_type": 28,
+    "object_id": "8",
+    "object_repr": "Manicura Completa - $15,000",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Imagen\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 24,
+  "fields": {
+    "action_time": "2025-06-17T03:47:37.069Z",
+    "user": 1,
+    "content_type": 28,
+    "object_id": "10",
+    "object_repr": "Hidratación Profunda - $32,000",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Imagen\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 25,
+  "fields": {
+    "action_time": "2025-06-17T03:47:53.950Z",
+    "user": 1,
+    "content_type": 28,
+    "object_id": "9",
+    "object_repr": "Tratamiento Antipulgas - $28,000",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Imagen\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 26,
+  "fields": {
+    "action_time": "2025-06-17T03:48:07.829Z",
+    "user": 1,
+    "content_type": 28,
+    "object_id": "11",
+    "object_repr": "Paquete Básico - $35,000",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Imagen\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 27,
+  "fields": {
+    "action_time": "2025-06-17T03:48:15.275Z",
+    "user": 1,
+    "content_type": 28,
+    "object_id": "12",
+    "object_repr": "Paquete Premium - $55,000",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Imagen\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 28,
+  "fields": {
+    "action_time": "2025-06-17T03:48:22.895Z",
+    "user": 1,
+    "content_type": 28,
+    "object_id": "13",
+    "object_repr": "Paquete VIP - $75,000",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Imagen\"]}}]"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 1,
+  "fields": {
+    "name": "Can add log entry",
+    "content_type": 1,
+    "codename": "add_logentry"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 2,
+  "fields": {
+    "name": "Can change log entry",
+    "content_type": 1,
+    "codename": "change_logentry"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 3,
+  "fields": {
+    "name": "Can delete log entry",
+    "content_type": 1,
+    "codename": "delete_logentry"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 4,
+  "fields": {
+    "name": "Can view log entry",
+    "content_type": 1,
+    "codename": "view_logentry"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 5,
+  "fields": {
+    "name": "Can add permission",
+    "content_type": 2,
+    "codename": "add_permission"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 6,
+  "fields": {
+    "name": "Can change permission",
+    "content_type": 2,
+    "codename": "change_permission"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 7,
+  "fields": {
+    "name": "Can delete permission",
+    "content_type": 2,
+    "codename": "delete_permission"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 8,
+  "fields": {
+    "name": "Can view permission",
+    "content_type": 2,
+    "codename": "view_permission"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 9,
+  "fields": {
+    "name": "Can add group",
+    "content_type": 3,
+    "codename": "add_group"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 10,
+  "fields": {
+    "name": "Can change group",
+    "content_type": 3,
+    "codename": "change_group"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 11,
+  "fields": {
+    "name": "Can delete group",
+    "content_type": 3,
+    "codename": "delete_group"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 12,
+  "fields": {
+    "name": "Can view group",
+    "content_type": 3,
+    "codename": "view_group"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 13,
+  "fields": {
+    "name": "Can add content type",
+    "content_type": 4,
+    "codename": "add_contenttype"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 14,
+  "fields": {
+    "name": "Can change content type",
+    "content_type": 4,
+    "codename": "change_contenttype"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 15,
+  "fields": {
+    "name": "Can delete content type",
+    "content_type": 4,
+    "codename": "delete_contenttype"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 16,
+  "fields": {
+    "name": "Can view content type",
+    "content_type": 4,
+    "codename": "view_contenttype"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 17,
+  "fields": {
+    "name": "Can add session",
+    "content_type": 5,
+    "codename": "add_session"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 18,
+  "fields": {
+    "name": "Can change session",
+    "content_type": 5,
+    "codename": "change_session"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 19,
+  "fields": {
+    "name": "Can delete session",
+    "content_type": 5,
+    "codename": "delete_session"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 20,
+  "fields": {
+    "name": "Can view session",
+    "content_type": 5,
+    "codename": "view_session"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 21,
+  "fields": {
+    "name": "Can add Item de Carrito",
+    "content_type": 6,
+    "codename": "add_carritoitem"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 22,
+  "fields": {
+    "name": "Can change Item de Carrito",
+    "content_type": 6,
+    "codename": "change_carritoitem"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 23,
+  "fields": {
+    "name": "Can delete Item de Carrito",
+    "content_type": 6,
+    "codename": "delete_carritoitem"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 24,
+  "fields": {
+    "name": "Can view Item de Carrito",
+    "content_type": 6,
+    "codename": "view_carritoitem"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 25,
+  "fields": {
+    "name": "Can add Categoría",
+    "content_type": 7,
+    "codename": "add_categoria"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 26,
+  "fields": {
+    "name": "Can change Categoría",
+    "content_type": 7,
+    "codename": "change_categoria"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 27,
+  "fields": {
+    "name": "Can delete Categoría",
+    "content_type": 7,
+    "codename": "delete_categoria"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 28,
+  "fields": {
+    "name": "Can view Categoría",
+    "content_type": 7,
+    "codename": "view_categoria"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 29,
+  "fields": {
+    "name": "Can add Mascota",
+    "content_type": 8,
+    "codename": "add_mascota"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 30,
+  "fields": {
+    "name": "Can change Mascota",
+    "content_type": 8,
+    "codename": "change_mascota"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 31,
+  "fields": {
+    "name": "Can delete Mascota",
+    "content_type": 8,
+    "codename": "delete_mascota"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 32,
+  "fields": {
+    "name": "Can view Mascota",
+    "content_type": 8,
+    "codename": "view_mascota"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 33,
+  "fields": {
+    "name": "Can add Pedido",
+    "content_type": 9,
+    "codename": "add_pedido"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 34,
+  "fields": {
+    "name": "Can change Pedido",
+    "content_type": 9,
+    "codename": "change_pedido"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 35,
+  "fields": {
+    "name": "Can delete Pedido",
+    "content_type": 9,
+    "codename": "delete_pedido"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 36,
+  "fields": {
+    "name": "Can view Pedido",
+    "content_type": 9,
+    "codename": "view_pedido"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 37,
+  "fields": {
+    "name": "Can add user",
+    "content_type": 10,
+    "codename": "add_user"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 38,
+  "fields": {
+    "name": "Can change user",
+    "content_type": 10,
+    "codename": "change_user"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 39,
+  "fields": {
+    "name": "Can delete user",
+    "content_type": 10,
+    "codename": "delete_user"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 40,
+  "fields": {
+    "name": "Can view user",
+    "content_type": 10,
+    "codename": "view_user"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 41,
+  "fields": {
+    "name": "Can add Cita",
+    "content_type": 11,
+    "codename": "add_cita"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 42,
+  "fields": {
+    "name": "Can change Cita",
+    "content_type": 11,
+    "codename": "change_cita"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 43,
+  "fields": {
+    "name": "Can delete Cita",
+    "content_type": 11,
+    "codename": "delete_cita"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 44,
+  "fields": {
+    "name": "Can view Cita",
+    "content_type": 11,
+    "codename": "view_cita"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 45,
+  "fields": {
+    "name": "Can add pet",
+    "content_type": 12,
+    "codename": "add_pet"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 46,
+  "fields": {
+    "name": "Can change pet",
+    "content_type": 12,
+    "codename": "change_pet"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 47,
+  "fields": {
+    "name": "Can delete pet",
+    "content_type": 12,
+    "codename": "delete_pet"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 48,
+  "fields": {
+    "name": "Can view pet",
+    "content_type": 12,
+    "codename": "view_pet"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 49,
+  "fields": {
+    "name": "Can add Producto",
+    "content_type": 13,
+    "codename": "add_producto"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 50,
+  "fields": {
+    "name": "Can change Producto",
+    "content_type": 13,
+    "codename": "change_producto"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 51,
+  "fields": {
+    "name": "Can delete Producto",
+    "content_type": 13,
+    "codename": "delete_producto"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 52,
+  "fields": {
+    "name": "Can view Producto",
+    "content_type": 13,
+    "codename": "view_producto"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 53,
+  "fields": {
+    "name": "Can add Item de Pedido",
+    "content_type": 14,
+    "codename": "add_pedidoitem"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 54,
+  "fields": {
+    "name": "Can change Item de Pedido",
+    "content_type": 14,
+    "codename": "change_pedidoitem"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 55,
+  "fields": {
+    "name": "Can delete Item de Pedido",
+    "content_type": 14,
+    "codename": "delete_pedidoitem"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 56,
+  "fields": {
+    "name": "Can view Item de Pedido",
+    "content_type": 14,
+    "codename": "view_pedidoitem"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 57,
+  "fields": {
+    "name": "Can add service",
+    "content_type": 15,
+    "codename": "add_service"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 58,
+  "fields": {
+    "name": "Can change service",
+    "content_type": 15,
+    "codename": "change_service"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 59,
+  "fields": {
+    "name": "Can delete service",
+    "content_type": 15,
+    "codename": "delete_service"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 60,
+  "fields": {
+    "name": "Can view service",
+    "content_type": 15,
+    "codename": "view_service"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 61,
+  "fields": {
+    "name": "Can add Servicio",
+    "content_type": 16,
+    "codename": "add_servicio"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 62,
+  "fields": {
+    "name": "Can change Servicio",
+    "content_type": 16,
+    "codename": "change_servicio"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 63,
+  "fields": {
+    "name": "Can delete Servicio",
+    "content_type": 16,
+    "codename": "delete_servicio"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 64,
+  "fields": {
+    "name": "Can view Servicio",
+    "content_type": 16,
+    "codename": "view_servicio"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 65,
+  "fields": {
+    "name": "Can add Veterinario",
+    "content_type": 17,
+    "codename": "add_veterinario"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 66,
+  "fields": {
+    "name": "Can change Veterinario",
+    "content_type": 17,
+    "codename": "change_veterinario"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 67,
+  "fields": {
+    "name": "Can delete Veterinario",
+    "content_type": 17,
+    "codename": "delete_veterinario"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 68,
+  "fields": {
+    "name": "Can view Veterinario",
+    "content_type": 17,
+    "codename": "view_veterinario"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 69,
+  "fields": {
+    "name": "Can add Receta Médica",
+    "content_type": 18,
+    "codename": "add_recetamedica"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 70,
+  "fields": {
+    "name": "Can change Receta Médica",
+    "content_type": 18,
+    "codename": "change_recetamedica"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 71,
+  "fields": {
+    "name": "Can delete Receta Médica",
+    "content_type": 18,
+    "codename": "delete_recetamedica"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 72,
+  "fields": {
+    "name": "Can view Receta Médica",
+    "content_type": 18,
+    "codename": "view_recetamedica"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 73,
+  "fields": {
+    "name": "Can add Item de Reserva",
+    "content_type": 19,
+    "codename": "add_itemreserva"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 74,
+  "fields": {
+    "name": "Can change Item de Reserva",
+    "content_type": 19,
+    "codename": "change_itemreserva"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 75,
+  "fields": {
+    "name": "Can delete Item de Reserva",
+    "content_type": 19,
+    "codename": "delete_itemreserva"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 76,
+  "fields": {
+    "name": "Can view Item de Reserva",
+    "content_type": 19,
+    "codename": "view_itemreserva"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 77,
+  "fields": {
+    "name": "Can add Item de Receta",
+    "content_type": 20,
+    "codename": "add_itemreceta"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 78,
+  "fields": {
+    "name": "Can change Item de Receta",
+    "content_type": 20,
+    "codename": "change_itemreceta"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 79,
+  "fields": {
+    "name": "Can delete Item de Receta",
+    "content_type": 20,
+    "codename": "delete_itemreceta"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 80,
+  "fields": {
+    "name": "Can view Item de Receta",
+    "content_type": 20,
+    "codename": "view_itemreceta"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 81,
+  "fields": {
+    "name": "Can add Medicamento",
+    "content_type": 21,
+    "codename": "add_medicamento"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 82,
+  "fields": {
+    "name": "Can change Medicamento",
+    "content_type": 21,
+    "codename": "change_medicamento"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 83,
+  "fields": {
+    "name": "Can delete Medicamento",
+    "content_type": 21,
+    "codename": "delete_medicamento"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 84,
+  "fields": {
+    "name": "Can view Medicamento",
+    "content_type": 21,
+    "codename": "view_medicamento"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 85,
+  "fields": {
+    "name": "Can add Categoría de Farmacia",
+    "content_type": 22,
+    "codename": "add_categoriafarmacia"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 86,
+  "fields": {
+    "name": "Can change Categoría de Farmacia",
+    "content_type": 22,
+    "codename": "change_categoriafarmacia"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 87,
+  "fields": {
+    "name": "Can delete Categoría de Farmacia",
+    "content_type": 22,
+    "codename": "delete_categoriafarmacia"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 88,
+  "fields": {
+    "name": "Can view Categoría de Farmacia",
+    "content_type": 22,
+    "codename": "view_categoriafarmacia"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 89,
+  "fields": {
+    "name": "Can add Reserva de Medicamento",
+    "content_type": 23,
+    "codename": "add_reservamedicamento"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 90,
+  "fields": {
+    "name": "Can change Reserva de Medicamento",
+    "content_type": 23,
+    "codename": "change_reservamedicamento"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 91,
+  "fields": {
+    "name": "Can delete Reserva de Medicamento",
+    "content_type": 23,
+    "codename": "delete_reservamedicamento"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 92,
+  "fields": {
+    "name": "Can view Reserva de Medicamento",
+    "content_type": 23,
+    "codename": "view_reservamedicamento"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 93,
+  "fields": {
+    "name": "Can add Servicio de Cita de Peluquería",
+    "content_type": 24,
+    "codename": "add_serviciocitapeluqueria"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 94,
+  "fields": {
+    "name": "Can change Servicio de Cita de Peluquería",
+    "content_type": 24,
+    "codename": "change_serviciocitapeluqueria"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 95,
+  "fields": {
+    "name": "Can delete Servicio de Cita de Peluquería",
+    "content_type": 24,
+    "codename": "delete_serviciocitapeluqueria"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 96,
+  "fields": {
+    "name": "Can view Servicio de Cita de Peluquería",
+    "content_type": 24,
+    "codename": "view_serviciocitapeluqueria"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 97,
+  "fields": {
+    "name": "Can add Fotos Antes/Después",
+    "content_type": 25,
+    "codename": "add_fotosantesdepues"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 98,
+  "fields": {
+    "name": "Can change Fotos Antes/Después",
+    "content_type": 25,
+    "codename": "change_fotosantesdepues"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 99,
+  "fields": {
+    "name": "Can delete Fotos Antes/Después",
+    "content_type": 25,
+    "codename": "delete_fotosantesdepues"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 100,
+  "fields": {
+    "name": "Can view Fotos Antes/Después",
+    "content_type": 25,
+    "codename": "view_fotosantesdepues"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 101,
+  "fields": {
+    "name": "Can add Categoría de Servicio de Peluquería",
+    "content_type": 26,
+    "codename": "add_categoriaserviciopeluqueria"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 102,
+  "fields": {
+    "name": "Can change Categoría de Servicio de Peluquería",
+    "content_type": 26,
+    "codename": "change_categoriaserviciopeluqueria"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 103,
+  "fields": {
+    "name": "Can delete Categoría de Servicio de Peluquería",
+    "content_type": 26,
+    "codename": "delete_categoriaserviciopeluqueria"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 104,
+  "fields": {
+    "name": "Can view Categoría de Servicio de Peluquería",
+    "content_type": 26,
+    "codename": "view_categoriaserviciopeluqueria"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 105,
+  "fields": {
+    "name": "Can add Cita de Peluquería",
+    "content_type": 27,
+    "codename": "add_citapeluqueria"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 106,
+  "fields": {
+    "name": "Can change Cita de Peluquería",
+    "content_type": 27,
+    "codename": "change_citapeluqueria"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 107,
+  "fields": {
+    "name": "Can delete Cita de Peluquería",
+    "content_type": 27,
+    "codename": "delete_citapeluqueria"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 108,
+  "fields": {
+    "name": "Can view Cita de Peluquería",
+    "content_type": 27,
+    "codename": "view_citapeluqueria"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 109,
+  "fields": {
+    "name": "Can add Servicio de Peluquería",
+    "content_type": 28,
+    "codename": "add_serviciopeluqueria"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 110,
+  "fields": {
+    "name": "Can change Servicio de Peluquería",
+    "content_type": 28,
+    "codename": "change_serviciopeluqueria"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 111,
+  "fields": {
+    "name": "Can delete Servicio de Peluquería",
+    "content_type": 28,
+    "codename": "delete_serviciopeluqueria"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 112,
+  "fields": {
+    "name": "Can view Servicio de Peluquería",
+    "content_type": 28,
+    "codename": "view_serviciopeluqueria"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 113,
+  "fields": {
+    "name": "Can add Peluquero",
+    "content_type": 29,
+    "codename": "add_peluquero"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 114,
+  "fields": {
+    "name": "Can change Peluquero",
+    "content_type": 29,
+    "codename": "change_peluquero"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 115,
+  "fields": {
+    "name": "Can delete Peluquero",
+    "content_type": 29,
+    "codename": "delete_peluquero"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 116,
+  "fields": {
+    "name": "Can view Peluquero",
+    "content_type": 29,
+    "codename": "view_peluquero"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 117,
+  "fields": {
+    "name": "Can add Farmacéutico",
+    "content_type": 30,
+    "codename": "add_farmaceutico"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 118,
+  "fields": {
+    "name": "Can change Farmacéutico",
+    "content_type": 30,
+    "codename": "change_farmaceutico"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 119,
+  "fields": {
+    "name": "Can delete Farmacéutico",
+    "content_type": 30,
+    "codename": "delete_farmaceutico"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 120,
+  "fields": {
+    "name": "Can view Farmacéutico",
+    "content_type": 30,
+    "codename": "view_farmaceutico"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 1,
+  "fields": {
+    "app_label": "admin",
+    "model": "logentry"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 2,
+  "fields": {
+    "app_label": "auth",
+    "model": "permission"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 3,
+  "fields": {
+    "app_label": "auth",
+    "model": "group"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 4,
+  "fields": {
+    "app_label": "contenttypes",
+    "model": "contenttype"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 5,
+  "fields": {
+    "app_label": "sessions",
+    "model": "session"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 6,
+  "fields": {
+    "app_label": "veterinaria",
+    "model": "carritoitem"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 7,
+  "fields": {
+    "app_label": "veterinaria",
+    "model": "categoria"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 8,
+  "fields": {
+    "app_label": "veterinaria",
+    "model": "mascota"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 9,
+  "fields": {
+    "app_label": "veterinaria",
+    "model": "pedido"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 10,
+  "fields": {
+    "app_label": "veterinaria",
+    "model": "user"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 11,
+  "fields": {
+    "app_label": "veterinaria",
+    "model": "cita"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 12,
+  "fields": {
+    "app_label": "veterinaria",
+    "model": "pet"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 13,
+  "fields": {
+    "app_label": "veterinaria",
+    "model": "producto"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 14,
+  "fields": {
+    "app_label": "veterinaria",
+    "model": "pedidoitem"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 15,
+  "fields": {
+    "app_label": "veterinaria",
+    "model": "service"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 16,
+  "fields": {
+    "app_label": "veterinaria",
+    "model": "servicio"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 17,
+  "fields": {
+    "app_label": "veterinaria",
+    "model": "veterinario"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 18,
+  "fields": {
+    "app_label": "veterinaria",
+    "model": "recetamedica"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 19,
+  "fields": {
+    "app_label": "veterinaria",
+    "model": "itemreserva"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 20,
+  "fields": {
+    "app_label": "veterinaria",
+    "model": "itemreceta"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 21,
+  "fields": {
+    "app_label": "veterinaria",
+    "model": "medicamento"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 22,
+  "fields": {
+    "app_label": "veterinaria",
+    "model": "categoriafarmacia"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 23,
+  "fields": {
+    "app_label": "veterinaria",
+    "model": "reservamedicamento"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 24,
+  "fields": {
+    "app_label": "veterinaria",
+    "model": "serviciocitapeluqueria"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 25,
+  "fields": {
+    "app_label": "veterinaria",
+    "model": "fotosantesdepues"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 26,
+  "fields": {
+    "app_label": "veterinaria",
+    "model": "categoriaserviciopeluqueria"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 27,
+  "fields": {
+    "app_label": "veterinaria",
+    "model": "citapeluqueria"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 28,
+  "fields": {
+    "app_label": "veterinaria",
+    "model": "serviciopeluqueria"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 29,
+  "fields": {
+    "app_label": "veterinaria",
+    "model": "peluquero"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 30,
+  "fields": {
+    "app_label": "veterinaria",
+    "model": "farmaceutico"
+  }
+},
+{
+  "model": "veterinaria.user",
+  "pk": 1,
+  "fields": {
+    "password": "pbkdf2_sha256$720000$nhJRxGI5YlrRk63UUhlRma$5iGMCb4xRyhKk9e3OcVjLS5y27Hd4fzwOMGNDOUBhZg=",
+    "last_login": "2025-06-17T03:43:01.071Z",
+    "is_superuser": true,
+    "username": "admin",
+    "first_name": "",
+    "last_name": "",
+    "email": "admin@mascotafeliz.com",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2025-06-12T21:29:57.043Z",
+    "is_admin": true,
+    "region": "Región Metropolitana",
+    "phone": "",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "veterinaria.user",
+  "pk": 2,
+  "fields": {
+    "password": "pbkdf2_sha256$720000$wpYqhQ7lf9eQs8ysin0qAZ$mmTHqyZF5/i+LYOrfUO96eJ8ApVPFkoXdef1VLUJQwM=",
+    "last_login": "2025-06-17T03:37:34.208Z",
+    "is_superuser": false,
+    "username": "cliente1",
+    "first_name": "",
+    "last_name": "",
+    "email": "cliente1@example.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-06-12T21:29:57.507Z",
+    "is_admin": false,
+    "region": "Región de Los Lagos",
+    "phone": "+56912345678",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "veterinaria.user",
+  "pk": 3,
+  "fields": {
+    "password": "pbkdf2_sha256$720000$HVNqFChSaOBF2iaAenHqs9$ZdwolJfo32GcOSTZKUksDb+GnyMIM9uf/hPHMsqSA60=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "dr_martinez",
+    "first_name": "Carlos",
+    "last_name": "Martínez",
+    "email": "carlos.martinez@mascotafeliz.cl",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-06-14T08:56:36.265Z",
+    "is_admin": false,
+    "region": "",
+    "phone": "",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "veterinaria.user",
+  "pk": 4,
+  "fields": {
+    "password": "pbkdf2_sha256$720000$6MQfRL4LIkT3XgkCwR27gw$BkM8x4XUPrTMrn7PEBjW/dHg+3F7poA9wh7bZSlDj0M=",
+    "last_login": "2025-06-14T09:30:12.092Z",
+    "is_superuser": false,
+    "username": "dra_rodriguez",
+    "first_name": "María",
+    "last_name": "Rodríguez",
+    "email": "maria.rodriguez@mascotafeliz.cl",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-06-14T08:58:58.684Z",
+    "is_admin": false,
+    "region": "",
+    "phone": "",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "veterinaria.user",
+  "pk": 5,
+  "fields": {
+    "password": "pbkdf2_sha256$720000$kNc9FxRjyc935ziePOlr2c$1HXItxCixr2mxZjVIYh4aITjyUcs28/RQFGU23HDlhA=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "dr_gonzalez",
+    "first_name": "Pedro",
+    "last_name": "González",
+    "email": "pedro.gonzalez@mascotafeliz.cl",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-06-14T08:58:59.141Z",
+    "is_admin": false,
+    "region": "",
+    "phone": "",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "veterinaria.user",
+  "pk": 6,
+  "fields": {
+    "password": "pbkdf2_sha256$720000$EofnrQXpVGwYiEBHJACcjl$iLXZYbJI2zmBh8gbSZZIFvE/uwgFTBmFOQOAbfTMrbw=",
+    "last_login": "2025-06-17T01:53:44.886Z",
+    "is_superuser": false,
+    "username": "dra_lopez",
+    "first_name": "Ana",
+    "last_name": "López",
+    "email": "ana.lopez@mascotafeliz.cl",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-06-14T08:58:59.573Z",
+    "is_admin": false,
+    "region": "",
+    "phone": "",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "veterinaria.user",
+  "pk": 7,
+  "fields": {
+    "password": "pbkdf2_sha256$720000$nzLkWdQIb9T2OxozTgUqDi$TM5yHKaWRiBejTN4tFEveQU9z2OMACNXNrcOtJkEymU=",
+    "last_login": "2025-06-16T03:20:07.173Z",
+    "is_superuser": false,
+    "username": "dr_silva",
+    "first_name": "Roberto",
+    "last_name": "Silva",
+    "email": "roberto.silva@mascotafeliz.cl",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-06-14T08:59:00.032Z",
+    "is_admin": false,
+    "region": "",
+    "phone": "",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "veterinaria.user",
+  "pk": 8,
+  "fields": {
+    "password": "pbkdf2_sha256$720000$xBLQhMhgrZXqXGSiCEzRcm$90r8NbYqgumbvHPt4eTFJImYUzT6tTWmXj3NERwwk4Q=",
+    "last_login": "2025-06-17T03:36:03.250Z",
+    "is_superuser": false,
+    "username": "peluquero1",
+    "first_name": "María",
+    "last_name": "González",
+    "email": "maria.gonzalez@mascotafeliz.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-06-16T21:34:54.244Z",
+    "is_admin": false,
+    "region": "",
+    "phone": "",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "veterinaria.user",
+  "pk": 9,
+  "fields": {
+    "password": "pbkdf2_sha256$720000$d0BRJI5UxC60dANossW22C$d2UZEi4bggwsy1ww9dab1h83QA8qp1/R9FhkBZPA5jY=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "peluquero2",
+    "first_name": "Carlos",
+    "last_name": "Rodríguez",
+    "email": "carlos.rodriguez@mascotafeliz.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-06-16T21:34:54.842Z",
+    "is_admin": false,
+    "region": "",
+    "phone": "",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "veterinaria.user",
+  "pk": 10,
+  "fields": {
+    "password": "pbkdf2_sha256$720000$E6YHR95LMcOdaWKuXCxomG$dtbgz8zfmokxRNmegKqc/In1Hc8xcWi22nXXZUMyDpM=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "peluquero3",
+    "first_name": "Ana",
+    "last_name": "Martínez",
+    "email": "ana.martinez@mascotafeliz.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-06-16T21:34:55.425Z",
+    "is_admin": false,
+    "region": "",
+    "phone": "",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "veterinaria.user",
+  "pk": 11,
+  "fields": {
+    "password": "pbkdf2_sha256$720000$aSfK4iHaBVuKPwO1TBzdnq$FlbaPW3dedUYt68zKWnALkPf+Jzsfvi1H5paJBYyOxg=",
+    "last_login": "2025-06-17T02:18:04.914Z",
+    "is_superuser": false,
+    "username": "farmaceutico1",
+    "first_name": "María",
+    "last_name": "González",
+    "email": "farmaceutico@mascotafeliz.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-06-17T02:06:54.915Z",
+    "is_admin": false,
+    "region": "Santiago",
+    "phone": "+56987654321",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "veterinaria.veterinario",
+  "pk": 1,
+  "fields": {
+    "user": 4,
+    "especialidad": "Cirugía Veterinaria",
+    "telefono": "+56 9 7654 3210"
+  }
+},
+{
+  "model": "veterinaria.veterinario",
+  "pk": 2,
+  "fields": {
+    "user": 5,
+    "especialidad": "Dermatología Veterinaria",
+    "telefono": "+56 9 6543 2109"
+  }
+},
+{
+  "model": "veterinaria.veterinario",
+  "pk": 3,
+  "fields": {
+    "user": 6,
+    "especialidad": "Cardiología Veterinaria",
+    "telefono": "+56 9 5432 1098"
+  }
+},
+{
+  "model": "veterinaria.veterinario",
+  "pk": 4,
+  "fields": {
+    "user": 7,
+    "especialidad": "Medicina Felina",
+    "telefono": "+56 9 4321 0987"
+  }
+},
+{
+  "model": "veterinaria.farmaceutico",
+  "pk": 1,
+  "fields": {
+    "user": 11,
+    "telefono": "+56987654321",
+    "numero_registro": "FARM-2024-001",
+    "especialidad": "Farmacia Clínica",
+    "experiencia_años": 5,
+    "certificaciones": "Certificación en Farmacia Veterinaria, Curso de Medicamentos Controlados",
+    "horario_inicio": "08:00:00",
+    "horario_fin": "20:00:00",
+    "activo": true,
+    "created_at": "2025-06-17T02:06:55.392Z",
+    "updated_at": "2025-06-17T02:06:55.392Z"
+  }
+},
+{
+  "model": "veterinaria.mascota",
+  "pk": 47120,
+  "fields": {
+    "propietario": 1,
+    "nombre": "Vivian",
+    "raza": "Himalaya",
+    "color": "Gris",
+    "especie": "Gato",
+    "condicion": "Normal",
+    "edad": "5 años",
+    "sexo": "Hembra"
+  }
+},
+{
+  "model": "veterinaria.mascota",
+  "pk": 47146,
+  "fields": {
+    "propietario": 2,
+    "nombre": "Dinah",
+    "raza": "Labrador Retriever/Affenpinscher",
+    "color": "Negro",
+    "especie": "Perro",
+    "condicion": "Normal",
+    "edad": "3 años",
+    "sexo": "Hembra"
+  }
+},
+{
+  "model": "veterinaria.mascota",
+  "pk": 47147,
+  "fields": {
+    "propietario": 1,
+    "nombre": "Pucca",
+    "raza": "Yorkie Poo",
+    "color": "Gris",
+    "especie": "Perro",
+    "condicion": "Normal",
+    "edad": "4 años",
+    "sexo": "Hembra"
+  }
+},
+{
+  "model": "veterinaria.mascota",
+  "pk": 47148,
+  "fields": {
+    "propietario": 2,
+    "nombre": "Polo",
+    "raza": "Quiltro",
+    "color": "Blanco",
+    "especie": "Perro",
+    "condicion": "Vejez",
+    "edad": "12 años",
+    "sexo": "Macho"
+  }
+},
+{
+  "model": "veterinaria.mascota",
+  "pk": 47149,
+  "fields": {
+    "propietario": 3,
+    "nombre": "Max",
+    "raza": "Golden Retriever",
+    "color": "Dorado",
+    "especie": "Perro",
+    "condicion": "Normal",
+    "edad": "3 años",
+    "sexo": "Macho"
+  }
+},
+{
+  "model": "veterinaria.mascota",
+  "pk": 47150,
+  "fields": {
+    "propietario": 4,
+    "nombre": "Luna",
+    "raza": "Persa",
+    "color": "Blanco",
+    "especie": "Gato",
+    "condicion": "Normal",
+    "edad": "2 años",
+    "sexo": "Hembra"
+  }
+},
+{
+  "model": "veterinaria.mascota",
+  "pk": 47151,
+  "fields": {
+    "propietario": 5,
+    "nombre": "Rocky",
+    "raza": "Bulldog",
+    "color": "Marrón",
+    "especie": "Perro",
+    "condicion": "Normal",
+    "edad": "4 años",
+    "sexo": "Macho"
+  }
+},
+{
+  "model": "veterinaria.mascota",
+  "pk": 47152,
+  "fields": {
+    "propietario": 6,
+    "nombre": "Mimi",
+    "raza": "Siamés",
+    "color": "Crema",
+    "especie": "Gato",
+    "condicion": "Normal",
+    "edad": "1 año",
+    "sexo": "Hembra"
+  }
+},
+{
+  "model": "veterinaria.mascota",
+  "pk": 47153,
+  "fields": {
+    "propietario": 7,
+    "nombre": "Toby",
+    "raza": "Beagle",
+    "color": "Tricolor",
+    "especie": "Perro",
+    "condicion": "Normal",
+    "edad": "5 años",
+    "sexo": "Macho"
+  }
+},
+{
+  "model": "veterinaria.mascota",
+  "pk": 47154,
+  "fields": {
+    "propietario": 2,
+    "nombre": "Max",
+    "raza": "Mestizo",
+    "color": "Negro",
+    "especie": "Perro",
+    "condicion": "Normal",
+    "edad": "5 años",
+    "sexo": "Macho"
+  }
+},
+{
+  "model": "veterinaria.cita",
+  "pk": 1,
+  "fields": {
+    "mascota": 47120,
+    "fecha": "2025-06-26",
+    "hora": "08:00:00",
+    "motivo": "a",
+    "estado": "completada",
+    "veterinario": 4,
+    "duracion_minutos": 60,
+    "notas_veterinario": "hola",
+    "created_at": "2025-06-14T08:01:57.803Z",
+    "updated_at": "2025-06-14T09:02:16.509Z"
+  }
+},
+{
+  "model": "veterinaria.cita",
+  "pk": 2,
+  "fields": {
+    "mascota": 47146,
+    "fecha": "2025-06-17",
+    "hora": "08:00:00",
+    "motivo": "hola",
+    "estado": "cancelada",
+    "veterinario": 1,
+    "duracion_minutos": 60,
+    "notas_veterinario": "hola",
+    "created_at": "2025-06-14T09:03:33.290Z",
+    "updated_at": "2025-06-17T01:47:41.643Z"
+  }
+},
+{
+  "model": "veterinaria.cita",
+  "pk": 3,
+  "fields": {
+    "mascota": 47120,
+    "fecha": "2025-06-14",
+    "hora": "16:00:00",
+    "motivo": "hola",
+    "estado": "completada",
+    "veterinario": 1,
+    "duracion_minutos": 60,
+    "notas_veterinario": "esta bien",
+    "created_at": "2025-06-14T09:30:00.577Z",
+    "updated_at": "2025-06-14T09:32:46.702Z"
+  }
+},
+{
+  "model": "veterinaria.cita",
+  "pk": 4,
+  "fields": {
+    "mascota": 47146,
+    "fecha": "2025-06-14",
+    "hora": "05:41:26.291",
+    "motivo": "Consulta general de prueba",
+    "estado": "completada",
+    "veterinario": null,
+    "duracion_minutos": 60,
+    "notas_veterinario": "",
+    "created_at": "2025-06-14T09:41:26.293Z",
+    "updated_at": "2025-06-14T09:41:26.293Z"
+  }
+},
+{
+  "model": "veterinaria.cita",
+  "pk": 5,
+  "fields": {
+    "mascota": 47146,
+    "fecha": "2025-06-14",
+    "hora": "05:41:44.066",
+    "motivo": "Consulta general de prueba",
+    "estado": "completada",
+    "veterinario": null,
+    "duracion_minutos": 60,
+    "notas_veterinario": "",
+    "created_at": "2025-06-14T09:41:44.068Z",
+    "updated_at": "2025-06-14T09:41:44.068Z"
+  }
+},
+{
+  "model": "veterinaria.cita",
+  "pk": 6,
+  "fields": {
+    "mascota": 47146,
+    "fecha": "2025-06-14",
+    "hora": "05:42:18.619",
+    "motivo": "Consulta general de prueba",
+    "estado": "completada",
+    "veterinario": null,
+    "duracion_minutos": 60,
+    "notas_veterinario": "",
+    "created_at": "2025-06-14T09:42:18.622Z",
+    "updated_at": "2025-06-14T09:42:18.622Z"
+  }
+},
+{
+  "model": "veterinaria.cita",
+  "pk": 7,
+  "fields": {
+    "mascota": 47146,
+    "fecha": "2025-06-14",
+    "hora": "05:42:57.048",
+    "motivo": "Consulta general de prueba",
+    "estado": "completada",
+    "veterinario": null,
+    "duracion_minutos": 60,
+    "notas_veterinario": "",
+    "created_at": "2025-06-14T09:42:57.051Z",
+    "updated_at": "2025-06-14T09:42:57.051Z"
+  }
+},
+{
+  "model": "veterinaria.cita",
+  "pk": 8,
+  "fields": {
+    "mascota": 47120,
+    "fecha": "2025-06-24",
+    "hora": "08:00:00",
+    "motivo": "ola",
+    "estado": "completada",
+    "veterinario": 4,
+    "duracion_minutos": 60,
+    "notas_veterinario": "",
+    "created_at": "2025-06-14T21:08:46.649Z",
+    "updated_at": "2025-06-14T21:10:43.737Z"
+  }
+},
+{
+  "model": "veterinaria.cita",
+  "pk": 9,
+  "fields": {
+    "mascota": 47120,
+    "fecha": "2025-06-23",
+    "hora": "15:30:00",
+    "motivo": "Vomitos",
+    "estado": "completada",
+    "veterinario": 4,
+    "duracion_minutos": 60,
+    "notas_veterinario": "",
+    "created_at": "2025-06-16T03:19:23.101Z",
+    "updated_at": "2025-06-16T03:24:01.952Z"
+  }
+},
+{
+  "model": "veterinaria.cita",
+  "pk": 10,
+  "fields": {
+    "mascota": 47148,
+    "fecha": "2025-06-16",
+    "hora": "09:00:00",
+    "motivo": "hola",
+    "estado": "completada",
+    "veterinario": 3,
+    "duracion_minutos": 60,
+    "notas_veterinario": "",
+    "created_at": "2025-06-17T01:53:07.452Z",
+    "updated_at": "2025-06-17T01:57:48.983Z"
+  }
+},
+{
+  "model": "veterinaria.categoria",
+  "pk": 1,
+  "fields": {
+    "nombre": "Comida para perros",
+    "descripcion": ""
+  }
+},
+{
+  "model": "veterinaria.categoria",
+  "pk": 3,
+  "fields": {
+    "nombre": "Comida para gatos",
+    "descripcion": ""
+  }
+},
+{
+  "model": "veterinaria.categoria",
+  "pk": 4,
+  "fields": {
+    "nombre": "Alimentos",
+    "descripcion": "Alimentos para mascotas"
+  }
+},
+{
+  "model": "veterinaria.categoria",
+  "pk": 5,
+  "fields": {
+    "nombre": "Juguetes",
+    "descripcion": "Juguetes para mascotas"
+  }
+},
+{
+  "model": "veterinaria.categoria",
+  "pk": 6,
+  "fields": {
+    "nombre": "Cuidado",
+    "descripcion": "Productos de cuidado e higiene"
+  }
+},
+{
+  "model": "veterinaria.categoria",
+  "pk": 7,
+  "fields": {
+    "nombre": "Accesorios",
+    "descripcion": "Accesorios para mascotas"
+  }
+},
+{
+  "model": "veterinaria.producto",
+  "pk": 1,
+  "fields": {
+    "nombre": "Nómade Adulto Razas Medianas y Grandes 20 kg",
+    "categoria": 1,
+    "descripcion": "Nómade Adulto, un alimento ofrece una alimentación única para perros adultos de razas grandes, proporcionando nutrientes necesarios para su salud y bienestar.\r\n\r\nComposición:\r\n\r\nHarina de ave y/o vacuno\r\nMaíz\r\nArroz\r\nSubproductos de trigo\r\nAceite de ave y/o cerdo\r\nBeneficios de Nómade Adulto:\r\n\r\nEnriquecido con ácidos grasos Omega 3 y 6 para promover un pelaje más sano y un mejor desarrollo y funcionamiento del sistema nervioso.\r\nMejora el sistema inmunológico y la absorción de nutrientes gracias a la incorporación de MOS (Manano Oligosacáridos) y XPC® (cultivo de levaduras).\r\nContiene maqui, una fruta rica en antioxidantes que ayuda a reducir la formación de tejido graso y tiene propiedades antiinflamatorias.\r\nProteínas de alta calidad y adecuado balance de aminoácidos, ayudan a desarrollar y mantener músculos fuertes y saludables, gracias a que promueve un metabolismo general óptimo.\r\nEl uso regular de HMF reduce significativamente el sarro dental, lográndose dientes más blancos y encías más sanas.\r\nReducción de los olores molestos de las heces de los perros (amonio, ácido sulfhídrico y mercaptanos).\r\nInformación nutricional:\r\n\r\nHumedad Máximo: 12%\r\nProteína Mínimo: 25%\r\nGrasa Cruda Mínimo: 10%\r\nFibra Cruda Máximo: 4%\r\nIngredientes\r\nHarina de ave y/o vacuno; Maíz; Arroz; Subproductos de trigo; Aceite de ave y/o cerdo; Harina de soya; Hidrolizado de hígado de ave/vacuno; Carbonato de calcio; Colorante caramelo natural; Sal; Cultivo de levaduras XPC (Diamond V Mills); Aceite de salmón (como fuente de Omega 3, EPA y DHA); Maqui orgánico deshidratado; Hexametafosfato de sodio (HMF); Extracto Yucca-Quillay; Zinc orgánico; Manano Oligosacáridos (MOS); Antioxidantes (BHT, BHA, TBHQ y ácido citríco) y esencia de carne. Vitaminas: A, B1, B2, B6, D3, Niacina, Cloruro de Colina, Pantotenato de calcio y Ácido fólico. Minerales: Calcio, Fósforo, Hierro, Zinc, Cobre, Manganeso, Sodio y Selenio.",
+    "precio": "28990.00",
+    "stock": 50,
+    "imagen": "productos/Nuevo-NOMADE_Adulto-1.png",
+    "es_destacado": true,
+    "created_at": "2025-06-14T08:07:47.380Z",
+    "updated_at": "2025-06-17T03:18:01.481Z"
+  }
+},
+{
+  "model": "veterinaria.producto",
+  "pk": 2,
+  "fields": {
+    "nombre": "Pelota porfiada para gatos",
+    "categoria": 5,
+    "descripcion": "Pajaro con pompón y plumas para atrear y jugar con tu gato a que lo atrape.",
+    "precio": "2490.00",
+    "stock": 15,
+    "imagen": "productos/Pelota_porfiada_con_ratón_y_plumas_de_colores.png",
+    "es_destacado": true,
+    "created_at": "2025-06-14T08:16:59.922Z",
+    "updated_at": "2025-06-17T03:17:58.731Z"
+  }
+},
+{
+  "model": "veterinaria.producto",
+  "pk": 3,
+  "fields": {
+    "nombre": "Shampoo Hipoalergénico Premium",
+    "categoria": 6,
+    "descripcion": "Shampoo especial para mascotas con piel sensible. Fórmula suave sin químicos agresivos, con aloe vera.",
+    "precio": "12500.00",
+    "stock": 29,
+    "imagen": "productos/images_4.jpeg",
+    "es_destacado": true,
+    "created_at": "2025-06-14T08:16:59.930Z",
+    "updated_at": "2025-06-17T03:20:37.887Z"
+  }
+},
+{
+  "model": "veterinaria.producto",
+  "pk": 4,
+  "fields": {
+    "nombre": "Collar GPS Inteligente",
+    "categoria": 7,
+    "descripcion": "Collar con GPS y monitor de actividad. Rastrea la ubicación y salud de tu mascota en tiempo real.",
+    "precio": "89990.00",
+    "stock": 8,
+    "imagen": "productos/images_3.jpeg",
+    "es_destacado": true,
+    "created_at": "2025-06-14T08:16:59.946Z",
+    "updated_at": "2025-06-17T03:16:53.861Z"
+  }
+},
+{
+  "model": "veterinaria.producto",
+  "pk": 5,
+  "fields": {
+    "nombre": "Cama Ortopédica para Perros",
+    "categoria": 7,
+    "descripcion": "Cama con espuma de memoria que proporciona soporte óptimo para las articulaciones de tu perro.",
+    "precio": "45990.00",
+    "stock": 12,
+    "imagen": "productos/Cama_ortopedica-0920231107-4299-lgbhnu.jpg",
+    "es_destacado": true,
+    "created_at": "2025-06-14T08:16:59.962Z",
+    "updated_at": "2025-06-17T03:16:25.767Z"
+  }
+},
+{
+  "model": "veterinaria.producto",
+  "pk": 6,
+  "fields": {
+    "nombre": "PURINA® DENTALIFE® snacks de salmón para gatos",
+    "categoria": 4,
+    "descripcion": "Los Snacks PURINA® Dentalife® Salmón para Gatos están especialmente diseñados con una textura más porosa que los snacks tradicionales. Esto ayuda a que el diente penetre mejor, rodeando todos los lados del diente y llegando a los lugares difíciles de alcanzar, para una limpieza profunda.",
+    "precio": "8990.00",
+    "stock": 40,
+    "imagen": "productos/7613036724111_1_front_pack_1.jpg",
+    "es_destacado": true,
+    "created_at": "2025-06-14T08:16:59.970Z",
+    "updated_at": "2025-06-14T08:30:36.571Z"
+  }
+},
+{
+  "model": "veterinaria.pedido",
+  "pk": 1,
+  "fields": {
+    "usuario": 1,
+    "direccion_envio": "No especificada",
+    "metodo_pago": "Efectivo",
+    "total": "12500.00",
+    "fecha_pedido": "2025-06-17T03:20:37.858Z"
+  }
+},
+{
+  "model": "veterinaria.pedidoitem",
+  "pk": 1,
+  "fields": {
+    "pedido": 1,
+    "producto": 3,
+    "cantidad": 1,
+    "precio_unitario": "12500.00",
+    "subtotal": "12500.00"
+  }
+},
+{
+  "model": "veterinaria.pet",
+  "pk": "47120",
+  "fields": {
+    "owner": 2,
+    "name": "Vivian",
+    "species": "Gato",
+    "breed": "Himalaya",
+    "base_color": "Gris",
+    "condition": "Normal",
+    "age_years": 5,
+    "age_months": 0,
+    "sex": "Hembra",
+    "service_history": []
+  }
+},
+{
+  "model": "veterinaria.pet",
+  "pk": "47146",
+  "fields": {
+    "owner": 2,
+    "name": "Dinah",
+    "species": "Perro",
+    "breed": "Labrador Retriever/Affenpinscher",
+    "base_color": "Negro",
+    "condition": "Normal",
+    "age_years": 3,
+    "age_months": 0,
+    "sex": "Hembra",
+    "service_history": []
+  }
+},
+{
+  "model": "veterinaria.service",
+  "pk": 1,
+  "fields": {
+    "pet": "47120",
+    "service_type": "Farmacia",
+    "reservation_type": "Online",
+    "date": "2025-06-12"
+  }
+},
+{
+  "model": "veterinaria.service",
+  "pk": 2,
+  "fields": {
+    "pet": "47146",
+    "service_type": "Servicio Complementario",
+    "reservation_type": "Online",
+    "date": "2025-06-12"
+  }
+},
+{
+  "model": "veterinaria.categoriafarmacia",
+  "pk": 1,
+  "fields": {
+    "nombre": "Antibióticos",
+    "descripcion": "Medicamentos para combatir infecciones bacterianas",
+    "icono": "fas fa-shield-virus"
+  }
+},
+{
+  "model": "veterinaria.categoriafarmacia",
+  "pk": 2,
+  "fields": {
+    "nombre": "Analgésicos",
+    "descripcion": "Medicamentos para aliviar el dolor",
+    "icono": "fas fa-hand-holding-heart"
+  }
+},
+{
+  "model": "veterinaria.categoriafarmacia",
+  "pk": 3,
+  "fields": {
+    "nombre": "Antiinflamatorios",
+    "descripcion": "Medicamentos para reducir la inflamación",
+    "icono": "fas fa-fire-extinguisher"
+  }
+},
+{
+  "model": "veterinaria.categoriafarmacia",
+  "pk": 4,
+  "fields": {
+    "nombre": "Antiparasitarios",
+    "descripcion": "Medicamentos contra parásitos internos y externos",
+    "icono": "fas fa-bug"
+  }
+},
+{
+  "model": "veterinaria.categoriafarmacia",
+  "pk": 5,
+  "fields": {
+    "nombre": "Vitaminas y Suplementos",
+    "descripcion": "Suplementos nutricionales y vitamínicos",
+    "icono": "fas fa-leaf"
+  }
+},
+{
+  "model": "veterinaria.categoriafarmacia",
+  "pk": 6,
+  "fields": {
+    "nombre": "Vacunas",
+    "descripcion": "Vacunas preventivas para mascotas",
+    "icono": "fas fa-syringe"
+  }
+},
+{
+  "model": "veterinaria.categoriafarmacia",
+  "pk": 7,
+  "fields": {
+    "nombre": "Dermatológicos",
+    "descripcion": "Medicamentos para problemas de piel",
+    "icono": "fas fa-hand-sparkles"
+  }
+},
+{
+  "model": "veterinaria.categoriafarmacia",
+  "pk": 8,
+  "fields": {
+    "nombre": "Cardiológicos",
+    "descripcion": "Medicamentos para el corazón",
+    "icono": "fas fa-heartbeat"
+  }
+},
+{
+  "model": "veterinaria.categoriafarmacia",
+  "pk": 9,
+  "fields": {
+    "nombre": "Digestivos",
+    "descripcion": "Medicamentos para problemas digestivos",
+    "icono": "fas fa-stomach"
+  }
+},
+{
+  "model": "veterinaria.categoriafarmacia",
+  "pk": 10,
+  "fields": {
+    "nombre": "Oftálmicos",
+    "descripcion": "Medicamentos para los ojos",
+    "icono": "fas fa-eye"
+  }
+},
+{
+  "model": "veterinaria.medicamento",
+  "pk": 1,
+  "fields": {
+    "nombre": "Amoxicilina Veterinaria",
+    "nombre_generico": "Amoxicilina",
+    "categoria": 1,
+    "tipo": "antibiotico",
+    "presentacion": "tableta",
+    "concentracion": "250mg",
+    "laboratorio": "VetPharma",
+    "descripcion": "Antibiótico de amplio espectro para infecciones bacterianas",
+    "indicaciones": "Infecciones respiratorias, urinarias, de piel y tejidos blandos",
+    "contraindicaciones": "Hipersensibilidad a penicilinas",
+    "efectos_secundarios": "Posibles trastornos gastrointestinales leves",
+    "dosis_recomendada": "10-20mg/kg cada 8-12 horas",
+    "precio": "15990.00",
+    "stock": 50,
+    "stock_minimo": 5,
+    "requiere_receta": true,
+    "imagen": "",
+    "activo": true,
+    "created_at": "2025-06-14T09:10:10.275Z",
+    "updated_at": "2025-06-14T09:10:10.275Z"
+  }
+},
+{
+  "model": "veterinaria.medicamento",
+  "pk": 2,
+  "fields": {
+    "nombre": "Cefalexina Canina",
+    "nombre_generico": "Cefalexina",
+    "categoria": 1,
+    "tipo": "antibiotico",
+    "presentacion": "capsula",
+    "concentracion": "500mg",
+    "laboratorio": "PetMed",
+    "descripcion": "Antibiótico cefalosporínico para perros",
+    "indicaciones": "Infecciones de piel, heridas, infecciones del tracto urinario",
+    "contraindicaciones": "Alergia a cefalosporinas",
+    "efectos_secundarios": "Vómitos, diarrea ocasional",
+    "dosis_recomendada": "15-30mg/kg cada 12 horas",
+    "precio": "22500.00",
+    "stock": 30,
+    "stock_minimo": 5,
+    "requiere_receta": true,
+    "imagen": "",
+    "activo": true,
+    "created_at": "2025-06-14T09:10:10.285Z",
+    "updated_at": "2025-06-14T09:10:10.285Z"
+  }
+},
+{
+  "model": "veterinaria.medicamento",
+  "pk": 3,
+  "fields": {
+    "nombre": "Meloxicam Veterinario",
+    "nombre_generico": "Meloxicam",
+    "categoria": 2,
+    "tipo": "analgesico",
+    "presentacion": "suspension",
+    "concentracion": "1.5mg/ml",
+    "laboratorio": "AnimalCare",
+    "descripcion": "Analgésico y antiinflamatorio no esteroidal",
+    "indicaciones": "Dolor e inflamación en artritis, post-cirugía",
+    "contraindicaciones": "Problemas renales, hepáticos o cardíacos",
+    "efectos_secundarios": "Posibles problemas gastrointestinales",
+    "dosis_recomendada": "0.1mg/kg una vez al día",
+    "precio": "18750.00",
+    "stock": 25,
+    "stock_minimo": 5,
+    "requiere_receta": true,
+    "imagen": "",
+    "activo": true,
+    "created_at": "2025-06-14T09:10:10.303Z",
+    "updated_at": "2025-06-14T09:10:10.303Z"
+  }
+},
+{
+  "model": "veterinaria.medicamento",
+  "pk": 4,
+  "fields": {
+    "nombre": "Tramadol Veterinario",
+    "nombre_generico": "Tramadol",
+    "categoria": 2,
+    "tipo": "analgesico",
+    "presentacion": "tableta",
+    "concentracion": "50mg",
+    "laboratorio": "VetPain",
+    "descripcion": "Analgésico opioide para dolor moderado a severo",
+    "indicaciones": "Dolor post-operatorio, dolor crónico",
+    "contraindicaciones": "Hipersensibilidad al tramadol",
+    "efectos_secundarios": "Sedación, náuseas, estreñimiento",
+    "dosis_recomendada": "2-5mg/kg cada 8-12 horas",
+    "precio": "25990.00",
+    "stock": 20,
+    "stock_minimo": 5,
+    "requiere_receta": true,
+    "imagen": "",
+    "activo": true,
+    "created_at": "2025-06-14T09:10:10.315Z",
+    "updated_at": "2025-06-14T09:10:10.315Z"
+  }
+},
+{
+  "model": "veterinaria.medicamento",
+  "pk": 5,
+  "fields": {
+    "nombre": "Bravecto Perros",
+    "nombre_generico": "Fluralaner",
+    "categoria": 4,
+    "tipo": "antiparasitario",
+    "presentacion": "tableta",
+    "concentracion": "250mg",
+    "laboratorio": "MSD",
+    "descripcion": "Antiparasitario de larga duración contra pulgas y garrapatas",
+    "indicaciones": "Prevención y tratamiento de pulgas y garrapatas",
+    "contraindicaciones": "Cachorros menores de 8 semanas",
+    "efectos_secundarios": "Vómitos ocasionales, diarrea leve",
+    "dosis_recomendada": "Una tableta cada 12 semanas según peso",
+    "precio": "45990.00",
+    "stock": 15,
+    "stock_minimo": 5,
+    "requiere_receta": false,
+    "imagen": "",
+    "activo": true,
+    "created_at": "2025-06-14T09:10:10.323Z",
+    "updated_at": "2025-06-14T09:10:10.323Z"
+  }
+},
+{
+  "model": "veterinaria.medicamento",
+  "pk": 6,
+  "fields": {
+    "nombre": "Drontal Plus",
+    "nombre_generico": "Praziquantel + Pirantel + Febantel",
+    "categoria": 4,
+    "tipo": "desparasitante",
+    "presentacion": "tableta",
+    "concentracion": "50mg/144mg/150mg",
+    "laboratorio": "Bayer",
+    "descripcion": "Desparasitante interno de amplio espectro",
+    "indicaciones": "Lombrices, tenias, anquilostomas",
+    "contraindicaciones": "Cachorros menores de 2 semanas",
+    "efectos_secundarios": "Vómitos leves ocasionales",
+    "dosis_recomendada": "1 tableta por 10kg de peso",
+    "precio": "12990.00",
+    "stock": 40,
+    "stock_minimo": 5,
+    "requiere_receta": false,
+    "imagen": "",
+    "activo": true,
+    "created_at": "2025-06-14T09:10:10.341Z",
+    "updated_at": "2025-06-14T09:10:10.341Z"
+  }
+},
+{
+  "model": "veterinaria.medicamento",
+  "pk": 7,
+  "fields": {
+    "nombre": "Multivitamínico Canino",
+    "nombre_generico": "Complejo vitamínico",
+    "categoria": 5,
+    "tipo": "vitamina",
+    "presentacion": "tableta",
+    "concentracion": "Multivitamínico",
+    "laboratorio": "NutriPet",
+    "descripcion": "Suplemento vitamínico completo para perros",
+    "indicaciones": "Suplementación nutricional, convalecencia",
+    "contraindicaciones": "Ninguna conocida",
+    "efectos_secundarios": "Ninguno reportado",
+    "dosis_recomendada": "1 tableta por 10kg de peso diario",
+    "precio": "8990.00",
+    "stock": 60,
+    "stock_minimo": 5,
+    "requiere_receta": false,
+    "imagen": "",
+    "activo": true,
+    "created_at": "2025-06-14T09:10:10.352Z",
+    "updated_at": "2025-06-14T09:10:10.352Z"
+  }
+},
+{
+  "model": "veterinaria.medicamento",
+  "pk": 8,
+  "fields": {
+    "nombre": "Omega 3 Veterinario",
+    "nombre_generico": "Ácidos grasos Omega 3",
+    "categoria": 5,
+    "tipo": "vitamina",
+    "presentacion": "capsula",
+    "concentracion": "1000mg",
+    "laboratorio": "HealthyPet",
+    "descripcion": "Suplemento de ácidos grasos para piel y pelaje",
+    "indicaciones": "Mejora de piel y pelaje, apoyo cardiovascular",
+    "contraindicaciones": "Trastornos de coagulación",
+    "efectos_secundarios": "Posible olor a pescado en el aliento",
+    "dosis_recomendada": "1 cápsula por 15kg de peso diario",
+    "precio": "16500.00",
+    "stock": 35,
+    "stock_minimo": 5,
+    "requiere_receta": false,
+    "imagen": "",
+    "activo": true,
+    "created_at": "2025-06-14T09:10:10.363Z",
+    "updated_at": "2025-06-14T09:10:10.363Z"
+  }
+},
+{
+  "model": "veterinaria.medicamento",
+  "pk": 9,
+  "fields": {
+    "nombre": "Shampoo Medicado Antiséptico",
+    "nombre_generico": "Clorhexidina",
+    "categoria": 7,
+    "tipo": "dermatologico",
+    "presentacion": "suspension",
+    "concentracion": "2%",
+    "laboratorio": "DermVet",
+    "descripcion": "Shampoo medicado para problemas de piel",
+    "indicaciones": "Dermatitis, infecciones cutáneas, seborrea",
+    "contraindicaciones": "Hipersensibilidad a clorhexidina",
+    "efectos_secundarios": "Posible irritación en piel sensible",
+    "dosis_recomendada": "Aplicar 2-3 veces por semana",
+    "precio": "14990.00",
+    "stock": 25,
+    "stock_minimo": 5,
+    "requiere_receta": false,
+    "imagen": "",
+    "activo": true,
+    "created_at": "2025-06-14T09:10:10.376Z",
+    "updated_at": "2025-06-14T09:10:10.376Z"
+  }
+},
+{
+  "model": "veterinaria.medicamento",
+  "pk": 10,
+  "fields": {
+    "nombre": "Gotas Oftálmicas Veterinarias",
+    "nombre_generico": "Tobramicina + Dexametasona",
+    "categoria": 10,
+    "tipo": "oftalmico",
+    "presentacion": "gotas",
+    "concentracion": "3mg/ml + 1mg/ml",
+    "laboratorio": "EyeCare",
+    "descripcion": "Gotas para infecciones e inflamación ocular",
+    "indicaciones": "Conjuntivitis, blefaritis, infecciones oculares",
+    "contraindicaciones": "Infecciones virales o fúngicas del ojo",
+    "efectos_secundarios": "Irritación ocular temporal",
+    "dosis_recomendada": "1-2 gotas cada 6-8 horas",
+    "precio": "19990.00",
+    "stock": 20,
+    "stock_minimo": 5,
+    "requiere_receta": true,
+    "imagen": "",
+    "activo": true,
+    "created_at": "2025-06-14T09:10:25.860Z",
+    "updated_at": "2025-06-14T09:10:25.860Z"
+  }
+},
+{
+  "model": "veterinaria.medicamento",
+  "pk": 11,
+  "fields": {
+    "nombre": "Probiótico Veterinario",
+    "nombre_generico": "Lactobacillus acidophilus",
+    "categoria": 9,
+    "tipo": "digestivo",
+    "presentacion": "polvo",
+    "concentracion": "1x10^9 UFC/g",
+    "laboratorio": "GutHealth",
+    "descripcion": "Probiótico para salud digestiva",
+    "indicaciones": "Diarrea, problemas digestivos, post-antibióticos",
+    "contraindicaciones": "Ninguna conocida",
+    "efectos_secundarios": "Ninguno reportado",
+    "dosis_recomendada": "1g por 10kg de peso diario",
+    "precio": "11990.00",
+    "stock": 30,
+    "stock_minimo": 5,
+    "requiere_receta": false,
+    "imagen": "",
+    "activo": true,
+    "created_at": "2025-06-14T09:10:25.871Z",
+    "updated_at": "2025-06-14T09:10:25.871Z"
+  }
+},
+{
+  "model": "veterinaria.recetamedica",
+  "pk": 1,
+  "fields": {
+    "cita": 3,
+    "veterinario": 1,
+    "mascota": 47120,
+    "fecha_emision": "2025-06-14T09:31:22.692Z",
+    "fecha_vencimiento": "2025-07-14",
+    "diagnostico": "ta malo q te digo",
+    "observaciones": "q se mejore",
+    "estado": "activa"
+  }
+},
+{
+  "model": "veterinaria.recetamedica",
+  "pk": 2,
+  "fields": {
+    "cita": 5,
+    "veterinario": 1,
+    "mascota": 47146,
+    "fecha_emision": "2025-06-14T09:41:44.082Z",
+    "fecha_vencimiento": "2025-07-14",
+    "diagnostico": "Infección leve",
+    "observaciones": "Administrar medicamento según indicaciones",
+    "estado": "activa"
+  }
+},
+{
+  "model": "veterinaria.recetamedica",
+  "pk": 3,
+  "fields": {
+    "cita": 6,
+    "veterinario": 1,
+    "mascota": 47146,
+    "fecha_emision": "2025-06-14T09:42:18.635Z",
+    "fecha_vencimiento": "2025-07-14",
+    "diagnostico": "Infección leve",
+    "observaciones": "Administrar medicamento según indicaciones",
+    "estado": "activa"
+  }
+},
+{
+  "model": "veterinaria.recetamedica",
+  "pk": 4,
+  "fields": {
+    "cita": 7,
+    "veterinario": 1,
+    "mascota": 47146,
+    "fecha_emision": "2025-06-14T09:42:57.063Z",
+    "fecha_vencimiento": "2025-07-14",
+    "diagnostico": "Infección leve",
+    "observaciones": "Administrar medicamento según indicaciones",
+    "estado": "activa"
+  }
+},
+{
+  "model": "veterinaria.recetamedica",
+  "pk": 5,
+  "fields": {
+    "cita": 8,
+    "veterinario": 4,
+    "mascota": 47120,
+    "fecha_emision": "2025-06-14T21:10:00.974Z",
+    "fecha_vencimiento": "2025-07-14",
+    "diagnostico": "ta malito",
+    "observaciones": "hola",
+    "estado": "activa"
+  }
+},
+{
+  "model": "veterinaria.recetamedica",
+  "pk": 6,
+  "fields": {
+    "cita": 9,
+    "veterinario": 4,
+    "mascota": 47120,
+    "fecha_emision": "2025-06-16T03:23:04.637Z",
+    "fecha_vencimiento": "2025-07-15",
+    "diagnostico": "hola",
+    "observaciones": "chao",
+    "estado": "activa"
+  }
+},
+{
+  "model": "veterinaria.itemreceta",
+  "pk": 1,
+  "fields": {
+    "receta": 1,
+    "medicamento": 1,
+    "cantidad": 2,
+    "dosis": "1 tableta cada 8 horas",
+    "duracion": "7 dias",
+    "instrucciones": "tomarlo despues de una comida",
+    "precio_unitario": "15990.00",
+    "subtotal": "31980.00"
+  }
+},
+{
+  "model": "veterinaria.itemreceta",
+  "pk": 2,
+  "fields": {
+    "receta": 3,
+    "medicamento": 1,
+    "cantidad": 1,
+    "dosis": "1 comprimido cada 8 horas",
+    "duracion": "7 días",
+    "instrucciones": "Administrar con comida",
+    "precio_unitario": "15990.00",
+    "subtotal": "15990.00"
+  }
+},
+{
+  "model": "veterinaria.itemreceta",
+  "pk": 3,
+  "fields": {
+    "receta": 3,
+    "medicamento": 5,
+    "cantidad": 1,
+    "dosis": "1 comprimido cada 8 horas",
+    "duracion": "7 días",
+    "instrucciones": "Administrar con comida",
+    "precio_unitario": "45990.00",
+    "subtotal": "45990.00"
+  }
+},
+{
+  "model": "veterinaria.itemreceta",
+  "pk": 4,
+  "fields": {
+    "receta": 3,
+    "medicamento": 2,
+    "cantidad": 1,
+    "dosis": "1 comprimido cada 8 horas",
+    "duracion": "7 días",
+    "instrucciones": "Administrar con comida",
+    "precio_unitario": "22500.00",
+    "subtotal": "22500.00"
+  }
+},
+{
+  "model": "veterinaria.itemreceta",
+  "pk": 5,
+  "fields": {
+    "receta": 4,
+    "medicamento": 1,
+    "cantidad": 1,
+    "dosis": "1 comprimido cada 8 horas",
+    "duracion": "7 días",
+    "instrucciones": "Administrar con comida",
+    "precio_unitario": "15990.00",
+    "subtotal": "15990.00"
+  }
+},
+{
+  "model": "veterinaria.itemreceta",
+  "pk": 6,
+  "fields": {
+    "receta": 4,
+    "medicamento": 5,
+    "cantidad": 1,
+    "dosis": "1 comprimido cada 8 horas",
+    "duracion": "7 días",
+    "instrucciones": "Administrar con comida",
+    "precio_unitario": "45990.00",
+    "subtotal": "45990.00"
+  }
+},
+{
+  "model": "veterinaria.itemreceta",
+  "pk": 7,
+  "fields": {
+    "receta": 4,
+    "medicamento": 2,
+    "cantidad": 1,
+    "dosis": "1 comprimido cada 8 horas",
+    "duracion": "7 días",
+    "instrucciones": "Administrar con comida",
+    "precio_unitario": "22500.00",
+    "subtotal": "22500.00"
+  }
+},
+{
+  "model": "veterinaria.itemreceta",
+  "pk": 8,
+  "fields": {
+    "receta": 5,
+    "medicamento": 1,
+    "cantidad": 2,
+    "dosis": "1 tableta cada 8 horas",
+    "duracion": "7 dias",
+    "instrucciones": "tomeselo",
+    "precio_unitario": "15990.00",
+    "subtotal": "31980.00"
+  }
+},
+{
+  "model": "veterinaria.itemreceta",
+  "pk": 9,
+  "fields": {
+    "receta": 6,
+    "medicamento": 1,
+    "cantidad": 2,
+    "dosis": "1 tableta cada 8 horas",
+    "duracion": "7 dias",
+    "instrucciones": "AAAAAA",
+    "precio_unitario": "15990.00",
+    "subtotal": "31980.00"
+  }
+},
+{
+  "model": "veterinaria.reservamedicamento",
+  "pk": 1,
+  "fields": {
+    "cliente": 2,
+    "receta": 4,
+    "tipo": "receta",
+    "fecha_reserva": "2025-06-14T09:42:57.113Z",
+    "fecha_retiro": "2025-06-15",
+    "estado": "pendiente",
+    "total": "84480.00",
+    "notas": "Reserva de prueba",
+    "telefono_contacto": "123456789"
+  }
+},
+{
+  "model": "veterinaria.reservamedicamento",
+  "pk": 2,
+  "fields": {
+    "cliente": 2,
+    "receta": 4,
+    "tipo": "receta",
+    "fecha_reserva": "2025-06-16T03:27:15.903Z",
+    "fecha_retiro": "2025-06-16",
+    "estado": "pendiente",
+    "total": "84480.00",
+    "notas": "AAAA",
+    "telefono_contacto": "+56931344769"
+  }
+},
+{
+  "model": "veterinaria.reservamedicamento",
+  "pk": 3,
+  "fields": {
+    "cliente": 2,
+    "receta": 4,
+    "tipo": "receta",
+    "fecha_reserva": "2025-06-17T01:58:38.928Z",
+    "fecha_retiro": "2025-06-17",
+    "estado": "pendiente",
+    "total": "84480.00",
+    "notas": "",
+    "telefono_contacto": "+56931344769"
+  }
+},
+{
+  "model": "veterinaria.itemreserva",
+  "pk": 1,
+  "fields": {
+    "reserva": 1,
+    "medicamento": 1,
+    "cantidad": 1,
+    "precio_unitario": "15990.00",
+    "subtotal": "15990.00"
+  }
+},
+{
+  "model": "veterinaria.itemreserva",
+  "pk": 2,
+  "fields": {
+    "reserva": 1,
+    "medicamento": 5,
+    "cantidad": 1,
+    "precio_unitario": "45990.00",
+    "subtotal": "45990.00"
+  }
+},
+{
+  "model": "veterinaria.itemreserva",
+  "pk": 3,
+  "fields": {
+    "reserva": 1,
+    "medicamento": 2,
+    "cantidad": 1,
+    "precio_unitario": "22500.00",
+    "subtotal": "22500.00"
+  }
+},
+{
+  "model": "veterinaria.itemreserva",
+  "pk": 4,
+  "fields": {
+    "reserva": 2,
+    "medicamento": 1,
+    "cantidad": 1,
+    "precio_unitario": "15990.00",
+    "subtotal": "15990.00"
+  }
+},
+{
+  "model": "veterinaria.itemreserva",
+  "pk": 5,
+  "fields": {
+    "reserva": 2,
+    "medicamento": 5,
+    "cantidad": 1,
+    "precio_unitario": "45990.00",
+    "subtotal": "45990.00"
+  }
+},
+{
+  "model": "veterinaria.itemreserva",
+  "pk": 6,
+  "fields": {
+    "reserva": 2,
+    "medicamento": 2,
+    "cantidad": 1,
+    "precio_unitario": "22500.00",
+    "subtotal": "22500.00"
+  }
+},
+{
+  "model": "veterinaria.itemreserva",
+  "pk": 7,
+  "fields": {
+    "reserva": 3,
+    "medicamento": 1,
+    "cantidad": 1,
+    "precio_unitario": "15990.00",
+    "subtotal": "15990.00"
+  }
+},
+{
+  "model": "veterinaria.itemreserva",
+  "pk": 8,
+  "fields": {
+    "reserva": 3,
+    "medicamento": 5,
+    "cantidad": 1,
+    "precio_unitario": "45990.00",
+    "subtotal": "45990.00"
+  }
+},
+{
+  "model": "veterinaria.itemreserva",
+  "pk": 9,
+  "fields": {
+    "reserva": 3,
+    "medicamento": 2,
+    "cantidad": 1,
+    "precio_unitario": "22500.00",
+    "subtotal": "22500.00"
+  }
+},
+{
+  "model": "veterinaria.categoriaserviciopeluqueria",
+  "pk": 1,
+  "fields": {
+    "nombre": "Baño y Secado",
+    "descripcion": "Servicios básicos de higiene y limpieza",
+    "icono": "fas fa-shower",
+    "activo": true
+  }
+},
+{
+  "model": "veterinaria.categoriaserviciopeluqueria",
+  "pk": 2,
+  "fields": {
+    "nombre": "Corte y Estilismo",
+    "descripcion": "Cortes profesionales y estilismo canino/felino",
+    "icono": "fas fa-cut",
+    "activo": true
+  }
+},
+{
+  "model": "veterinaria.categoriaserviciopeluqueria",
+  "pk": 3,
+  "fields": {
+    "nombre": "Cuidado de Uñas",
+    "descripcion": "Corte y limado de uñas profesional",
+    "icono": "fas fa-hand-scissors",
+    "activo": true
+  }
+},
+{
+  "model": "veterinaria.categoriaserviciopeluqueria",
+  "pk": 4,
+  "fields": {
+    "nombre": "Tratamientos Especiales",
+    "descripcion": "Tratamientos dermatológicos y de belleza",
+    "icono": "fas fa-spa",
+    "activo": true
+  }
+},
+{
+  "model": "veterinaria.categoriaserviciopeluqueria",
+  "pk": 5,
+  "fields": {
+    "nombre": "Paquetes Completos",
+    "descripcion": "Servicios integrales de peluquería",
+    "icono": "fas fa-gift",
+    "activo": true
+  }
+},
+{
+  "model": "veterinaria.serviciopeluqueria",
+  "pk": 1,
+  "fields": {
+    "nombre": "Baño Básico",
+    "categoria": 1,
+    "descripcion": "Baño con shampoo hipoalergénico, secado y cepillado básico. Ideal para el mantenimiento regular de la higiene de tu mascota.",
+    "precio_base": "15000.00",
+    "duracion_estimada": 45,
+    "tipo_mascota": "ambos",
+    "tamaño_mascota": "todos",
+    "incluye": "Baño con shampoo, secado con toalla y secador, cepillado básico, limpieza de oídos externa",
+    "recomendaciones": "Recomendado cada 3-4 semanas para mantener la higiene óptima",
+    "imagen": "peluqueria/images_2.jpeg",
+    "activo": true,
+    "created_at": "2025-06-16T21:34:53.893Z",
+    "updated_at": "2025-06-17T02:59:41.995Z"
+  }
+},
+{
+  "model": "veterinaria.serviciopeluqueria",
+  "pk": 2,
+  "fields": {
+    "nombre": "Baño Premium",
+    "categoria": 1,
+    "descripcion": "Baño completo con productos premium, masaje relajante, secado profesional y acabado con perfume para mascotas.",
+    "precio_base": "25000.00",
+    "duracion_estimada": 60,
+    "tipo_mascota": "ambos",
+    "tamaño_mascota": "todos",
+    "incluye": "Baño con productos premium, masaje, secado profesional, cepillado, limpieza de oídos, perfume",
+    "recomendaciones": "Perfecto para ocasiones especiales o mascotas con piel sensible",
+    "imagen": "peluqueria/images_2_8pPZLjz.jpeg",
+    "activo": true,
+    "created_at": "2025-06-16T21:34:53.922Z",
+    "updated_at": "2025-06-17T03:35:29.437Z"
+  }
+},
+{
+  "model": "veterinaria.serviciopeluqueria",
+  "pk": 3,
+  "fields": {
+    "nombre": "Baño Medicado",
+    "categoria": 1,
+    "descripcion": "Baño terapéutico con shampoo medicado para problemas dermatológicos específicos. Requiere prescripción veterinaria.",
+    "precio_base": "30000.00",
+    "duracion_estimada": 75,
+    "tipo_mascota": "ambos",
+    "tamaño_mascota": "todos",
+    "incluye": "Baño con shampoo medicado, tiempo de contacto terapéutico, secado suave, hidratación",
+    "recomendaciones": "Solo con prescripción veterinaria. Ideal para dermatitis, alergias o problemas de piel",
+    "imagen": "peluqueria/images_2_iYFXnLA.jpeg",
+    "activo": true,
+    "created_at": "2025-06-16T21:34:53.940Z",
+    "updated_at": "2025-06-17T03:34:54.247Z"
+  }
+},
+{
+  "model": "veterinaria.serviciopeluqueria",
+  "pk": 4,
+  "fields": {
+    "nombre": "Corte Higiénico",
+    "categoria": 2,
+    "descripcion": "Corte de pelo en zonas íntimas, patas y cara para mantener la higiene y comodidad de tu mascota.",
+    "precio_base": "12000.00",
+    "duracion_estimada": 30,
+    "tipo_mascota": "ambos",
+    "tamaño_mascota": "todos",
+    "incluye": "Corte en zonas íntimas, patas, cara, limpieza de lágrimas",
+    "recomendaciones": "Recomendado mensualmente, especialmente en verano",
+    "imagen": "peluqueria/tipos_de_corte_de_pelo_perros_bNU4zln.webp",
+    "activo": true,
+    "created_at": "2025-06-16T21:34:53.956Z",
+    "updated_at": "2025-06-17T03:45:23.946Z"
+  }
+},
+{
+  "model": "veterinaria.serviciopeluqueria",
+  "pk": 5,
+  "fields": {
+    "nombre": "Corte de Raza",
+    "categoria": 2,
+    "descripcion": "Corte específico según el estándar de la raza, realizado por peluqueros especializados en estilismo canino.",
+    "precio_base": "35000.00",
+    "duracion_estimada": 90,
+    "tipo_mascota": "perro",
+    "tamaño_mascota": "todos",
+    "incluye": "Corte según estándar de raza, estilismo profesional, acabado detallado",
+    "recomendaciones": "Ideal para exposiciones o para mantener la apariencia característica de la raza",
+    "imagen": "peluqueria/tipos_de_corte_de_pelo_perros_gKeBZXj.webp",
+    "activo": true,
+    "created_at": "2025-06-16T21:34:53.973Z",
+    "updated_at": "2025-06-17T03:45:32.593Z"
+  }
+},
+{
+  "model": "veterinaria.serviciopeluqueria",
+  "pk": 6,
+  "fields": {
+    "nombre": "Corte Creativo",
+    "categoria": 2,
+    "descripcion": "Cortes modernos y creativos, diseños personalizados según las preferencias del propietario.",
+    "precio_base": "40000.00",
+    "duracion_estimada": 120,
+    "tipo_mascota": "perro",
+    "tamaño_mascota": "mediano",
+    "incluye": "Diseño personalizado, corte creativo, estilismo único, acabado profesional",
+    "recomendaciones": "Para propietarios que buscan un look único y moderno para su mascota",
+    "imagen": "peluqueria/tipos_de_corte_de_pelo_perros.webp",
+    "activo": true,
+    "created_at": "2025-06-16T21:34:53.992Z",
+    "updated_at": "2025-06-17T03:45:09.792Z"
+  }
+},
+{
+  "model": "veterinaria.serviciopeluqueria",
+  "pk": 7,
+  "fields": {
+    "nombre": "Corte de Uñas Básico",
+    "categoria": 3,
+    "descripcion": "Corte profesional de uñas con herramientas especializadas, incluye limado y revisión de almohadillas.",
+    "precio_base": "8000.00",
+    "duracion_estimada": 20,
+    "tipo_mascota": "ambos",
+    "tamaño_mascota": "todos",
+    "incluye": "Corte de uñas, limado, revisión de almohadillas",
+    "recomendaciones": "Cada 3-4 semanas para mantener la salud de las patas",
+    "imagen": "peluqueria/images_5.jpeg",
+    "activo": true,
+    "created_at": "2025-06-16T21:34:54.010Z",
+    "updated_at": "2025-06-17T03:46:24.959Z"
+  }
+},
+{
+  "model": "veterinaria.serviciopeluqueria",
+  "pk": 8,
+  "fields": {
+    "nombre": "Manicura Completa",
+    "categoria": 3,
+    "descripcion": "Servicio completo de cuidado de patas: corte, limado, hidratación de almohadillas y masaje relajante.",
+    "precio_base": "15000.00",
+    "duracion_estimada": 35,
+    "tipo_mascota": "ambos",
+    "tamaño_mascota": "todos",
+    "incluye": "Corte y limado de uñas, hidratación de almohadillas, masaje de patas, revisión completa",
+    "recomendaciones": "Ideal para mascotas que caminan mucho o tienen almohadillas secas",
+    "imagen": "peluqueria/images_5_R3iJ736.jpeg",
+    "activo": true,
+    "created_at": "2025-06-16T21:34:54.031Z",
+    "updated_at": "2025-06-17T03:46:36.527Z"
+  }
+},
+{
+  "model": "veterinaria.serviciopeluqueria",
+  "pk": 9,
+  "fields": {
+    "nombre": "Tratamiento Antipulgas",
+    "categoria": 4,
+    "descripcion": "Baño especializado con productos antipulgas y garrapatas, incluye revisión completa del pelaje.",
+    "precio_base": "28000.00",
+    "duracion_estimada": 60,
+    "tipo_mascota": "ambos",
+    "tamaño_mascota": "todos",
+    "incluye": "Baño con shampoo antipulgas, revisión completa, secado, aplicación de repelente natural",
+    "recomendaciones": "Especialmente importante en temporadas de calor y para mascotas que salen al exterior",
+    "imagen": "peluqueria/perro-banandose_939Du2w.jpg",
+    "activo": true,
+    "created_at": "2025-06-16T21:34:54.053Z",
+    "updated_at": "2025-06-17T03:47:53.947Z"
+  }
+},
+{
+  "model": "veterinaria.serviciopeluqueria",
+  "pk": 10,
+  "fields": {
+    "nombre": "Hidratación Profunda",
+    "categoria": 4,
+    "descripcion": "Tratamiento intensivo para pelajes secos o dañados, con mascarillas nutritivas y aceites naturales.",
+    "precio_base": "32000.00",
+    "duracion_estimada": 90,
+    "tipo_mascota": "ambos",
+    "tamaño_mascota": "todos",
+    "incluye": "Mascarilla nutritiva, aceites naturales, masaje, baño hidratante, secado suave",
+    "recomendaciones": "Para mascotas con pelaje seco, opaco o dañado por factores ambientales",
+    "imagen": "peluqueria/perro-banandose.jpg",
+    "activo": true,
+    "created_at": "2025-06-16T21:34:54.072Z",
+    "updated_at": "2025-06-17T03:47:37.067Z"
+  }
+},
+{
+  "model": "veterinaria.serviciopeluqueria",
+  "pk": 11,
+  "fields": {
+    "nombre": "Paquete Básico",
+    "categoria": 5,
+    "descripcion": "Servicio completo básico: baño, secado, corte higiénico, corte de uñas y limpieza de oídos.",
+    "precio_base": "35000.00",
+    "duracion_estimada": 90,
+    "tipo_mascota": "ambos",
+    "tamaño_mascota": "todos",
+    "incluye": "Baño completo, secado, corte higiénico, corte de uñas, limpieza de oídos, cepillado",
+    "recomendaciones": "Paquete ideal para el mantenimiento regular mensual",
+    "imagen": "peluqueria/perro-banandose_YwrgjPd.jpg",
+    "activo": true,
+    "created_at": "2025-06-16T21:34:54.090Z",
+    "updated_at": "2025-06-17T03:48:07.822Z"
+  }
+},
+{
+  "model": "veterinaria.serviciopeluqueria",
+  "pk": 12,
+  "fields": {
+    "nombre": "Paquete Premium",
+    "categoria": 5,
+    "descripcion": "Experiencia completa de spa: baño premium, corte estilizado, manicura, tratamiento hidratante y perfume.",
+    "precio_base": "55000.00",
+    "duracion_estimada": 150,
+    "tipo_mascota": "ambos",
+    "tamaño_mascota": "todos",
+    "incluye": "Baño premium, corte estilizado, manicura completa, tratamiento hidratante, perfume, fotos antes/después",
+    "recomendaciones": "Perfecto para ocasiones especiales, cumpleaños o simplemente para consentir a tu mascota",
+    "imagen": "peluqueria/perro-banandose_hjjapqW.jpg",
+    "activo": true,
+    "created_at": "2025-06-16T21:34:54.149Z",
+    "updated_at": "2025-06-17T03:48:15.262Z"
+  }
+},
+{
+  "model": "veterinaria.serviciopeluqueria",
+  "pk": 13,
+  "fields": {
+    "nombre": "Paquete VIP",
+    "categoria": 5,
+    "descripcion": "La experiencia más completa: todos nuestros servicios incluidos con atención personalizada y productos de lujo.",
+    "precio_base": "75000.00",
+    "duracion_estimada": 180,
+    "tipo_mascota": "ambos",
+    "tamaño_mascota": "mediano",
+    "incluye": "Todos los servicios, productos de lujo, atención personalizada, sesión de fotos profesional, certificado de belleza",
+    "recomendaciones": "La experiencia definitiva para mascotas especiales y propietarios exigentes",
+    "imagen": "peluqueria/perro-banandose_Qhx8pIr.jpg",
+    "activo": true,
+    "created_at": "2025-06-16T21:34:54.219Z",
+    "updated_at": "2025-06-17T03:48:22.891Z"
+  }
+},
+{
+  "model": "veterinaria.peluquero",
+  "pk": 1,
+  "fields": {
+    "user": 8,
+    "telefono": "+56 9 8765 4321",
+    "experiencia_años": 8,
+    "certificaciones": "Certificada en Estilismo Canino por la Academia Internacional de Peluquería Canina. Especialista en razas de pelo largo y cortes creativos. Curso avanzado en dermatología canina.",
+    "horario_inicio": "09:00:00",
+    "horario_fin": "18:00:00",
+    "activo": true,
+    "created_at": "2025-06-16T21:34:54.802Z",
+    "especialidades": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ]
+  }
+},
+{
+  "model": "veterinaria.peluquero",
+  "pk": 2,
+  "fields": {
+    "user": 9,
+    "telefono": "+56 9 7654 3210",
+    "experiencia_años": 5,
+    "certificaciones": "Técnico en Peluquería Canina y Felina. Especialista en tratamientos dermatológicos y baños medicados. Certificación en manejo de mascotas nerviosas.",
+    "horario_inicio": "08:30:00",
+    "horario_fin": "17:30:00",
+    "activo": true,
+    "created_at": "2025-06-16T21:34:55.395Z",
+    "especialidades": [
+      1,
+      4
+    ]
+  }
+},
+{
+  "model": "veterinaria.peluquero",
+  "pk": 3,
+  "fields": {
+    "user": 10,
+    "telefono": "+56 9 6543 2109",
+    "experiencia_años": 12,
+    "certificaciones": "Master en Estética Canina y Felina. Juez certificada en exposiciones caninas. Especialista en cortes de raza y preparación para competencias. Instructora certificada.",
+    "horario_inicio": "09:30:00",
+    "horario_fin": "18:30:00",
+    "activo": true,
+    "created_at": "2025-06-16T21:34:55.953Z",
+    "especialidades": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ]
+  }
+},
+{
+  "model": "veterinaria.citapeluqueria",
+  "pk": 1,
+  "fields": {
+    "cliente": 2,
+    "mascota": 47146,
+    "peluquero": 1,
+    "fecha": "2025-06-19",
+    "hora": "10:00:00",
+    "estado": "completada",
+    "observaciones_cliente": "Mi perrita es muy tranquila, pero no le gusta mucho el secador. Por favor sean gentiles con ella.",
+    "observaciones_peluquero": "",
+    "total": "35000.00",
+    "telefono_contacto": "+56 9 1234 5678",
+    "created_at": "2025-06-16T21:34:55.990Z",
+    "updated_at": "2025-06-17T03:36:33.129Z"
+  }
+},
+{
+  "model": "veterinaria.citapeluqueria",
+  "pk": 2,
+  "fields": {
+    "cliente": 2,
+    "mascota": 47120,
+    "peluquero": null,
+    "fecha": "2025-06-18",
+    "hora": "17:45:00",
+    "estado": "cancelada",
+    "observaciones_cliente": "hola",
+    "observaciones_peluquero": "",
+    "total": "12000.00",
+    "telefono_contacto": "+56931344769",
+    "created_at": "2025-06-16T21:46:23.896Z",
+    "updated_at": "2025-06-17T01:30:41.864Z"
+  }
+},
+{
+  "model": "veterinaria.citapeluqueria",
+  "pk": 3,
+  "fields": {
+    "cliente": 1,
+    "mascota": 47147,
+    "peluquero": null,
+    "fecha": "2025-06-24",
+    "hora": "11:30:00",
+    "estado": "programada",
+    "observaciones_cliente": "hola",
+    "observaciones_peluquero": "",
+    "total": "15000.00",
+    "telefono_contacto": "+56931344769",
+    "created_at": "2025-06-17T03:29:56.975Z",
+    "updated_at": "2025-06-17T03:29:57.023Z"
+  }
+},
+{
+  "model": "veterinaria.serviciocitapeluqueria",
+  "pk": 1,
+  "fields": {
+    "cita": 1,
+    "servicio": 11,
+    "precio": "35000.00",
+    "notas": "",
+    "completado": false
+  }
+},
+{
+  "model": "veterinaria.serviciocitapeluqueria",
+  "pk": 2,
+  "fields": {
+    "cita": 2,
+    "servicio": 4,
+    "precio": "12000.00",
+    "notas": "",
+    "completado": false
+  }
+},
+{
+  "model": "veterinaria.serviciocitapeluqueria",
+  "pk": 3,
+  "fields": {
+    "cita": 3,
+    "servicio": 1,
+    "precio": "15000.00",
+    "notas": "",
+    "completado": false
+  }
+}
+]

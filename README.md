@@ -49,16 +49,21 @@ Sistema completo de gestión veterinaria desarrollado en Django que incluye clí
 
 ## ⚙️ Instalación
 
+### 🚀 Instalación Rápida (Recomendada)
+
 1. **Clonar el repositorio:**
 ```bash
-git clone https://github.com/tu-usuario/mascota-feliz.git
-cd mascota-feliz
+git clone https://github.com/MaxTheBeatle/mascota-feliz-bpm.git
+cd mascota-feliz-bpm
 ```
 
 2. **Crear entorno virtual:**
 ```bash
 python -m venv venv
-source venv/bin/activate  # En Windows: venv\Scripts\activate
+# En Windows:
+venv\Scripts\activate
+# En Linux/Mac:
+source venv/bin/activate
 ```
 
 3. **Instalar dependencias:**
@@ -66,20 +71,52 @@ source venv/bin/activate  # En Windows: venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-4. **Configurar base de datos:**
+4. **Configurar base de datos con datos de ejemplo:**
+```bash
+python crear_datos_ejemplo.py
+```
+
+5. **¡Listo! Ejecutar servidor:**
+```bash
+python manage.py runserver
+```
+
+### 🔐 Usuarios de Prueba Incluidos
+
+El script de configuración carga automáticamente usuarios de ejemplo:
+
+**👨‍💼 Administrador:**
+- Usuario: `admin` / Contraseña: `admin123`
+
+**👨‍⚕️ Veterinario:**
+- Usuario: `veterinario1` / Contraseña: `vet123`
+- Nombre: Dr. Carlos Mendoza (Medicina General)
+
+**✂️ Peluquero:**
+- Usuario: `peluquero1` / Contraseña: `peluquero123`
+- Nombre: María González (8 años experiencia)
+
+**👤 Cliente de Ejemplo:**
+- Usuario: `cliente1` / Contraseña: `cliente123`
+
+### ⚙️ Instalación Manual (Opcional)
+
+Si prefieres configurar manualmente:
+
+1. **Hacer migraciones:**
 ```bash
 python manage.py makemigrations
 python manage.py migrate
 ```
 
-5. **Crear superusuario:**
+2. **Crear superusuario:**
 ```bash
 python manage.py createsuperuser
 ```
 
-6. **Ejecutar servidor:**
+3. **Cargar datos iniciales (opcional):**
 ```bash
-python manage.py runserver
+python manage.py loaddata initial_data.json
 ```
 
 ## 👥 Tipos de Usuario
