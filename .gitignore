@@ -27,7 +27,9 @@ venv/
 local_settings.py
 db.sqlite3
 db.sqlite3-journal
-media/
+# Excluir media excepto imágenes de productos y peluquería
+media/mascotas/
+media/usuarios/
 staticfiles/
 
 # Visual Studio Code
