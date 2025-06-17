@@ -1,0 +1,257 @@
+{% extends "admin/base_site.html" %}
+{% load i18n static %}
+
+{% block title %}{% trans 'Site administration' %}{% endblock %}
+
+{% block extrahead %}
+<style>
+    .dashboard-stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        margin: 20px 0;
+    }
+    
+    .stat-card {
+        background: #f8f9fa;
+        border: 1px solid #dee2e6;
+        border-radius: 8px;
+        padding: 20px;
+        text-align: center;
+        transition: transform 0.2s;
+    }
+    
+    .stat-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    
+    .stat-number {
+        font-size: 2.5em;
+        font-weight: bold;
+        color: #007bff;
+        margin: 10px 0;
+    }
+    
+    .stat-label {
+        font-size: 1.1em;
+        color: #6c757d;
+        margin: 0;
+    }
+    
+    .stat-icon {
+        font-size: 3em;
+        margin-bottom: 10px;
+    }
+    
+    .quick-actions {
+        background: #fff;
+        border: 1px solid #dee2e6;
+        border-radius: 8px;
+        padding: 20px;
+        margin: 20px 0;
+    }
+    
+    .quick-actions h3 {
+        color: #007bff;
+        margin-bottom: 15px;
+    }
+    
+    .action-buttons {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+    
+    .action-btn {
+        background: #007bff;
+        color: white;
+        padding: 10px 20px;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background 0.2s;
+    }
+    
+    .action-btn:hover {
+        background: #0056b3;
+        color: white;
+        text-decoration: none;
+    }
+    
+    .action-btn.danger {
+        background: #dc3545;
+    }
+    
+    .action-btn.danger:hover {
+        background: #c82333;
+    }
+    
+    .system-info {
+        background: #e9ecef;
+        border-radius: 8px;
+        padding: 15px;
+        margin: 20px 0;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<h1>🐾 Panel de Control - Mascota Feliz</h1>
+
+<div class="system-info">
+    <h3>📊 Estadísticas del Sistema</h3>
+    <p>Resumen completo de todos los datos gestionados por el sistema</p>
+</div>
+
+<div class="dashboard-stats">
+    <div class="stat-card">
+        <div class="stat-icon">👥</div>
+        <div class="stat-number">{{ estadisticas.total_usuarios|default:0 }}</div>
+        <p class="stat-label">Usuarios Totales</p>
+    </div>
+    
+    <div class="stat-card">
+        <div class="stat-icon">🐕</div>
+        <div class="stat-number">{{ estadisticas.total_mascotas|default:0 }}</div>
+        <p class="stat-label">Mascotas Registradas</p>
+    </div>
+    
+    <div class="stat-card">
+        <div class="stat-icon">👨‍⚕️</div>
+        <div class="stat-number">{{ estadisticas.total_veterinarios|default:0 }}</div>
+        <p class="stat-label">Veterinarios</p>
+    </div>
+    
+    <div class="stat-card">
+        <div class="stat-icon">💊</div>
+        <div class="stat-number">{{ estadisticas.total_farmaceuticos|default:0 }}</div>
+        <p class="stat-label">Farmacéuticos</p>
+    </div>
+    
+    <div class="stat-card">
+        <div class="stat-icon">✂️</div>
+        <div class="stat-number">{{ estadisticas.total_peluqueros|default:0 }}</div>
+        <p class="stat-label">Peluqueros</p>
+    </div>
+    
+    <div class="stat-card">
+        <div class="stat-icon">🛒</div>
+        <div class="stat-number">{{ estadisticas.total_productos|default:0 }}</div>
+        <p class="stat-label">Productos Tienda</p>
+    </div>
+    
+    <div class="stat-card">
+        <div class="stat-icon">💉</div>
+        <div class="stat-number">{{ estadisticas.total_medicamentos|default:0 }}</div>
+        <p class="stat-label">Medicamentos</p>
+    </div>
+    
+    <div class="stat-card">
+        <div class="stat-icon">🎨</div>
+        <div class="stat-number">{{ estadisticas.total_servicios_peluqueria|default:0 }}</div>
+        <p class="stat-label">Servicios Peluquería</p>
+    </div>
+    
+    <div class="stat-card">
+        <div class="stat-icon">📅</div>
+        <div class="stat-number">{{ estadisticas.citas_veterinaria_pendientes|default:0 }}</div>
+        <p class="stat-label">Citas Veterinaria Pendientes</p>
+    </div>
+    
+    <div class="stat-card">
+        <div class="stat-icon">💇</div>
+        <div class="stat-number">{{ estadisticas.citas_peluqueria_pendientes|default:0 }}</div>
+        <p class="stat-label">Citas Peluquería Pendientes</p>
+    </div>
+</div>
+
+<div class="quick-actions">
+    <h3>⚡ Acciones Rápidas</h3>
+    <div class="action-buttons">
+        <a href="{% url 'admin:veterinaria_user_changelist' %}" class="action-btn">
+            👥 Gestionar Usuarios
+        </a>
+        <a href="{% url 'admin:veterinaria_mascota_changelist' %}" class="action-btn">
+            🐕 Gestionar Mascotas
+        </a>
+        <a href="{% url 'admin:veterinaria_producto_changelist' %}" class="action-btn">
+            🛒 Gestionar Productos
+        </a>
+        <a href="{% url 'admin:veterinaria_medicamento_changelist' %}" class="action-btn">
+            💊 Gestionar Medicamentos
+        </a>
+        <a href="{% url 'admin:veterinaria_cita_changelist' %}" class="action-btn">
+            📅 Ver Citas Veterinaria
+        </a>
+        <a href="{% url 'admin:veterinaria_citapeluqueria_changelist' %}" class="action-btn">
+            ✂️ Ver Citas Peluquería
+        </a>
+    </div>
+</div>
+
+<div class="quick-actions">
+    <h3>🔧 Herramientas de Administración</h3>
+    <div class="action-buttons">
+        <a href="/" class="action-btn">
+            🌐 Ver Sitio Web
+        </a>
+        <a href="{% url 'admin:veterinaria_user_add' %}" class="action-btn">
+            ➕ Crear Usuario
+        </a>
+        <a href="{% url 'admin:veterinaria_mascota_add' %}" class="action-btn">
+            🐕 Registrar Mascota
+        </a>
+        <a href="{% url 'admin:veterinaria_producto_add' %}" class="action-btn">
+            📦 Agregar Producto
+        </a>
+    </div>
+</div>
+
+<div class="system-info">
+    <h3>ℹ️ Información del Sistema</h3>
+    <p><strong>Datos de Ejemplo:</strong> Todos los datos mostrados fueron creados por el script <code>crear_datos_ejemplo.py</code></p>
+    <p><strong>Gestión de Datos:</strong> Use el script <code>python gestionar_datos_admin.py</code> para operaciones avanzadas</p>
+    <p><strong>Sincronización:</strong> Los modelos Mascota y Pet están sincronizados automáticamente</p>
+</div>
+
+{% if app_list %}
+    <div id="content-main">
+        {% for app in app_list %}
+            <div class="app-{{ app.app_label }} module">
+                <table>
+                    <caption>
+                        <a href="{{ app.app_url }}" class="section" title="{% blocktrans with name=app.name %}Models in the {{ name }} application{% endblocktrans %}">{{ app.name }}</a>
+                    </caption>
+                    {% for model in app.models %}
+                        <tr class="model-{{ model.object_name|lower }}">
+                            {% if model.admin_url %}
+                                <th scope="row"><a href="{{ model.admin_url }}">{{ model.name }}</a></th>
+                            {% else %}
+                                <th scope="row">{{ model.name }}</th>
+                            {% endif %}
+
+                            {% if model.add_url %}
+                                <td><a href="{{ model.add_url }}" class="addlink">{% trans 'Add' %}</a></td>
+                            {% else %}
+                                <td>&nbsp;</td>
+                            {% endif %}
+
+                            {% if model.admin_url %}
+                                {% if model.view_only %}
+                                    <td><a href="{{ model.admin_url }}" class="viewlink">{% trans 'View' %}</a></td>
+                                {% else %}
+                                    <td><a href="{{ model.admin_url }}" class="changelink">{% trans 'Change' %}</a></td>
+                                {% endif %}
+                            {% else %}
+                                <td>&nbsp;</td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <p>{% trans "You don't have permission to view or edit anything." %}</p>
+{% endif %}
+{% endblock %} 
