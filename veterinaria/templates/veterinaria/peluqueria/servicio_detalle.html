@@ -1,0 +1,331 @@
+{% extends 'veterinaria/base.html' %}
+{% load static %}
+
+{% block title %}{{ servicio.nombre }} - Peluquería{% endblock %}
+
+{% block extra_css %}
+<style>
+    .service-hero {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 80px 0;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .service-hero::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="white" opacity="0.1"/><circle cx="75" cy="75" r="1" fill="white" opacity="0.1"/><circle cx="50" cy="10" r="0.5" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+        opacity: 0.3;
+    }
+    
+    .service-image {
+        border-radius: 20px;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        height: 350px;
+        width: 100%;
+        object-fit: cover;
+        object-position: center;
+    }
+    
+    .price-card {
+        background: linear-gradient(45deg, #56ab2f, #a8e6cf);
+        color: white;
+        border-radius: 20px;
+        padding: 30px;
+        text-align: center;
+        box-shadow: 0 15px 35px rgba(86, 171, 47, 0.3);
+    }
+    
+    .feature-item {
+        background: #f8f9fa;
+        border-radius: 15px;
+        padding: 20px;
+        margin-bottom: 15px;
+        border-left: 5px solid #667eea;
+        transition: all 0.3s ease;
+    }
+    
+    .feature-item:hover {
+        transform: translateX(10px);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    
+    .btn-book-now {
+        background: linear-gradient(45deg, #ff6b6b, #feca57);
+        border: none;
+        color: white;
+        font-weight: bold;
+        padding: 15px 40px;
+        border-radius: 30px;
+        font-size: 1.1rem;
+        transition: all 0.3s ease;
+        box-shadow: 0 8px 20px rgba(255, 107, 107, 0.3);
+    }
+    
+    .btn-book-now:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 12px 25px rgba(255, 107, 107, 0.4);
+        color: white;
+    }
+    
+    .info-badge {
+        background: rgba(255,255,255,0.2);
+        color: white;
+        padding: 8px 16px;
+        border-radius: 20px;
+        font-size: 0.9rem;
+        margin: 5px;
+        display: inline-block;
+    }
+    
+    .recommendation-box {
+        background: linear-gradient(45deg, #ffeaa7, #fdcb6e);
+        border-radius: 15px;
+        padding: 20px;
+        margin: 20px 0;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<div class="service-hero">
+    <div class="container position-relative">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                <div class="mb-3">
+                    <span class="info-badge">
+                        <i class="fas fa-tag me-2"></i>{{ servicio.categoria.nombre }}
+                    </span>
+                    <span class="info-badge">
+                        <i class="fas fa-paw me-2"></i>{{ servicio.get_tipo_mascota_display }}
+                    </span>
+                    {% if servicio.tamaño_mascota != 'todos' %}
+                        <span class="info-badge">
+                            <i class="fas fa-weight me-2"></i>{{ servicio.get_tamaño_mascota_display }}
+                        </span>
+                    {% endif %}
+                </div>
+                
+                <h1 class="display-4 mb-3">{{ servicio.nombre }}</h1>
+                <p class="lead mb-4">{{ servicio.descripcion }}</p>
+                
+                <div class="d-flex align-items-center mb-4">
+                    <div class="me-4">
+                        <i class="fas fa-clock fa-2x me-2"></i>
+                        <span class="h5">{{ servicio.duracion_formateada }}</span>
+                    </div>
+                    <div>
+                        <i class="fas fa-dollar-sign fa-2x me-2"></i>
+                        <span class="h3">${{ servicio.precio_base|floatformat:0 }}</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 text-center">
+                {% if servicio.imagen %}
+                    <img src="{{ servicio.imagen.url }}" alt="{{ servicio.nombre }}" class="service-image">
+                {% else %}
+                    <div class="service-image bg-white d-flex align-items-center justify-content-center">
+                        <i class="fas fa-cut fa-5x text-primary"></i>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container py-5">
+    <div class="row">
+        <div class="col-lg-8">
+            <!-- Qué incluye el servicio -->
+            <div class="mb-5">
+                <h3 class="mb-4">
+                    <i class="fas fa-check-circle text-success me-2"></i>
+                    ¿Qué incluye este servicio?
+                </h3>
+                <div class="feature-item">
+                    <p class="mb-0">{{ servicio.incluye }}</p>
+                </div>
+            </div>
+            
+            <!-- Recomendaciones -->
+            {% if servicio.recomendaciones %}
+                <div class="mb-5">
+                    <h3 class="mb-4">
+                        <i class="fas fa-lightbulb text-warning me-2"></i>
+                        Recomendaciones
+                    </h3>
+                    <div class="recommendation-box">
+                        <p class="mb-0">{{ servicio.recomendaciones }}</p>
+                    </div>
+                </div>
+            {% endif %}
+            
+            <!-- Información adicional -->
+            <div class="mb-5">
+                <h3 class="mb-4">
+                    <i class="fas fa-info-circle text-info me-2"></i>
+                    Información del Servicio
+                </h3>
+                
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="feature-item">
+                            <h6><i class="fas fa-paw text-primary me-2"></i>Tipo de Mascota</h6>
+                            <p class="mb-0">{{ servicio.get_tipo_mascota_display }}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <div class="feature-item">
+                            <h6><i class="fas fa-weight text-primary me-2"></i>Tamaño Recomendado</h6>
+                            <p class="mb-0">{{ servicio.get_tamaño_mascota_display }}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <div class="feature-item">
+                            <h6><i class="fas fa-clock text-primary me-2"></i>Duración Estimada</h6>
+                            <p class="mb-0">{{ servicio.duracion_formateada }}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <div class="feature-item">
+                            <h6><i class="fas fa-calendar text-primary me-2"></i>Disponibilidad</h6>
+                            <p class="mb-0">Lunes a Sábado, 9:00 AM - 6:00 PM</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Proceso del servicio -->
+            <div class="mb-5">
+                <h3 class="mb-4">
+                    <i class="fas fa-list-ol text-primary me-2"></i>
+                    ¿Cómo funciona?
+                </h3>
+                
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <div class="feature-item">
+                            <h6><span class="badge bg-primary rounded-circle me-2">1</span>Agenda tu cita</h6>
+                            <p class="mb-0">Selecciona fecha y hora que mejor te convenga</p>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 mb-3">
+                        <div class="feature-item">
+                            <h6><span class="badge bg-primary rounded-circle me-2">2</span>Trae a tu mascota</h6>
+                            <p class="mb-0">Llega 10 minutos antes de tu cita</p>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 mb-3">
+                        <div class="feature-item">
+                            <h6><span class="badge bg-primary rounded-circle me-2">3</span>Relajación total</h6>
+                            <p class="mb-0">Nuestros expertos cuidan a tu mascota</p>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 mb-3">
+                        <div class="feature-item">
+                            <h6><span class="badge bg-primary rounded-circle me-2">4</span>¡Listo!</h6>
+                            <p class="mb-0">Recoge a tu mascota hermosa y feliz</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Sidebar con precio y reserva -->
+        <div class="col-lg-4">
+            <div class="price-card sticky-top" style="top: 100px;">
+                <h4 class="mb-3">
+                    <i class="fas fa-cut me-2"></i>
+                    Reserva Ahora
+                </h4>
+                
+                <div class="mb-4">
+                    <div class="h2 mb-1">${{ servicio.precio_base|floatformat:0 }}</div>
+                    <small class="opacity-75">Precio base del servicio</small>
+                </div>
+                
+                <div class="mb-4">
+                    <div class="d-flex justify-content-between mb-2">
+                        <span><i class="fas fa-clock me-2"></i>Duración:</span>
+                        <strong>{{ servicio.duracion_formateada }}</strong>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2">
+                        <span><i class="fas fa-paw me-2"></i>Para:</span>
+                        <strong>{{ servicio.get_tipo_mascota_display }}</strong>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <span><i class="fas fa-calendar me-2"></i>Disponible:</span>
+                        <strong>Lun - Sáb</strong>
+                    </div>
+                </div>
+                
+                {% if user.is_authenticated %}
+                    <div class="d-grid gap-2">
+                        <a href="{% url 'agendar_cita_peluqueria_servicio' servicio.id %}" class="btn btn-book-now">
+                            <i class="fas fa-calendar-plus me-2"></i>
+                            Agendar Cita
+                        </a>
+                        <a href="{% url 'peluqueria_catalogo' %}" class="btn btn-outline-light">
+                            <i class="fas fa-arrow-left me-2"></i>
+                            Ver Más Servicios
+                        </a>
+                    </div>
+                {% else %}
+                    <div class="d-grid gap-2">
+                        <a href="{% url 'login' %}" class="btn btn-book-now">
+                            <i class="fas fa-sign-in-alt me-2"></i>
+                            Inicia Sesión para Agendar
+                        </a>
+                        <a href="{% url 'register' %}" class="btn btn-outline-light">
+                            <i class="fas fa-user-plus me-2"></i>
+                            Crear Cuenta
+                        </a>
+                    </div>
+                {% endif %}
+                
+                <hr class="my-4">
+                
+                <div class="text-center">
+                    <h6 class="mb-3">¿Tienes preguntas?</h6>
+                    <p class="small mb-3">Contáctanos para más información</p>
+                    <div class="d-grid gap-2">
+                        <a href="tel:+56912345678" class="btn btn-outline-light btn-sm">
+                            <i class="fas fa-phone me-2"></i>
+                            +56 9 1234 5678
+                        </a>
+                        <a href="mailto:info@mascotafeliz.com" class="btn btn-outline-light btn-sm">
+                            <i class="fas fa-envelope me-2"></i>
+                            info@mascotafeliz.com
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Servicios relacionados -->
+    <div class="mt-5">
+        <h3 class="text-center mb-4">Otros Servicios que te Pueden Interesar</h3>
+        <div class="text-center">
+            <a href="{% url 'peluqueria_catalogo' %}" class="btn btn-primary btn-lg">
+                <i class="fas fa-eye me-2"></i>
+                Ver Todos los Servicios
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %} 

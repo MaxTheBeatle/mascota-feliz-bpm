@@ -1,0 +1,354 @@
+{% extends 'veterinaria/base.html' %}
+{% load static %}
+
+{% block title %}Galería de Trabajos - Peluquería{% endblock %}
+
+{% block extra_css %}
+<style>
+    body {
+        background-color: #f8f9fa;
+    }
+
+    /* Hero Section */
+    .gallery-hero {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 4rem 0;
+        margin-bottom: 2rem;
+    }
+
+    .gallery-hero h1 {
+        font-weight: 700;
+        text-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    }
+
+    .gallery-hero p {
+        font-size: 1.25rem;
+        opacity: 0.9;
+    }
+
+    /* Filtros */
+    .filter-tabs {
+        background-color: white;
+        padding: 1.5rem;
+        border-radius: 0.75rem;
+        margin-bottom: 3rem;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    }
+
+    .filter-btn {
+        border: 2px solid #e9ecef;
+        background: transparent;
+        color: #495057;
+        padding: 8px 20px;
+        border-radius: 20px;
+        margin: 0 5px;
+        transition: all 0.3s ease;
+    }
+
+    .filter-btn:hover, .filter-btn.active {
+        background: linear-gradient(45deg, #667eea, #764ba2);
+        border-color: transparent;
+        color: white;
+    }
+
+    /* Tarjetas de Transformación */
+    .transformation-card {
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        margin-bottom: 30px;
+        transition: transform 0.3s ease;
+        overflow: hidden;
+    }
+
+    .transformation-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    }
+
+    .before-after-container {
+        position: relative;
+        height: 300px;
+        cursor: pointer;
+    }
+
+    .before-image, .after-image {
+        position: absolute;
+        top: 0;
+        width: 50%;
+        height: 100%;
+        object-fit: cover;
+        transition: all 0.3s ease;
+    }
+
+    .before-image {
+        left: 0;
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    }
+
+    .after-image {
+        right: 0;
+    }
+
+    .image-label {
+        position: absolute;
+        bottom: 1rem;
+        padding: 0.5rem 1rem;
+        color: white;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        z-index: 10;
+    }
+
+    .before-label {
+        left: 1rem;
+        background-color: rgba(231, 76, 60, 0.9);
+    }
+
+    .after-label {
+        right: 1rem;
+        background-color: rgba(46, 204, 113, 0.9);
+    }
+
+    .card-content {
+        padding: 1.5rem;
+    }
+
+    .service-tag {
+        background: #f8f9fa;
+        color: #495057;
+        padding: 4px 10px;
+        border-radius: 15px;
+        font-size: 0.85rem;
+        margin-right: 5px;
+        margin-bottom: 5px;
+        display: inline-block;
+    }
+
+    /* Lightbox */
+    .lightbox {
+        display: none;
+        position: fixed;
+        z-index: 999;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.9);
+        padding: 2rem;
+    }
+
+    .lightbox-content {
+        max-width: 90%;
+        max-height: 90vh;
+        margin: auto;
+        display: block;
+        object-fit: contain;
+    }
+
+    .close-lightbox {
+        position: absolute;
+        top: 1rem;
+        right: 2rem;
+        color: white;
+        font-size: 2rem;
+        cursor: pointer;
+        z-index: 1000;
+    }
+
+    .lightbox-nav {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        color: white;
+        font-size: 2rem;
+        cursor: pointer;
+        padding: 1rem;
+        z-index: 1000;
+    }
+
+    .lightbox-prev {
+        left: 1rem;
+    }
+
+    .lightbox-next {
+        right: 1rem;
+    }
+
+    /* Animación de carga */
+    .loading-spinner {
+        width: 50px;
+        height: 50px;
+        border: 5px solid #f3f3f3;
+        border-top: 5px solid #667eea;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin: 2rem auto;
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<div class="gallery-hero">
+    <div class="container text-center">
+        <h1 class="display-4 mb-4">Galería de Transformaciones</h1>
+        <p class="lead mb-0">Descubre las increíbles transformaciones de nuestros clientes peludos</p>
+    </div>
+</div>
+
+<div class="container">
+    <!-- Filtros -->
+    <div class="filter-tabs">
+        <div class="d-flex justify-content-center flex-wrap gap-2">
+            <button class="filter-btn active" data-filter="all">
+                <i class="fas fa-th-large me-2"></i>Todos
+            </button>
+            <button class="filter-btn" data-filter="corte">
+                <i class="fas fa-cut me-2"></i>Cortes
+            </button>
+            <button class="filter-btn" data-filter="bano">
+                <i class="fas fa-shower me-2"></i>Baños
+            </button>
+            <button class="filter-btn" data-filter="completo">
+                <i class="fas fa-star me-2"></i>Servicios Completos
+            </button>
+        </div>
+    </div>
+
+    <!-- Galería -->
+    <div class="row" id="gallery">
+        {% for foto in fotos %}
+            <div class="col-lg-4 col-md-6 gallery-item" data-category="completo">
+                <div class="transformation-card">
+                    <div class="before-after-container">
+                        {% if foto.foto_antes %}
+                            <img src="{{ foto.foto_antes.url }}" alt="Antes" class="before-image" onclick="openLightbox('{{ foto.foto_antes.url }}')">
+                            <span class="image-label before-label">Antes</span>
+                        {% endif %}
+                        
+                        {% if foto.foto_despues %}
+                            <img src="{{ foto.foto_despues.url }}" alt="Después" class="after-image" onclick="openLightbox('{{ foto.foto_despues.url }}')">
+                            <span class="image-label after-label">Después</span>
+                        {% endif %}
+                    </div>
+                    <div class="card-content">
+                        <h5 class="mb-2">
+                            <i class="fas fa-paw me-2 text-primary"></i>{{ foto.cita.mascota.nombre }}
+                        </h5>
+                        <p class="text-muted small mb-3">
+                            <i class="fas fa-user-md me-1"></i>Peluquero: {{ foto.cita.peluquero.user.get_full_name }}<br>
+                            <i class="fas fa-calendar-alt me-1"></i>Fecha: {{ foto.fecha_subida|date:"d/m/Y" }}
+                        </p>
+                        {% if foto.descripcion %}
+                            <p class="mb-3">{{ foto.descripcion|truncatewords:15 }}</p>
+                        {% endif %}
+                        <div class="d-flex flex-wrap gap-1">
+                            {% for servicio in foto.cita.servicios.all %}
+                                <span class="service-tag">
+                                    <i class="fas fa-cut me-1"></i>{{ servicio.servicio.nombre }}
+                                </span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <div class="col-12 text-center py-5">
+                <i class="fas fa-camera-retro fa-4x text-muted mb-3"></i>
+                <h4>No hay fotos para mostrar</h4>
+                <p class="text-muted">Pronto agregaremos nuevas transformaciones</p>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Lightbox -->
+<div id="lightbox" class="lightbox">
+    <span class="close-lightbox" onclick="closeLightbox()">&times;</span>
+    <span class="lightbox-nav lightbox-prev" onclick="changeImage(-1)">&#10094;</span>
+    <span class="lightbox-nav lightbox-next" onclick="changeImage(1)">&#10095;</span>
+    <img class="lightbox-content" id="lightbox-img">
+</div>
+
+<script>
+let currentImageIndex = 0;
+const images = document.querySelectorAll('.before-image, .after-image');
+
+function openLightbox(src) {
+    document.getElementById('lightbox').style.display = "flex";
+    const img = document.getElementById('lightbox-img');
+    img.src = src;
+    
+    // Find current image index
+    for(let i = 0; i < images.length; i++) {
+        if(images[i].src === src) {
+            currentImageIndex = i;
+            break;
+        }
+    }
+}
+
+function closeLightbox() {
+    document.getElementById('lightbox').style.display = "none";
+}
+
+function changeImage(direction) {
+    currentImageIndex += direction;
+    if(currentImageIndex >= images.length) currentImageIndex = 0;
+    if(currentImageIndex < 0) currentImageIndex = images.length - 1;
+    
+    const img = document.getElementById('lightbox-img');
+    img.src = images[currentImageIndex].src;
+}
+
+// Filter functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const galleryItems = document.querySelectorAll('.gallery-item');
+
+    filterButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            // Manage active state
+            filterButtons.forEach(btn => btn.classList.remove('active'));
+            this.classList.add('active');
+
+            const filter = this.getAttribute('data-filter');
+
+            galleryItems.forEach(item => {
+                if (filter === 'all' || item.getAttribute('data-category') === filter) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+    });
+});
+
+// Close lightbox when clicking outside the image
+document.getElementById('lightbox').addEventListener('click', function(e) {
+    if(e.target === this) {
+        closeLightbox();
+    }
+});
+
+// Keyboard navigation
+document.addEventListener('keydown', function(e) {
+    if(document.getElementById('lightbox').style.display === "flex") {
+        if(e.key === "ArrowLeft") changeImage(-1);
+        if(e.key === "ArrowRight") changeImage(1);
+        if(e.key === "Escape") closeLightbox();
+    }
+});
+</script>
+{% endblock %} 

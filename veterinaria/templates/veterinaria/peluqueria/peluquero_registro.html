@@ -1,0 +1,402 @@
+{% extends 'veterinaria/base.html' %}
+{% load static %}
+
+{% block title %}Registro de Peluquero - Mascota Feliz{% endblock %}
+
+{% block extra_css %}
+<style>
+    .registro-container {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        padding: 40px 0;
+    }
+    
+    .registro-card {
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        overflow: hidden;
+        margin: 20px 0;
+    }
+    
+    .registro-header {
+        background: linear-gradient(45deg, #667eea, #764ba2);
+        color: white;
+        padding: 40px;
+        text-align: center;
+    }
+    
+    .registro-body {
+        padding: 40px;
+    }
+    
+    .form-floating {
+        margin-bottom: 20px;
+    }
+    
+    .form-control:focus {
+        border-color: #667eea;
+        box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+    }
+    
+    .btn-registro {
+        background: linear-gradient(45deg, #667eea, #764ba2);
+        border: none;
+        color: white;
+        font-weight: bold;
+        padding: 15px 30px;
+        border-radius: 25px;
+        transition: all 0.3s ease;
+        width: 100%;
+    }
+    
+    .btn-registro:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        color: white;
+    }
+    
+    .especialidad-checkbox {
+        background: #f8f9fa;
+        border-radius: 10px;
+        padding: 15px;
+        margin-bottom: 10px;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+    
+    .especialidad-checkbox:hover {
+        background: #e9ecef;
+    }
+    
+    .especialidad-checkbox input:checked + label {
+        color: #667eea;
+        font-weight: bold;
+    }
+    
+    .requirements-list {
+        background: #f8f9fa;
+        border-radius: 15px;
+        padding: 25px;
+        margin: 20px 0;
+    }
+    
+    .requirement-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+    
+    .requirement-item i {
+        color: #28a745;
+        margin-right: 10px;
+    }
+    
+    .benefits-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        margin: 30px 0;
+    }
+    
+    .benefit-card {
+        background: white;
+        border-radius: 15px;
+        padding: 25px;
+        text-align: center;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        transition: transform 0.3s ease;
+    }
+    
+    .benefit-card:hover {
+        transform: translateY(-5px);
+    }
+    
+    .benefit-icon {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background: linear-gradient(45deg, #667eea, #764ba2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 15px;
+        color: white;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="registro-container">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="registro-card">
+                    <div class="registro-header">
+                        <h1 class="mb-3">
+                            <i class="fas fa-cut fa-2x mb-3"></i><br>
+                            Únete a Nuestro Equipo
+                        </h1>
+                        <p class="lead mb-0">Conviértete en peluquero profesional de Mascota Feliz</p>
+                    </div>
+                    
+                    <div class="registro-body">
+                        <!-- Beneficios -->
+                        <div class="text-center mb-5">
+                            <h3 class="mb-4">¿Por qué trabajar con nosotros?</h3>
+                            <div class="benefits-grid">
+                                <div class="benefit-card">
+                                    <div class="benefit-icon">
+                                        <i class="fas fa-dollar-sign fa-2x"></i>
+                                    </div>
+                                    <h5>Ingresos Competitivos</h5>
+                                    <p class="text-muted">Comisiones atractivas y bonos por desempeño</p>
+                                </div>
+                                
+                                <div class="benefit-card">
+                                    <div class="benefit-icon">
+                                        <i class="fas fa-calendar-alt fa-2x"></i>
+                                    </div>
+                                    <h5>Horarios Flexibles</h5>
+                                    <p class="text-muted">Gestiona tu propio horario de trabajo</p>
+                                </div>
+                                
+                                <div class="benefit-card">
+                                    <div class="benefit-icon">
+                                        <i class="fas fa-graduation-cap fa-2x"></i>
+                                    </div>
+                                    <h5>Capacitación Continua</h5>
+                                    <p class="text-muted">Cursos y talleres de actualización</p>
+                                </div>
+                                
+                                <div class="benefit-card">
+                                    <div class="benefit-icon">
+                                        <i class="fas fa-users fa-2x"></i>
+                                    </div>
+                                    <h5>Clientes Garantizados</h5>
+                                    <p class="text-muted">Acceso a nuestra base de clientes</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Requisitos -->
+                        <div class="requirements-list">
+                            <h4 class="mb-3">
+                                <i class="fas fa-clipboard-check text-primary me-2"></i>
+                                Requisitos
+                            </h4>
+                            <div class="requirement-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Certificación en peluquería canina/felina</span>
+                            </div>
+                            <div class="requirement-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Mínimo 2 años de experiencia comprobable</span>
+                            </div>
+                            <div class="requirement-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Pasión por el cuidado animal</span>
+                            </div>
+                            <div class="requirement-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Disponibilidad de horario</span>
+                            </div>
+                            <div class="requirement-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Excelente trato con clientes</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Formulario de Registro -->
+                        <form method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            
+                            <h4 class="mb-4 text-center">Completa tu Registro</h4>
+                            
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        {{ form.first_name }}
+                                        <label for="{{ form.first_name.id_for_label }}">Nombre *</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        {{ form.last_name }}
+                                        <label for="{{ form.last_name.id_for_label }}">Apellido *</label>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        {{ form.email }}
+                                        <label for="{{ form.email.id_for_label }}">Email *</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        {{ form.telefono }}
+                                        <label for="{{ form.telefono.id_for_label }}">Teléfono *</label>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        {{ form.password1 }}
+                                        <label for="{{ form.password1.id_for_label }}">Contraseña *</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        {{ form.password2 }}
+                                        <label for="{{ form.password2.id_for_label }}">Confirmar Contraseña *</label>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        {{ form.experiencia_años }}
+                                        <label for="{{ form.experiencia_años.id_for_label }}">Años de Experiencia *</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        {{ form.certificaciones }}
+                                        <label for="{{ form.certificaciones.id_for_label }}">Certificaciones</label>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Especialidades -->
+                            <div class="mb-4">
+                                <h5 class="mb-3">Especialidades *</h5>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="especialidad-checkbox">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="especialidades" value="Corte y Peinado" id="esp1">
+                                                <label class="form-check-label" for="esp1">
+                                                    <i class="fas fa-cut me-2"></i>Corte y Peinado
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="especialidad-checkbox">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="especialidades" value="Baño y Secado" id="esp2">
+                                                <label class="form-check-label" for="esp2">
+                                                    <i class="fas fa-shower me-2"></i>Baño y Secado
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="especialidad-checkbox">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="especialidades" value="Cuidado de Uñas" id="esp3">
+                                                <label class="form-check-label" for="esp3">
+                                                    <i class="fas fa-hand-scissors me-2"></i>Cuidado de Uñas
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="especialidad-checkbox">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="especialidades" value="Tratamientos Especiales" id="esp4">
+                                                <label class="form-check-label" for="esp4">
+                                                    <i class="fas fa-spa me-2"></i>Tratamientos Especiales
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Horarios -->
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        {{ form.horario_inicio }}
+                                        <label for="{{ form.horario_inicio.id_for_label }}">Horario de Inicio *</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        {{ form.horario_fin }}
+                                        <label for="{{ form.horario_fin.id_for_label }}">Horario de Fin *</label>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Descripción -->
+                            <div class="form-floating mb-4">
+                                {{ form.descripcion }}
+                                <label for="{{ form.descripcion.id_for_label }}">Descripción Personal</label>
+                            </div>
+                            
+                            <!-- Foto de Perfil -->
+                            <div class="mb-4">
+                                <label for="{{ form.foto_perfil.id_for_label }}" class="form-label">
+                                    <i class="fas fa-camera me-2"></i>Foto de Perfil
+                                </label>
+                                {{ form.foto_perfil }}
+                                <div class="form-text">Sube una foto profesional para tu perfil</div>
+                            </div>
+                            
+                            <!-- Términos y Condiciones -->
+                            <div class="form-check mb-4">
+                                <input class="form-check-input" type="checkbox" id="terminos" required>
+                                <label class="form-check-label" for="terminos">
+                                    Acepto los <a href="#" class="text-primary">términos y condiciones</a> y la <a href="#" class="text-primary">política de privacidad</a> *
+                                </label>
+                            </div>
+                            
+                            <!-- Errores del formulario -->
+                            {% if form.errors %}
+                                <div class="alert alert-danger">
+                                    <h6><i class="fas fa-exclamation-triangle me-2"></i>Por favor corrige los siguientes errores:</h6>
+                                    {% for field, errors in form.errors.items %}
+                                        {% for error in errors %}
+                                            <div>• {{ error }}</div>
+                                        {% endfor %}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                            
+                            <!-- Botón de registro -->
+                            <button type="submit" class="btn btn-registro">
+                                <i class="fas fa-user-plus me-2"></i>
+                                Registrarme como Peluquero
+                            </button>
+                        </form>
+                        
+                        <!-- Enlaces adicionales -->
+                        <div class="text-center mt-4">
+                            <p class="text-muted">
+                                ¿Ya tienes una cuenta? 
+                                <a href="{% url 'login' %}" class="text-primary text-decoration-none">
+                                    <strong>Inicia sesión aquí</strong>
+                                </a>
+                            </p>
+                            <p class="text-muted">
+                                ¿Necesitas ayuda? 
+                                <a href="tel:+56912345678" class="text-primary text-decoration-none">
+                                    <strong>Contáctanos: +56 9 1234 5678</strong>
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

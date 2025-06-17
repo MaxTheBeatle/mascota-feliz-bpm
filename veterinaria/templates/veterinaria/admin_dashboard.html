@@ -1,34 +1,335 @@
 {% extends 'veterinaria/base.html' %}
 
+{% block title %}Panel de Administración - Mascota Feliz{% endblock %}
+
 {% block content %}
-<div class="container mt-4">
-    <h2>Panel de Administración</h2>
-    
-    <div class="row mt-4">
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Estadísticas Generales</h5>
-                    <p><strong>Total de Mascotas:</strong> {{ total_pets }}</p>
-                    <p><strong>Total de Servicios:</strong> {{ total_services }}</p>
+<div class="container-fluid mt-4">
+    <!-- Header -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h1 class="h3 mb-0 text-gray-800">
+                        <i class="fas fa-tachometer-alt text-primary me-2"></i>
+                        Panel de Administración
+                    </h1>
+                    <p class="text-muted">Gestión completa del sistema Mascota Feliz</p>
+                </div>
+                <div>
+                    <a href="{% url 'admin:index' %}" class="btn btn-primary">
+                        <i class="fas fa-database me-2"></i>Panel Django Admin
+                    </a>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="row mt-4">
-        <div class="col-12">
-            <div class="card">
+    <!-- Estadísticas Generales -->
+    <div class="row mb-4">
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2">
                 <div class="card-body">
-                    <h5 class="card-title">Mascotas Registradas</h5>
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                Total Usuarios
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ total_usuarios }}</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-users fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                Total Mascotas
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ total_mascotas }}</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-paw fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-info shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                Total Citas
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ total_citas }}</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-calendar-alt fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-warning shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                Total Recetas
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ total_recetas }}</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-prescription fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Personal del Sistema -->
+    <div class="row mb-4">
+        <div class="col-xl-4 col-md-6 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                Veterinarios
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ total_veterinarios }}</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-user-md fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-4 col-md-6 mb-4">
+            <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                Farmacéuticos
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ total_farmaceuticos }}</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-pills fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-4 col-md-6 mb-4">
+            <div class="card border-left-info shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                Peluqueros
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ total_peluqueros }}</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-cut fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Estado de Citas -->
+    <div class="row mb-4">
+        <div class="col-xl-4 col-md-6 mb-4">
+            <div class="card border-left-warning shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                Citas Programadas
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ citas_programadas }}</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-clock fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-4 col-md-6 mb-4">
+            <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                Citas Completadas
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ citas_completadas }}</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-check-circle fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-4 col-md-6 mb-4">
+            <div class="card border-left-danger shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
+                                Citas Canceladas
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ citas_canceladas }}</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-times-circle fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Todas las Mascotas del Sistema -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">
+                        <i class="fas fa-paw me-2"></i>Todas las Mascotas del Sistema
+                    </h6>
+                    <div class="dropdown no-arrow">
+                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown">
+                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right shadow">
+                            <div class="dropdown-header">Acciones:</div>
+                            <a class="dropdown-item" href="{% url 'admin:veterinaria_mascota_changelist' %}">
+                                <i class="fas fa-edit fa-sm fa-fw mr-2 text-gray-400"></i>
+                                Gestionar en Admin
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table">
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                             <thead>
                                 <tr>
                                     <th>ID</th>
                                     <th>Nombre</th>
-                                    <th>Dueño</th>
+                                    <th>Propietario</th>
                                     <th>Especie</th>
+                                    <th>Raza</th>
+                                    <th>Edad</th>
+                                    <th>Condición</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for mascota in mascotas %}
+                                <tr>
+                                    <td>{{ mascota.id }}</td>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <i class="fas fa-paw text-primary me-2"></i>
+                                            <strong>{{ mascota.nombre }}</strong>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        {% if mascota.propietario %}
+                                            <div class="d-flex align-items-center">
+                                                <i class="fas fa-user text-info me-2"></i>
+                                                {{ mascota.propietario.get_full_name|default:mascota.propietario.username }}
+                                            </div>
+                                            <small class="text-muted">{{ mascota.propietario.email }}</small>
+                                        {% else %}
+                                            <span class="text-muted">Sin propietario</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <span class="badge badge-{% if mascota.especie == 'Perro' %}primary{% else %}success{% endif %}">
+                                            {{ mascota.especie }}
+                                        </span>
+                                    </td>
+                                    <td>{{ mascota.raza }}</td>
+                                    <td>{{ mascota.edad }}</td>
+                                    <td>
+                                        <span class="badge badge-{% if mascota.condicion == 'Normal' %}success{% elif mascota.condicion == 'Herido' %}danger{% else %}warning{% endif %}">
+                                            {{ mascota.condicion }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <div class="btn-group" role="group">
+                                            <a href="{% url 'pet_detail' mascota.id %}" class="btn btn-sm btn-outline-info" title="Ver detalles">
+                                                <i class="fas fa-eye"></i>
+                                            </a>
+                                            <a href="{% url 'admin:veterinaria_mascota_change' mascota.id %}" class="btn btn-sm btn-outline-primary" title="Editar">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="8" class="text-center text-muted">
+                                        <i class="fas fa-exclamation-circle me-2"></i>
+                                        No hay mascotas registradas en el sistema
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mascotas del Sistema Legacy (Pet) -->
+    {% if pets %}
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-secondary">
+                        <i class="fas fa-database me-2"></i>Mascotas del Sistema Legacy
+                    </h6>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Nombre</th>
+                                    <th>Propietario</th>
+                                    <th>Especie</th>
+                                    <th>Raza</th>
+                                    <th>Edad</th>
                                     <th>Estado</th>
                                     <th>Acciones</th>
                                 </tr>
@@ -38,17 +339,19 @@
                                 <tr>
                                     <td>{{ pet.id }}</td>
                                     <td>{{ pet.name }}</td>
-                                    <td>{{ pet.owner.username }}</td>
+                                    <td>{{ pet.owner.get_full_name|default:pet.owner.username }}</td>
                                     <td>{{ pet.species }}</td>
-                                    <td>{{ pet.condition }}</td>
+                                    <td>{{ pet.breed }}</td>
+                                    <td>{{ pet.age_years }} años {{ pet.age_months }} meses</td>
                                     <td>
-                                        <a href="{% url 'pet_detail' pet.id %}" class="btn btn-sm btn-info">Ver detalles</a>
+                                        <span class="badge badge-secondary">{{ pet.condition }}</span>
+                                    </td>
+                                    <td>
+                                        <a href="{% url 'pet_detail' pet.id %}" class="btn btn-sm btn-outline-info">
+                                            <i class="fas fa-eye"></i> Ver
+                                        </a>
                                     </td>
                                 </tr>
-                                {% empty %}
-                                <tr>
-                                    <td colspan="6">No hay mascotas registradas</td>
-                                </tr>
                                 {% endfor %}
                             </tbody>
                         </table>
@@ -57,43 +360,52 @@
             </div>
         </div>
     </div>
-
-    <div class="row mt-4">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Servicios Recientes</h5>
-                    <div class="table-responsive">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Fecha</th>
-                                    <th>Mascota</th>
-                                    <th>Dueño</th>
-                                    <th>Tipo de Servicio</th>
-                                    <th>Tipo de Reserva</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for service in services %}
-                                <tr>
-                                    <td>{{ service.date }}</td>
-                                    <td>{{ service.pet.name }}</td>
-                                    <td>{{ service.pet.owner.username }}</td>
-                                    <td>{{ service.service_type }}</td>
-                                    <td>{{ service.reservation_type }}</td>
-                                </tr>
-                                {% empty %}
-                                <tr>
-                                    <td colspan="5">No hay servicios registrados</td>
-                                </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    {% endif %}
 </div>
+
+<style>
+.border-left-primary {
+    border-left: 0.25rem solid #4e73df !important;
+}
+
+.border-left-success {
+    border-left: 0.25rem solid #1cc88a !important;
+}
+
+.border-left-info {
+    border-left: 0.25rem solid #36b9cc !important;
+}
+
+.border-left-warning {
+    border-left: 0.25rem solid #f6c23e !important;
+}
+
+.border-left-danger {
+    border-left: 0.25rem solid #e74a3b !important;
+}
+
+.text-xs {
+    font-size: 0.7rem;
+}
+
+.badge-primary {
+    background-color: #4e73df;
+}
+
+.badge-success {
+    background-color: #1cc88a;
+}
+
+.badge-warning {
+    background-color: #f6c23e;
+}
+
+.badge-danger {
+    background-color: #e74a3b;
+}
+
+.badge-secondary {
+    background-color: #858796;
+}
+</style>
 {% endblock %} 

@@ -1,0 +1,244 @@
+{% extends 'veterinaria/base.html' %}
+{% load static %}
+
+{% block title %}Mis Citas - Peluquería{% endblock %}
+
+{% block extra_css %}
+<style>
+    .appointments-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 40px 0;
+        border-radius: 0 0 30px 30px;
+        margin-bottom: 30px;
+    }
+
+    .filter-btn {
+        border: 2px solid #e9ecef;
+        background: transparent;
+        color: #495057;
+        padding: 8px 20px;
+        border-radius: 20px;
+        margin: 0 5px;
+        transition: all 0.3s ease;
+    }
+
+    .filter-btn:hover, .filter-btn.active {
+        background: linear-gradient(45deg, #667eea, #764ba2);
+        border-color: transparent;
+        color: white;
+    }
+
+    .appointment-card {
+        background: white;
+        border-radius: 15px;
+        padding: 20px;
+        margin-bottom: 15px;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+        border-left: 4px solid;
+        transition: all 0.3s ease;
+    }
+
+    .appointment-card:hover {
+        box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        transform: translateX(5px);
+    }
+
+    .appointment-card.programada { border-left-color: #3498db; }
+    .appointment-card.confirmada { border-left-color: #f39c12; }
+    .appointment-card.en_proceso { border-left-color: #9b59b6; }
+    .appointment-card.completada { border-left-color: #27ae60; }
+    .appointment-card.cancelada { border-left-color: #e74c3c; }
+    .appointment-card.no_asistio { border-left-color: #95a5a6; }
+
+    .pet-image {
+        width: 60px;
+        height: 60px;
+        border-radius: 10px;
+        object-fit: cover;
+    }
+
+    .service-tag {
+        background: #f8f9fa;
+        color: #495057;
+        padding: 4px 10px;
+        border-radius: 15px;
+        font-size: 0.85rem;
+        margin-right: 5px;
+        margin-bottom: 5px;
+        display: inline-block;
+    }
+
+    .status-badge {
+        padding: 6px 12px;
+        border-radius: 15px;
+        font-weight: 600;
+        font-size: 0.85rem;
+    }
+
+    .btn-action {
+        border-radius: 20px;
+        padding: 8px 15px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+
+    .btn-action:hover {
+        transform: translateY(-2px);
+    }
+
+    .calendar-header {
+        background: white;
+        border-radius: 15px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+    }
+
+    .date-selector {
+        background: #f8f9fa;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 20px;
+        color: #495057;
+        font-weight: 600;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Header -->
+<div class="appointments-header">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                <h1 class="display-4 mb-3">Mis Citas</h1>
+                <p class="lead mb-0">Gestiona todas tus citas de peluquería desde aquí</p>
+            </div>
+            <div class="col-lg-4 text-lg-end">
+                <div class="btn-group">
+                    <a href="{% url 'peluquero_dashboard' %}" class="btn btn-light">
+                        <i class="fas fa-th-large me-2"></i>Dashboard
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <!-- Filtros -->
+    <div class="calendar-header">
+        <form method="get" class="row align-items-center">
+            <div class="col-lg-3">
+                <label class="form-label small">Desde:</label>
+                <input type="date" name="fecha_desde" class="form-control date-selector" value="{{ fecha_desde }}">
+            </div>
+            <div class="col-lg-3">
+                <label class="form-label small">Hasta:</label>
+                <input type="date" name="fecha_hasta" class="form-control date-selector" value="{{ fecha_hasta }}">
+            </div>
+            <div class="col-lg-3">
+                <label class="form-label small">Estado:</label>
+                <select name="estado" class="form-select date-selector">
+                    <option value="">Todos los estados</option>
+                    {% for valor, nombre in estados_choices %}
+                        <option value="{{ valor }}" {% if estado_actual == valor %}selected{% endif %}>{{ nombre }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-lg-3">
+                <label class="form-label small">&nbsp;</label>
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-search me-2"></i>Filtrar
+                    </button>
+                </div>
+            </div>
+        </form>
+        
+        <!-- Filtros rápidos -->
+        <div class="row mt-3">
+            <div class="col-12">
+                <div class="d-flex justify-content-center flex-wrap gap-2">
+                    <a href="{% url 'peluquero_citas' %}" class="filter-btn {% if not estado_actual %}active{% endif %}">
+                        Todas
+                    </a>
+                    <a href="?estado=programada" class="filter-btn {% if estado_actual == 'programada' %}active{% endif %}">
+                        Programadas
+                    </a>
+                    <a href="?estado=confirmada" class="filter-btn {% if estado_actual == 'confirmada' %}active{% endif %}">
+                        Confirmadas
+                    </a>
+                    <a href="?estado=en_proceso" class="filter-btn {% if estado_actual == 'en_proceso' %}active{% endif %}">
+                        En Proceso
+                    </a>
+                    <a href="?estado=completada" class="filter-btn {% if estado_actual == 'completada' %}active{% endif %}">
+                        Completadas
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Lista de Citas -->
+    {% if citas %}
+        {% for cita in citas %}
+            <div class="appointment-card {{ cita.estado }}">
+                <div class="row align-items-center">
+                    <div class="col-lg-2 col-md-3">
+                        <div class="d-flex align-items-center">
+                            <img src="{% if cita.mascota.foto %}{{ cita.mascota.foto.url }}{% else %}{% static 'img/default-pet.png' %}{% endif %}" 
+                                 alt="{{ cita.mascota.nombre }}" 
+                                 class="pet-image me-3">
+                            <div>
+                                <h6 class="mb-1">{{ cita.mascota.nombre }}</h6>
+                                <small class="text-muted">{{ cita.mascota.get_especie_display }}</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3">
+                        <div class="small text-muted mb-1">
+                            <i class="fas fa-calendar me-1"></i>{{ cita.fecha|date:"d/m/Y" }}
+                        </div>
+                        <div class="small text-muted">
+                            <i class="fas fa-clock me-1"></i>{{ cita.hora|time:"H:i" }} ({{ cita.duracion_formateada }})
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3">
+                        <div class="d-flex flex-wrap">
+                            {% for servicio_cita in cita.servicios.all %}
+                                <span class="service-tag">
+                                    <i class="fas fa-cut me-1"></i>{{ servicio_cita.servicio.nombre }}
+                                </span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-1 text-center">
+                        <span class="status-badge {% if cita.estado == 'programada' %}bg-primary{% elif cita.estado == 'confirmada' %}bg-warning{% elif cita.estado == 'en_proceso' %}bg-info{% elif cita.estado == 'completada' %}bg-success{% elif cita.estado == 'cancelada' %}bg-danger{% else %}bg-secondary{% endif %}">
+                            {{ cita.get_estado_display }}
+                        </span>
+                    </div>
+                    <div class="col-lg-2 col-md-2 text-end">
+                        <a href="{% url 'peluquero_cita_detalle' cita.id %}" class="btn btn-primary btn-action">
+                            <i class="fas fa-eye me-1"></i>Ver Detalles
+                        </a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <div class="text-center py-5">
+            <i class="fas fa-calendar-xmark fa-4x text-muted mb-3"></i>
+            <h4>No hay citas para mostrar</h4>
+            <p class="text-muted">No se encontraron citas con los filtros seleccionados</p>
+        </div>
+    {% endif %}
+</div>
+
+<script>
+document.querySelector('.date-selector').addEventListener('change', function(e) {
+    window.location.href = `?fecha=${e.target.value}&estado={{ estado_filtro }}`;
+});
+</script>
+{% endblock %} 

@@ -1,0 +1,361 @@
+{% extends 'veterinaria/base.html' %}
+{% load static %}
+
+{% block title %}Cita {{ cita.numero_cita }} - Peluquería{% endblock %}
+
+{% block extra_css %}
+<style>
+    .cita-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 40px 0;
+        border-radius: 0 0 30px 30px;
+        margin-bottom: 30px;
+    }
+    
+    .status-badge {
+        padding: 10px 20px;
+        border-radius: 25px;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+    
+    .status-programada { background: linear-gradient(45deg, #3498db, #2980b9); }
+    .status-confirmada { background: linear-gradient(45deg, #f39c12, #e67e22); }
+    .status-en_proceso { background: linear-gradient(45deg, #9b59b6, #8e44ad); }
+    .status-completada { background: linear-gradient(45deg, #27ae60, #229954); }
+    .status-cancelada { background: linear-gradient(45deg, #e74c3c, #c0392b); }
+    
+    .info-card {
+        background: white;
+        border-radius: 15px;
+        padding: 25px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        margin-bottom: 20px;
+        border-left: 5px solid #667eea;
+    }
+    
+    .service-item {
+        background: #f8f9fa;
+        border-radius: 10px;
+        padding: 20px;
+        margin-bottom: 15px;
+        border-left: 4px solid #28a745;
+    }
+    
+    .timeline-item {
+        position: relative;
+        padding-left: 40px;
+        margin-bottom: 20px;
+    }
+    
+    .timeline-item::before {
+        content: '';
+        position: absolute;
+        left: 15px;
+        top: 0;
+        bottom: -20px;
+        width: 2px;
+        background: #dee2e6;
+    }
+    
+    .timeline-item::after {
+        content: '';
+        position: absolute;
+        left: 10px;
+        top: 5px;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: #667eea;
+    }
+    
+    .timeline-item.completed::after {
+        background: #28a745;
+    }
+    
+    .btn-action {
+        border-radius: 25px;
+        padding: 10px 25px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+    
+    .btn-action:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Header de la cita -->
+<div class="cita-header">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <h1 class="mb-3">
+                    <i class="fas fa-calendar-alt me-3"></i>
+                    Cita {{ cita.numero_cita }}
+                </h1>
+                <div class="d-flex align-items-center mb-3">
+                    <i class="fas fa-paw fa-2x me-3"></i>
+                    <div>
+                        <h4 class="mb-0">{{ cita.mascota.nombre }}</h4>
+                        <p class="mb-0 opacity-75">{{ cita.mascota.especie }} • {{ cita.mascota.raza }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 text-end">
+                <div class="status-badge status-{{ cita.estado }}">
+                    {{ cita.get_estado_display }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8">
+            <!-- Información de la cita -->
+            <div class="info-card">
+                <h5 class="mb-4">
+                    <i class="fas fa-info-circle text-primary me-2"></i>
+                    Información de la Cita
+                </h5>
+                
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-calendar text-primary me-3"></i>
+                            <div>
+                                <strong>Fecha</strong><br>
+                                <span class="text-muted">{{ cita.fecha|date:"l, d \d\e F \d\e Y" }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 mb-3">
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-clock text-primary me-3"></i>
+                            <div>
+                                <strong>Hora</strong><br>
+                                <span class="text-muted">{{ cita.hora|time:"H:i" }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 mb-3">
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-stopwatch text-primary me-3"></i>
+                            <div>
+                                <strong>Duración Estimada</strong><br>
+                                <span class="text-muted">{{ cita.duracion_formateada }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 mb-3">
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-phone text-primary me-3"></i>
+                            <div>
+                                <strong>Teléfono de Contacto</strong><br>
+                                <span class="text-muted">{{ cita.telefono_contacto }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                {% if cita.peluquero %}
+                    <hr>
+                    <div class="d-flex align-items-center">
+                        <i class="fas fa-user-tie text-primary me-3"></i>
+                        <div>
+                            <strong>Peluquero Asignado</strong><br>
+                            <span class="text-muted">{{ cita.peluquero.user.get_full_name }}</span>
+                            <small class="d-block text-muted">{{ cita.peluquero.experiencia_años }} años de experiencia</small>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+            
+            <!-- Servicios contratados -->
+            {% if cita.servicios.all %}
+                <div class="info-card">
+                    <h5 class="mb-4">
+                        <i class="fas fa-cut text-primary me-2"></i>
+                        Servicios Contratados
+                    </h5>
+                    
+                    {% for servicio_cita in cita.servicios.all %}
+                        <div class="service-item">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div class="flex-grow-1">
+                                    <h6 class="mb-2">{{ servicio_cita.servicio.nombre }}</h6>
+                                    <p class="text-muted mb-2">{{ servicio_cita.servicio.descripcion|truncatewords:20 }}</p>
+                                    <div class="small text-muted">
+                                        <i class="fas fa-tag me-1"></i>{{ servicio_cita.servicio.categoria.nombre }}
+                                        <span class="mx-2">•</span>
+                                        <i class="fas fa-clock me-1"></i>{{ servicio_cita.servicio.duracion_formateada }}
+                                    </div>
+                                    {% if servicio_cita.notas %}
+                                        <div class="mt-2">
+                                            <small class="text-info">
+                                                <i class="fas fa-sticky-note me-1"></i>
+                                                <strong>Notas:</strong> {{ servicio_cita.notas }}
+                                            </small>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                <div class="text-end ms-3">
+                                    <div class="h5 text-success mb-1">${{ servicio_cita.precio|floatformat:0 }}</div>
+                                    {% if servicio_cita.completado %}
+                                        <span class="badge bg-success">
+                                            <i class="fas fa-check me-1"></i>Completado
+                                        </span>
+                                    {% else %}
+                                        <span class="badge bg-secondary">Pendiente</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            
+            <!-- Observaciones -->
+            {% if cita.observaciones_cliente or cita.observaciones_peluquero %}
+                <div class="info-card">
+                    <h5 class="mb-4">
+                        <i class="fas fa-comments text-primary me-2"></i>
+                        Observaciones
+                    </h5>
+                    
+                    {% if cita.observaciones_cliente %}
+                        <div class="mb-3">
+                            <h6><i class="fas fa-user text-info me-2"></i>Observaciones del Cliente</h6>
+                            <p class="text-muted">{{ cita.observaciones_cliente }}</p>
+                        </div>
+                    {% endif %}
+                    
+                    {% if cita.observaciones_peluquero %}
+                        <div>
+                            <h6><i class="fas fa-user-tie text-success me-2"></i>Notas del Peluquero</h6>
+                            <p class="text-muted">{{ cita.observaciones_peluquero }}</p>
+                        </div>
+                    {% endif %}
+                </div>
+            {% endif %}
+            
+            <!-- Fotos antes/después -->
+            {% if cita.fotos.all %}
+                <div class="info-card">
+                    <h5 class="mb-4">
+                        <i class="fas fa-camera text-primary me-2"></i>
+                        Fotos del Resultado
+                    </h5>
+                    
+                    {% for foto in cita.fotos.all %}
+                        <div class="row mb-3">
+                            {% if foto.foto_antes %}
+                                <div class="col-md-6">
+                                    <div class="text-center">
+                                        <img src="{{ foto.foto_antes.url }}" alt="Antes" class="img-fluid rounded" style="max-height: 300px;">
+                                        <p class="mt-2 text-muted"><strong>Antes</strong></p>
+                                    </div>
+                                </div>
+                            {% endif %}
+                            
+                            {% if foto.foto_despues %}
+                                <div class="col-md-6">
+                                    <div class="text-center">
+                                        <img src="{{ foto.foto_despues.url }}" alt="Después" class="img-fluid rounded" style="max-height: 300px;">
+                                        <p class="mt-2 text-muted"><strong>Después</strong></p>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        </div>
+                        
+                        {% if foto.descripcion %}
+                            <p class="text-muted"><em>{{ foto.descripcion }}</em></p>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+        
+        <!-- Sidebar -->
+        <div class="col-lg-4">
+            <!-- Resumen de la cita -->
+            <div class="info-card">
+                <h5 class="mb-3">
+                    <i class="fas fa-receipt text-primary me-2"></i>
+                    Resumen
+                </h5>
+                
+                <div class="d-flex justify-content-between mb-2">
+                    <span>Total de Servicios:</span>
+                    <strong>{{ cita.servicios.count }}</strong>
+                </div>
+                
+                <div class="d-flex justify-content-between mb-3">
+                    <span>Duración Total:</span>
+                    <strong>{{ cita.duracion_formateada }}</strong>
+                </div>
+                
+                <hr>
+                
+                <div class="d-flex justify-content-between">
+                    <span class="h6">Total a Pagar:</span>
+                    <span class="h4 text-success">${{ cita.total|floatformat:0 }}</span>
+                </div>
+            </div>
+            
+            <!-- Acciones -->
+            <div class="info-card">
+                <h5 class="mb-3">
+                    <i class="fas fa-cogs text-primary me-2"></i>
+                    Acciones
+                </h5>
+                
+                <div class="d-grid gap-2">
+                    {% if cita.estado == 'programada' or cita.estado == 'confirmada' %}
+                        <a href="{% url 'cancelar_cita_peluqueria' cita.id %}" class="btn btn-outline-danger btn-action">
+                            <i class="fas fa-times me-2"></i>Cancelar Cita
+                        </a>
+                    {% endif %}
+                    
+                    <a href="{% url 'mis_citas_peluqueria' %}" class="btn btn-outline-primary btn-action">
+                        <i class="fas fa-arrow-left me-2"></i>Volver a Mis Citas
+                    </a>
+                    
+                    <a href="{% url 'peluqueria_catalogo' %}" class="btn btn-primary btn-action">
+                        <i class="fas fa-plus me-2"></i>Agendar Nueva Cita
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Información de contacto -->
+            <div class="info-card">
+                <h5 class="mb-3">
+                    <i class="fas fa-phone text-primary me-2"></i>
+                    ¿Necesitas Ayuda?
+                </h5>
+                
+                <p class="text-muted mb-3">Si tienes alguna pregunta sobre tu cita, no dudes en contactarnos.</p>
+                
+                <div class="d-grid gap-2">
+                    <a href="tel:+56912345678" class="btn btn-outline-success btn-sm">
+                        <i class="fas fa-phone me-2"></i>+56 9 1234 5678
+                    </a>
+                    <a href="mailto:peluqueria@mascotafeliz.com" class="btn btn-outline-info btn-sm">
+                        <i class="fas fa-envelope me-2"></i>peluqueria@mascotafeliz.com
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

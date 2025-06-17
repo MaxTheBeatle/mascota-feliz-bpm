@@ -3,30 +3,104 @@
 {% block title %}Cancelar Cita - Mascota Feliz{% endblock %}
 
 {% block content %}
-<div class="row">
-    <div class="col-md-6 offset-md-3">
-        <div class="card">
-            <div class="card-header bg-danger text-white">
-                <h4 class="mb-0">Cancelar Cita</h4>
-            </div>
-            <div class="card-body">
-                <p class="lead">¿Estás seguro que deseas cancelar la siguiente cita?</p>
-                <ul class="list-unstyled">
-                    <li><strong>Mascota:</strong> {{ cita.mascota.nombre }}</li>
-                    <li><strong>Fecha:</strong> {{ cita.fecha|date:"d/m/Y H:i" }}</li>
-                    <li><strong>Tipo:</strong> {{ cita.get_tipo_cita_display }}</li>
-                </ul>
-                <form method="post">
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-danger">
-                        <i class="fas fa-times"></i> Sí, Cancelar Cita
-                    </button>
-                    <a href="{% url 'cita_list' %}" class="btn btn-secondary">
-                        <i class="fas fa-arrow-left"></i> Volver
-                    </a>
-                </form>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <div class="card shadow">
+                <div class="card-header bg-danger text-white">
+                    <h4 class="mb-0">
+                        <i class="fas fa-exclamation-triangle me-2"></i>
+                        Cancelar Cita
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <p class="lead">¿Estás seguro que deseas cancelar la siguiente cita?</p>
+                    
+                    <div class="alert alert-warning">
+                        <i class="fas fa-info-circle me-2"></i>
+                        <strong>Nota:</strong> Esta acción no se puede deshacer.
+                    </div>
+                    
+                    <div class="cita-details bg-light p-3 rounded mb-4">
+                        <h5 class="mb-3">Detalles de la Cita</h5>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <p class="mb-2">
+                                    <i class="fas fa-paw text-primary me-2"></i>
+                                    <strong>Mascota:</strong> {{ cita.mascota.nombre }}
+                                </p>
+                                <p class="mb-2">
+                                    <i class="fas fa-calendar text-primary me-2"></i>
+                                    <strong>Fecha:</strong> {{ cita.fecha|date:"d/m/Y" }}
+                                </p>
+                            </div>
+                            <div class="col-sm-6">
+                                <p class="mb-2">
+                                    <i class="fas fa-clock text-primary me-2"></i>
+                                    <strong>Hora:</strong> {{ cita.hora|time:"H:i" }}
+                                </p>
+                                <p class="mb-2">
+                                    <i class="fas fa-stethoscope text-primary me-2"></i>
+                                    <strong>Estado:</strong> {{ cita.get_estado_display }}
+                                </p>
+                            </div>
+                        </div>
+                        
+                        {% if cita.motivo %}
+                            <p class="mb-0">
+                                <i class="fas fa-comment text-primary me-2"></i>
+                                <strong>Motivo:</strong> {{ cita.motivo }}
+                            </p>
+                        {% endif %}
+                        
+                        {% if cita.veterinario %}
+                            <p class="mb-0">
+                                <i class="fas fa-user-md text-primary me-2"></i>
+                                <strong>Veterinario:</strong> {{ cita.veterinario.user.get_full_name }}
+                            </p>
+                        {% endif %}
+                    </div>
+                    
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <a href="{% url 'cita_list' %}" class="btn btn-secondary me-md-2">
+                                <i class="fas fa-arrow-left me-2"></i>Volver
+                            </a>
+                            <button type="submit" class="btn btn-danger">
+                                <i class="fas fa-times me-2"></i>Sí, Cancelar Cita
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
+<style>
+.cita-details {
+    border-left: 4px solid #dc3545;
+}
+
+.card {
+    border: none;
+    border-radius: 15px;
+}
+
+.card-header {
+    border-radius: 15px 15px 0 0 !important;
+}
+
+.btn {
+    border-radius: 25px;
+    padding: 10px 20px;
+    font-weight: 500;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    transition: all 0.3s ease;
+}
+</style>
 {% endblock %} 

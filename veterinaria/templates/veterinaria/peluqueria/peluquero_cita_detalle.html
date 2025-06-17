@@ -1,0 +1,408 @@
+{% extends 'veterinaria/base.html' %}
+{% load static %}
+
+{% block title %}Detalle de Cita - {{ cita.numero_cita }}{% endblock %}
+
+{% block extra_css %}
+<style>
+    .appointment-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 30px 0;
+        border-radius: 0 0 30px 30px;
+        margin-bottom: 30px;
+    }
+
+    .status-badge {
+        padding: 8px 15px;
+        border-radius: 20px;
+        font-weight: 600;
+    }
+
+    .info-card {
+        background: white;
+        border-radius: 15px;
+        padding: 25px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        margin-bottom: 20px;
+    }
+
+    .pet-image {
+        width: 120px;
+        height: 120px;
+        border-radius: 15px;
+        object-fit: cover;
+    }
+
+    .service-item {
+        border-left: 4px solid #667eea;
+        padding: 15px;
+        background: #f8f9fa;
+        border-radius: 10px;
+        margin-bottom: 15px;
+    }
+
+    .timeline {
+        position: relative;
+        padding-left: 50px;
+    }
+
+    .timeline::before {
+        content: '';
+        position: absolute;
+        left: 20px;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background: #e9ecef;
+    }
+
+    .timeline-item {
+        position: relative;
+        padding-bottom: 20px;
+    }
+
+    .timeline-item::before {
+        content: '';
+        position: absolute;
+        left: -50px;
+        top: 0;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: #667eea;
+        border: 4px solid white;
+        box-shadow: 0 0 0 2px #667eea;
+    }
+
+    .timeline-item.completed::before {
+        background: #28a745;
+        box-shadow: 0 0 0 2px #28a745;
+    }
+
+    .timeline-item.pending::before {
+        background: #ffc107;
+        box-shadow: 0 0 0 2px #ffc107;
+    }
+
+    .photo-upload-area {
+        border: 2px dashed #dee2e6;
+        border-radius: 15px;
+        padding: 20px;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .photo-upload-area:hover {
+        border-color: #667eea;
+        background: #f8f9fa;
+    }
+
+    .photo-preview {
+        max-width: 100%;
+        height: 200px;
+        object-fit: cover;
+        border-radius: 10px;
+        margin-top: 10px;
+    }
+
+    .btn-action {
+        border-radius: 25px;
+        padding: 10px 25px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+
+    .btn-action:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Header -->
+<div class="appointment-header">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <h1 class="h3 mb-2">Cita #{{ cita.numero_cita }}</h1>
+                <p class="mb-0 opacity-75">{{ cita.fecha|date:"l, d F Y" }} - {{ cita.hora|time:"H:i" }}</p>
+            </div>
+            <span class="status-badge {% if cita.estado == 'programada' %}bg-primary{% elif cita.estado == 'confirmada' %}bg-warning{% elif cita.estado == 'en_proceso' %}bg-info{% elif cita.estado == 'completada' %}bg-success{% endif %}">
+                {{ cita.get_estado_display }}
+            </span>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8">
+            <!-- Información de la Mascota -->
+            <div class="info-card">
+                <div class="d-flex align-items-start">
+                    <img src="{% if cita.mascota.foto %}{{ cita.mascota.foto.url }}{% else %}{% static 'img/default-pet.png' %}{% endif %}" 
+                         alt="{{ cita.mascota.nombre }}" 
+                         class="pet-image">
+                    <div class="ms-4">
+                        <h4>{{ cita.mascota.nombre }}</h4>
+                        <p class="text-muted mb-2">
+                            {{ cita.mascota.get_especie_display }} - {{ cita.mascota.raza }}<br>
+                            {{ cita.mascota.get_sexo_display }} - {{ cita.mascota.edad }}
+                        </p>
+                        <p class="mb-0">
+                            <strong>Propietario:</strong> {{ cita.mascota.propietario.get_full_name }}<br>
+                            <strong>Teléfono:</strong> {{ cita.telefono_contacto }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Servicios -->
+            <div class="info-card">
+                <h5 class="mb-4">
+                    <i class="fas fa-list text-primary me-2"></i>
+                    Servicios Solicitados
+                </h5>
+                {% for servicio_cita in cita.servicios.all %}
+                    <div class="service-item">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <h6 class="mb-1">{{ servicio_cita.servicio.nombre }}</h6>
+                                <p class="text-muted small mb-2">{{ servicio_cita.servicio.descripcion|truncatewords:20 }}</p>
+                                <div class="small">
+                                    <i class="fas fa-clock text-primary me-1"></i>{{ servicio_cita.servicio.duracion_formateada }}
+                                </div>
+                            </div>
+                            <div class="text-end">
+                                <div class="h5 mb-2">${{ servicio_cita.precio|floatformat:0 }}</div>
+                                {% if servicio_cita.completado %}
+                                    <span class="badge bg-success">Completado</span>
+                                {% else %}
+                                    <span class="badge bg-warning">Pendiente</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+                <div class="text-end mt-3">
+                    <h5>Total: ${{ cita.total|floatformat:0 }}</h5>
+                </div>
+            </div>
+
+            <!-- Observaciones -->
+            <div class="info-card">
+                <h5 class="mb-4">
+                    <i class="fas fa-comment-alt text-primary me-2"></i>
+                    Observaciones
+                </h5>
+                <div class="mb-4">
+                    <h6 class="text-muted mb-2">Del Cliente:</h6>
+                    <p class="mb-0">{{ cita.observaciones_cliente|default:"Sin observaciones" }}</p>
+                </div>
+                <form method="post">
+                    {% csrf_token %}
+                    <h6 class="text-muted mb-2">Tus Notas:</h6>
+                    <div class="form-group">
+                        <textarea name="observaciones_peluquero" class="form-control" rows="4" placeholder="Agrega tus notas sobre el servicio...">{{ cita.observaciones_peluquero }}</textarea>
+                    </div>
+                    <div class="text-end mt-3">
+                        <button type="submit" name="guardar_notas" class="btn btn-primary btn-sm">
+                            <i class="fas fa-save me-2"></i>Guardar Notas
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Fotos Antes/Después -->
+            <div class="info-card">
+                <h5 class="mb-4">
+                    <i class="fas fa-camera text-primary me-2"></i>
+                    Fotos del Servicio
+                </h5>
+                
+                {% if cita.estado == 'en_proceso' or cita.estado == 'completada' %}
+                    <form method="post" enctype="multipart/form-data" id="photoForm">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label class="form-label">Foto Antes</label>
+                                <div class="photo-upload-area" onclick="document.getElementById('fotoBefore').click()">
+                                    <input type="file" id="fotoBefore" name="foto_antes" class="d-none" accept="image/*" onchange="previewImage(this, 'beforePreview')">
+                                    <div id="beforeUploadArea">
+                                        <i class="fas fa-cloud-upload-alt fa-3x text-primary mb-3"></i>
+                                        <p class="mb-0">Click para subir foto</p>
+                                    </div>
+                                    <img id="beforePreview" class="photo-preview d-none">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Foto Después</label>
+                                <div class="photo-upload-area" onclick="document.getElementById('fotoAfter').click()">
+                                    <input type="file" id="fotoAfter" name="foto_despues" class="d-none" accept="image/*" onchange="previewImage(this, 'afterPreview')">
+                                    <div id="afterUploadArea">
+                                        <i class="fas fa-cloud-upload-alt fa-3x text-primary mb-3"></i>
+                                        <p class="mb-0">Click para subir foto</p>
+                                    </div>
+                                    <img id="afterPreview" class="photo-preview d-none">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group mt-3">
+                            <label class="form-label">Descripción de las Fotos</label>
+                            <textarea name="descripcion_fotos" class="form-control" rows="2" placeholder="Describe los cambios realizados..."></textarea>
+                        </div>
+                        <div class="text-end mt-3">
+                            <button type="submit" name="subir_fotos" class="btn btn-primary">
+                                <i class="fas fa-upload me-2"></i>Subir Fotos
+                            </button>
+                        </div>
+                    </form>
+                {% endif %}
+
+                {% if cita.fotos.all %}
+                    <div class="mt-4">
+                        <h6 class="mb-3">Fotos Guardadas</h6>
+                        {% for foto in cita.fotos.all %}
+                            <div class="row mb-3">
+                                {% if foto.foto_antes %}
+                                    <div class="col-md-6">
+                                        <div class="text-center">
+                                            <img src="{{ foto.foto_antes.url }}" alt="Antes" class="img-fluid rounded" style="max-height: 200px;">
+                                            <p class="mt-2 text-muted"><strong>Antes</strong></p>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                                
+                                {% if foto.foto_despues %}
+                                    <div class="col-md-6">
+                                        <div class="text-center">
+                                            <img src="{{ foto.foto_despues.url }}" alt="Después" class="img-fluid rounded" style="max-height: 200px;">
+                                            <p class="mt-2 text-muted"><strong>Después</strong></p>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            </div>
+                            {% if foto.descripcion %}
+                                <p class="text-muted"><em>{{ foto.descripcion }}</em></p>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <!-- Estado y Acciones -->
+            <div class="info-card">
+                <h5 class="mb-4">
+                    <i class="fas fa-tasks text-primary me-2"></i>
+                    Estado y Acciones
+                </h5>
+                
+                <div class="timeline">
+                    <div class="timeline-item {% if cita.estado in 'confirmada,en_proceso,completada' %}completed{% endif %}">
+                        <h6>Cita Programada</h6>
+                        <p class="text-muted small mb-0">{{ cita.created_at|date:"d/m/Y H:i" }}</p>
+                    </div>
+                    
+                    <div class="timeline-item {% if cita.estado in 'en_proceso,completada' %}completed{% elif cita.estado == 'confirmada' %}pending{% endif %}">
+                        <h6>Confirmada</h6>
+                        <p class="text-muted small mb-0">Lista para iniciar</p>
+                    </div>
+                    
+                    <div class="timeline-item {% if cita.estado == 'completada' %}completed{% elif cita.estado == 'en_proceso' %}pending{% endif %}">
+                        <h6>En Proceso</h6>
+                        <p class="text-muted small mb-0">Servicio en curso</p>
+                    </div>
+                    
+                    <div class="timeline-item {% if cita.estado == 'completada' %}completed{% endif %}">
+                        <h6>Completada</h6>
+                        <p class="text-muted small mb-0">Servicio finalizado</p>
+                    </div>
+                </div>
+
+                <div class="d-grid gap-2 mt-4">
+                    {% if cita.estado == 'programada' %}
+                        <form method="post" class="d-inline">
+                            {% csrf_token %}
+                            <input type="hidden" name="accion" value="confirmar">
+                            <button type="submit" class="btn btn-warning btn-action w-100">
+                                <i class="fas fa-check-circle me-2"></i>Confirmar Cita
+                            </button>
+                        </form>
+                    {% elif cita.estado == 'confirmada' %}
+                        <form method="post" class="d-inline">
+                            {% csrf_token %}
+                            <input type="hidden" name="accion" value="iniciar">
+                            <button type="submit" class="btn btn-primary btn-action w-100">
+                                <i class="fas fa-play me-2"></i>Iniciar Servicio
+                            </button>
+                        </form>
+                    {% elif cita.estado == 'en_proceso' %}
+                        <form method="post" class="d-inline">
+                            {% csrf_token %}
+                            <input type="hidden" name="accion" value="completar">
+                            <div class="mb-3">
+                                <label class="form-label">Observaciones finales:</label>
+                                <textarea name="observaciones_peluquero" class="form-control" rows="3" placeholder="Agrega observaciones sobre el servicio realizado...">{{ cita.observaciones_peluquero }}</textarea>
+                            </div>
+                            <button type="submit" class="btn btn-success btn-action w-100">
+                                <i class="fas fa-check me-2"></i>Marcar como Completado
+                            </button>
+                        </form>
+                    {% endif %}
+                    
+                    {% if cita.estado in 'programada,confirmada' %}
+                        <form method="post" class="d-inline">
+                            {% csrf_token %}
+                            <input type="hidden" name="accion" value="cancelar">
+                            <button type="submit" class="btn btn-danger btn-action w-100" onclick="return confirm('¿Estás seguro de que quieres cancelar esta cita?')">
+                                <i class="fas fa-times me-2"></i>Cancelar Cita
+                            </button>
+                        </form>
+                    {% endif %}
+                    
+                    <a href="{% url 'peluquero_citas' %}" class="btn btn-outline-secondary btn-action">
+                        <i class="fas fa-arrow-left me-2"></i>Volver a Citas
+                    </a>
+                </div>
+            </div>
+
+            <!-- Recordatorios -->
+            <div class="info-card">
+                <h5 class="mb-4">
+                    <i class="fas fa-bell text-primary me-2"></i>
+                    Recordatorios
+                </h5>
+                <div class="alert alert-info mb-0">
+                    <ul class="mb-0">
+                        <li>Toma fotos antes y después del servicio</li>
+                        <li>Verifica el estado del pelaje y la piel</li>
+                        <li>Registra cualquier observación importante</li>
+                        <li>Confirma la satisfacción del cliente</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function previewImage(input, previewId) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            var preview = document.getElementById(previewId);
+            var uploadArea = document.getElementById(input.id === 'fotoBefore' ? 'beforeUploadArea' : 'afterUploadArea');
+            preview.src = e.target.result;
+            preview.classList.remove('d-none');
+            uploadArea.classList.add('d-none');
+        }
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+</script>
+{% endblock %} 

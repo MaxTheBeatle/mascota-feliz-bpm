@@ -60,4 +60,22 @@ urlpatterns = [
     path('veterinario/crear-receta/<int:cita_id>/', views.crear_receta, name='crear_receta'),
     path('veterinario/editar-receta/<int:receta_id>/', views.editar_receta, name='editar_receta'),
     path('veterinario/eliminar-item-receta/<int:item_id>/', views.eliminar_item_receta, name='eliminar_item_receta'),
+    
+    # ==================== URLs DE PELUQUERÍA ====================
+    path('peluqueria/', views.peluqueria_catalogo, name='peluqueria_catalogo'),
+    path('peluqueria/servicio/<int:servicio_id>/', views.servicio_peluqueria_detalle, name='servicio_peluqueria_detalle'),
+    path('peluqueria/agendar/', views.agendar_cita_peluqueria, name='agendar_cita_peluqueria'),
+    path('peluqueria/agendar/<int:servicio_id>/', views.agendar_cita_peluqueria, name='agendar_cita_peluqueria_servicio'),
+    path('peluqueria/mis-citas/', views.mis_citas_peluqueria, name='mis_citas_peluqueria'),
+    path('peluqueria/cita/<int:cita_id>/', views.detalle_cita_peluqueria, name='detalle_cita_peluqueria'),
+    path('peluqueria/cita/<int:cita_id>/cancelar/', views.cancelar_cita_peluqueria, name='cancelar_cita_peluqueria'),
+    # path('peluqueria/galeria/', views.galeria_peluqueria, name='galeria_peluqueria'),
+    
+    # URLs para peluqueros
+    path('peluquero/registro/', views.peluquero_register, name='peluquero_register'),
+    path('peluquero/dashboard/', views.peluquero_dashboard, name='peluquero_dashboard'),
+    path('peluquero/citas/', views.peluquero_citas, name='peluquero_citas'),
+    path('peluquero/cita/<int:cita_id>/', views.peluquero_cita_detalle, name='peluquero_cita_detalle'),
+    path('peluquero/cita/<int:cita_id>/completar/', views.peluquero_completar_cita, name='peluquero_completar_cita'),
+    path('peluquero/perfil/', views.peluquero_profile, name='peluquero_profile'),
 ] 

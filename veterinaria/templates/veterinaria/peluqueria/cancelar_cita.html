@@ -1,0 +1,214 @@
+{% extends 'veterinaria/base.html' %}
+{% load static %}
+
+{% block title %}Cancelar Cita {{ cita.numero_cita }}{% endblock %}
+
+{% block extra_css %}
+<style>
+    .cancel-container {
+        background: linear-gradient(135deg, #ff6b6b, #feca57);
+        border-radius: 20px;
+        padding: 40px;
+        color: white;
+        box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        margin: 40px 0;
+    }
+    
+    .cita-info {
+        background: rgba(255,255,255,0.1);
+        border-radius: 15px;
+        padding: 20px;
+        margin: 20px 0;
+        backdrop-filter: blur(10px);
+    }
+    
+    .warning-icon {
+        width: 80px;
+        height: 80px;
+        background: rgba(255,255,255,0.2);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 20px;
+    }
+    
+    .btn-cancel-confirm {
+        background: linear-gradient(45deg, #e74c3c, #c0392b);
+        border: none;
+        color: white;
+        font-weight: bold;
+        padding: 12px 30px;
+        border-radius: 25px;
+        transition: all 0.3s ease;
+    }
+    
+    .btn-cancel-confirm:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(231, 76, 60, 0.4);
+        color: white;
+    }
+    
+    .btn-keep {
+        background: linear-gradient(45deg, #27ae60, #229954);
+        border: none;
+        color: white;
+        font-weight: bold;
+        padding: 12px 30px;
+        border-radius: 25px;
+        transition: all 0.3s ease;
+    }
+    
+    .btn-keep:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(39, 174, 96, 0.4);
+        color: white;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="cancel-container">
+                <div class="text-center">
+                    <div class="warning-icon">
+                        <i class="fas fa-exclamation-triangle fa-2x"></i>
+                    </div>
+                    
+                    <h2 class="mb-3">¿Estás seguro de cancelar esta cita?</h2>
+                    <p class="lead mb-4">Esta acción no se puede deshacer. Tu cita será cancelada permanentemente.</p>
+                </div>
+                
+                <!-- Información de la cita -->
+                <div class="cita-info">
+                    <div class="row align-items-center">
+                        <div class="col-md-2 text-center">
+                            <i class="fas fa-paw fa-3x"></i>
+                        </div>
+                        <div class="col-md-10">
+                            <h5 class="mb-2">{{ cita.numero_cita }} - {{ cita.mascota.nombre }}</h5>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="mb-2">
+                                        <i class="fas fa-calendar me-2"></i>
+                                        <strong>{{ cita.fecha|date:"d/m/Y" }}</strong>
+                                    </div>
+                                    <div class="mb-2">
+                                        <i class="fas fa-clock me-2"></i>
+                                        <strong>{{ cita.hora|time:"H:i" }}</strong>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="mb-2">
+                                        <i class="fas fa-dollar-sign me-2"></i>
+                                        <strong>${{ cita.total|floatformat:0 }}</strong>
+                                    </div>
+                                    <div class="mb-2">
+                                        <i class="fas fa-stopwatch me-2"></i>
+                                        <strong>{{ cita.duracion_formateada }}</strong>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            {% if cita.servicios.all %}
+                                <div class="mt-3">
+                                    <small class="opacity-75">Servicios contratados:</small>
+                                    <div class="mt-1">
+                                        {% for servicio_cita in cita.servicios.all %}
+                                            <span class="badge bg-light text-dark me-1">{{ servicio_cita.servicio.nombre }}</span>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Política de cancelación -->
+                <div class="cita-info">
+                    <h6><i class="fas fa-info-circle me-2"></i>Política de Cancelación</h6>
+                    <ul class="mb-0 small">
+                        <li>Las cancelaciones deben realizarse con al menos 24 horas de anticipación</li>
+                        <li>No se aplicarán cargos por cancelación si se realiza con tiempo suficiente</li>
+                        <li>Puedes reagendar tu cita en cualquier momento</li>
+                        <li>Si necesitas ayuda, contáctanos al +56 9 1234 5678</li>
+                    </ul>
+                </div>
+                
+                <!-- Botones de acción -->
+                <form method="post" class="text-center">
+                    {% csrf_token %}
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+                        <a href="{% url 'detalle_cita_peluqueria' cita.id %}" class="btn btn-keep me-md-3">
+                            <i class="fas fa-arrow-left me-2"></i>
+                            Mantener Cita
+                        </a>
+                        <button type="submit" class="btn btn-cancel-confirm">
+                            <i class="fas fa-times me-2"></i>
+                            Sí, Cancelar Cita
+                        </button>
+                    </div>
+                </form>
+                
+                <div class="text-center mt-4">
+                    <p class="small opacity-75 mb-0">
+                        ¿Prefieres reagendar? 
+                        <a href="{% url 'agendar_cita_peluqueria' %}" class="text-white text-decoration-underline">
+                            <strong>Agenda una nueva cita aquí</strong>
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Alternativas -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <h4 class="text-center mb-4">¿Buscas otras opciones?</h4>
+            <div class="row">
+                <div class="col-md-4 text-center mb-3">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <i class="fas fa-calendar-plus fa-3x text-primary mb-3"></i>
+                            <h5>Reagendar</h5>
+                            <p class="text-muted">Cambia la fecha y hora de tu cita</p>
+                            <a href="{% url 'agendar_cita_peluqueria' %}" class="btn btn-outline-primary">
+                                Nueva Fecha
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4 text-center mb-3">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <i class="fas fa-phone fa-3x text-success mb-3"></i>
+                            <h5>Contactar</h5>
+                            <p class="text-muted">Habla con nuestro equipo</p>
+                            <a href="tel:+56912345678" class="btn btn-outline-success">
+                                Llamar Ahora
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4 text-center mb-3">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <i class="fas fa-cut fa-3x text-info mb-3"></i>
+                            <h5>Otros Servicios</h5>
+                            <p class="text-muted">Explora nuestro catálogo</p>
+                            <a href="{% url 'peluqueria_catalogo' %}" class="btn btn-outline-info">
+                                Ver Servicios
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

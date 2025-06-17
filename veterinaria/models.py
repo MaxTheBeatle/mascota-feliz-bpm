@@ -38,6 +38,29 @@ class Veterinario(models.Model):
         verbose_name = "Veterinario"
         verbose_name_plural = "Veterinarios"
 
+class Farmaceutico(models.Model):
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    telefono = models.CharField(
+        max_length=15,
+        validators=[RegexValidator(r'^\+?1?\d{9,15}$', message="El número debe estar en formato: '+999999999'")]
+    )
+    numero_registro = models.CharField(max_length=20, unique=True, help_text="Número de registro profesional")
+    especialidad = models.CharField(max_length=100, default="Farmacia General")
+    experiencia_años = models.PositiveIntegerField(default=0)
+    certificaciones = models.TextField(blank=True, help_text="Certificaciones y cursos especializados")
+    horario_inicio = models.TimeField(default='08:00')
+    horario_fin = models.TimeField(default='20:00')
+    activo = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"Farm. {self.user.get_full_name()}"
+
+    class Meta:
+        verbose_name = "Farmacéutico"
+        verbose_name_plural = "Farmacéuticos"
+
 class Mascota(models.Model):
     ESPECIE_CHOICES = [
         ('Perro', 'Perro'),
@@ -209,11 +232,20 @@ class Producto(models.Model):
         verbose_name_plural = "Productos"
 
 class CarritoItem(models.Model):
-    producto = models.CharField(max_length=100)
-    cantidad = models.IntegerField(default=1)
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE, related_name='carrito_items', null=True, blank=True)
+    producto = models.ForeignKey(Producto, on_delete=models.CASCADE, null=True, blank=True)
+    cantidad = models.PositiveIntegerField(default=1)
+    fecha_agregado = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+
+    def subtotal(self):
+        if self.producto:
+            return self.producto.precio * self.cantidad
+        return 0
 
     def __str__(self):
-        return f"{self.cantidad}x {self.producto}"
+        if self.producto and self.usuario:
+            return f"{self.cantidad}x {self.producto.nombre} - {self.usuario.username}"
+        return f"Item de carrito #{self.id}"
 
     class Meta:
         verbose_name = "Item de Carrito"
@@ -226,16 +258,21 @@ class Pedido(models.Model):
         ('Transferencia', 'Transferencia'),
     ]
     
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE, related_name='pedidos', null=True, blank=True)
     direccion_envio = models.CharField(max_length=200, default='No especificada')
     metodo_pago = models.CharField(max_length=20, choices=METODO_PAGO_CHOICES, default='Efectivo')
+    total = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     fecha_pedido = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"Pedido #{self.id} - {self.fecha_pedido.strftime('%Y-%m-%d')}"
+        if self.usuario:
+            return f"Pedido #{self.id} - {self.usuario.username} - ${self.total}"
+        return f"Pedido #{self.id} - ${self.total}"
 
     class Meta:
         verbose_name = "Pedido"
         verbose_name_plural = "Pedidos"
+        ordering = ['-fecha_pedido']
 
 class PedidoItem(models.Model):
     pedido = models.ForeignKey(Pedido, related_name='items', on_delete=models.CASCADE)
@@ -489,3 +526,166 @@ class ItemReserva(models.Model):
     class Meta:
         verbose_name = "Item de Reserva"
         verbose_name_plural = "Items de Reserva"
+
+# ==================== MODELOS DE PELUQUERÍA ====================
+
+class CategoriaServicioPeluqueria(models.Model):
+    nombre = models.CharField(max_length=100)
+    descripcion = models.TextField(blank=True)
+    icono = models.CharField(max_length=50, default='fas fa-cut')
+    activo = models.BooleanField(default=True)
+    
+    def __str__(self):
+        return self.nombre
+    
+    class Meta:
+        verbose_name = "Categoría de Servicio de Peluquería"
+        verbose_name_plural = "Categorías de Servicios de Peluquería"
+
+class ServicioPeluqueria(models.Model):
+    TIPO_MASCOTA_CHOICES = [
+        ('perro', 'Perro'),
+        ('gato', 'Gato'),
+        ('ambos', 'Perros y Gatos'),
+    ]
+    
+    TAMAÑO_CHOICES = [
+        ('pequeño', 'Pequeño (hasta 10kg)'),
+        ('mediano', 'Mediano (10-25kg)'),
+        ('grande', 'Grande (25-40kg)'),
+        ('gigante', 'Gigante (más de 40kg)'),
+        ('todos', 'Todos los tamaños'),
+    ]
+    
+    nombre = models.CharField(max_length=200)
+    categoria = models.ForeignKey(CategoriaServicioPeluqueria, on_delete=models.CASCADE)
+    descripcion = models.TextField()
+    precio_base = models.DecimalField(max_digits=10, decimal_places=2)
+    duracion_estimada = models.PositiveIntegerField(help_text="Duración en minutos")
+    tipo_mascota = models.CharField(max_length=10, choices=TIPO_MASCOTA_CHOICES, default='ambos')
+    tamaño_mascota = models.CharField(max_length=10, choices=TAMAÑO_CHOICES, default='todos')
+    incluye = models.TextField(help_text="Qué incluye el servicio")
+    recomendaciones = models.TextField(blank=True, help_text="Recomendaciones especiales")
+    imagen = models.ImageField(upload_to='peluqueria/', null=True, blank=True)
+    activo = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    @property
+    def duracion_formateada(self):
+        horas = self.duracion_estimada // 60
+        minutos = self.duracion_estimada % 60
+        if horas > 0:
+            return f"{horas}h {minutos}min" if minutos > 0 else f"{horas}h"
+        return f"{minutos}min"
+    
+    def __str__(self):
+        return f"{self.nombre} - ${self.precio_base:,.0f}"
+    
+    class Meta:
+        verbose_name = "Servicio de Peluquería"
+        verbose_name_plural = "Servicios de Peluquería"
+        ordering = ['categoria', 'nombre']
+
+class Peluquero(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    especialidades = models.ManyToManyField(CategoriaServicioPeluqueria, blank=True)
+    telefono = models.CharField(max_length=20)
+    experiencia_años = models.PositiveIntegerField(default=0)
+    certificaciones = models.TextField(blank=True, help_text="Certificaciones y cursos")
+    horario_inicio = models.TimeField(default='09:00')
+    horario_fin = models.TimeField(default='18:00')
+    activo = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self):
+        return f"{self.user.get_full_name()} - Peluquero"
+    
+    class Meta:
+        verbose_name = "Peluquero"
+        verbose_name_plural = "Peluqueros"
+
+class CitaPeluqueria(models.Model):
+    ESTADO_CHOICES = [
+        ('programada', 'Programada'),
+        ('confirmada', 'Confirmada'),
+        ('en_proceso', 'En Proceso'),
+        ('completada', 'Completada'),
+        ('cancelada', 'Cancelada'),
+        ('no_asistio', 'No Asistió'),
+    ]
+    
+    cliente = models.ForeignKey(User, on_delete=models.CASCADE)
+    mascota = models.ForeignKey(Mascota, on_delete=models.CASCADE)
+    peluquero = models.ForeignKey(Peluquero, on_delete=models.SET_NULL, null=True, blank=True)
+    fecha = models.DateField()
+    hora = models.TimeField()
+    estado = models.CharField(max_length=20, choices=ESTADO_CHOICES, default='programada')
+    observaciones_cliente = models.TextField(blank=True, help_text="Observaciones del cliente")
+    observaciones_peluquero = models.TextField(blank=True, help_text="Notas del peluquero")
+    total = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    telefono_contacto = models.CharField(max_length=20)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    @property
+    def numero_cita(self):
+        return f"PEL-{self.id:06d}"
+    
+    @property
+    def duracion_total(self):
+        return sum(item.servicio.duracion_estimada for item in self.servicios.all())
+    
+    @property
+    def duracion_formateada(self):
+        duracion = self.duracion_total
+        horas = duracion // 60
+        minutos = duracion % 60
+        if horas > 0:
+            return f"{horas}h {minutos}min" if minutos > 0 else f"{horas}h"
+        return f"{minutos}min"
+    
+    def __str__(self):
+        return f"Cita {self.numero_cita} - {self.mascota.nombre} ({self.fecha})"
+    
+    class Meta:
+        verbose_name = "Cita de Peluquería"
+        verbose_name_plural = "Citas de Peluquería"
+        ordering = ['-fecha', '-hora']
+
+class ServicioCitaPeluqueria(models.Model):
+    cita = models.ForeignKey(CitaPeluqueria, on_delete=models.CASCADE, related_name='servicios')
+    servicio = models.ForeignKey(ServicioPeluqueria, on_delete=models.CASCADE)
+    precio = models.DecimalField(max_digits=10, decimal_places=2)
+    notas = models.TextField(blank=True, help_text="Notas específicas para este servicio")
+    completado = models.BooleanField(default=False)
+    
+    def save(self, *args, **kwargs):
+        if not self.precio:
+            self.precio = self.servicio.precio_base
+        super().save(*args, **kwargs)
+        
+        # Actualizar total de la cita
+        self.cita.total = sum(item.precio for item in self.cita.servicios.all())
+        self.cita.save()
+    
+    def __str__(self):
+        return f"{self.servicio.nombre} - {self.cita.numero_cita}"
+    
+    class Meta:
+        verbose_name = "Servicio de Cita de Peluquería"
+        verbose_name_plural = "Servicios de Citas de Peluquería"
+
+class FotosAntesDepues(models.Model):
+    cita = models.ForeignKey(CitaPeluqueria, on_delete=models.CASCADE, related_name='fotos')
+    foto_antes = models.ImageField(upload_to='peluqueria/antes/', null=True, blank=True)
+    foto_despues = models.ImageField(upload_to='peluqueria/despues/', null=True, blank=True)
+    descripcion = models.TextField(blank=True)
+    fecha_subida = models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self):
+        return f"Fotos {self.cita.numero_cita} - {self.cita.mascota.nombre}"
+    
+    class Meta:
+        verbose_name = "Fotos Antes/Después"
+        verbose_name_plural = "Fotos Antes/Después"

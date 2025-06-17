@@ -1,0 +1,249 @@
+{% extends 'veterinaria/base.html' %}
+{% load static %}
+
+{% block title %}Agendar Cita de Peluquería{% endblock %}
+
+{% block extra_css %}
+<style>
+    .form-container {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-radius: 20px;
+        padding: 40px;
+        color: white;
+        box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+    }
+    
+    .form-control, .form-select {
+        border-radius: 10px;
+        border: 2px solid #e0e0e0;
+        padding: 12px 15px;
+        transition: all 0.3s ease;
+    }
+    
+    .form-control:focus, .form-select:focus {
+        border-color: #667eea;
+        box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+    }
+    
+    .btn-primary {
+        background: linear-gradient(45deg, #56ab2f, #a8e6cf);
+        border: none;
+        padding: 12px 30px;
+        border-radius: 25px;
+        font-weight: bold;
+        transition: all 0.3s ease;
+    }
+    
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(86, 171, 47, 0.4);
+    }
+    
+    .service-preview {
+        background: rgba(255,255,255,0.1);
+        border-radius: 15px;
+        padding: 20px;
+        margin-bottom: 30px;
+        backdrop-filter: blur(10px);
+    }
+    
+    .mascota-card {
+        background: rgba(255,255,255,0.1);
+        border-radius: 10px;
+        padding: 15px;
+        margin-bottom: 15px;
+        backdrop-filter: blur(10px);
+    }
+    
+    .icon-box {
+        width: 60px;
+        height: 60px;
+        background: rgba(255,255,255,0.2);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content-center;
+        margin: 0 auto 20px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="form-container">
+                <div class="text-center mb-4">
+                    <div class="icon-box">
+                        <i class="fas fa-calendar-plus fa-2x"></i>
+                    </div>
+                    <h2 class="mb-3">Agendar Cita de Peluquería</h2>
+                    <p class="mb-0">Programa una cita para el cuidado estético de tu mascota</p>
+                </div>
+
+                {% if servicio_seleccionado %}
+                    <div class="service-preview">
+                        <h5><i class="fas fa-cut me-2"></i>Servicio Seleccionado</h5>
+                        <div class="row align-items-center">
+                            <div class="col-md-8">
+                                <h6 class="mb-1">{{ servicio_seleccionado.nombre }}</h6>
+                                <p class="mb-1 small">{{ servicio_seleccionado.descripcion|truncatewords:20 }}</p>
+                                <div class="small">
+                                    <i class="fas fa-clock me-1"></i>{{ servicio_seleccionado.duracion_formateada }}
+                                    <span class="mx-2">•</span>
+                                    <i class="fas fa-paw me-1"></i>{{ servicio_seleccionado.get_tipo_mascota_display }}
+                                </div>
+                            </div>
+                            <div class="col-md-4 text-end">
+                                <div class="h4 mb-0">${{ servicio_seleccionado.precio_base|floatformat:0 }}</div>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+
+                <form method="post">
+                    {% csrf_token %}
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="{{ form.mascota.id_for_label }}" class="form-label">
+                                <i class="fas fa-paw me-2"></i>{{ form.mascota.label }}
+                            </label>
+                            {{ form.mascota }}
+                            {% if form.mascota.errors %}
+                                <div class="text-warning small mt-1">
+                                    {{ form.mascota.errors.0 }}
+                                </div>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <label for="{{ form.telefono_contacto.id_for_label }}" class="form-label">
+                                <i class="fas fa-phone me-2"></i>{{ form.telefono_contacto.label }}
+                            </label>
+                            {{ form.telefono_contacto }}
+                            {% if form.telefono_contacto.errors %}
+                                <div class="text-warning small mt-1">
+                                    {{ form.telefono_contacto.errors.0 }}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="{{ form.fecha.id_for_label }}" class="form-label">
+                                <i class="fas fa-calendar me-2"></i>{{ form.fecha.label }}
+                            </label>
+                            {{ form.fecha }}
+                            {% if form.fecha.errors %}
+                                <div class="text-warning small mt-1">
+                                    {{ form.fecha.errors.0 }}
+                                </div>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <label for="{{ form.hora.id_for_label }}" class="form-label">
+                                <i class="fas fa-clock me-2"></i>{{ form.hora.label }}
+                            </label>
+                            {{ form.hora }}
+                            {% if form.hora.errors %}
+                                <div class="text-warning small mt-1">
+                                    {{ form.hora.errors.0 }}
+                                </div>
+                            {% endif %}
+                            <div class="form-text text-light small">
+                                Horario de atención: 9:00 AM - 6:00 PM (Lunes a Sábado)
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="{{ form.observaciones_cliente.id_for_label }}" class="form-label">
+                            <i class="fas fa-comment me-2"></i>{{ form.observaciones_cliente.label }}
+                        </label>
+                        {{ form.observaciones_cliente }}
+                        {% if form.observaciones_cliente.errors %}
+                            <div class="text-warning small mt-1">
+                                {{ form.observaciones_cliente.errors.0 }}
+                            </div>
+                        {% endif %}
+                        <div class="form-text text-light small">
+                            Menciona cualquier información importante sobre tu mascota (temperamento, alergias, preferencias, etc.)
+                        </div>
+                    </div>
+
+                    {% if form.non_field_errors %}
+                        <div class="alert alert-warning" role="alert">
+                            {{ form.non_field_errors.0 }}
+                        </div>
+                    {% endif %}
+
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <a href="{% url 'peluqueria_catalogo' %}" class="btn btn-outline-light me-md-2">
+                            <i class="fas fa-arrow-left me-2"></i>Volver al Catálogo
+                        </a>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-calendar-check me-2"></i>Agendar Cita
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Información de tus mascotas -->
+    {% if user_mascotas %}
+        <div class="row mt-5">
+            <div class="col-12">
+                <h4 class="text-center mb-4">Tus Mascotas Registradas</h4>
+                <div class="row">
+                    {% for mascota in user_mascotas %}
+                        <div class="col-md-6 col-lg-3 mb-3">
+                            <div class="mascota-card text-center">
+                                <i class="fas fa-paw fa-2x mb-2 text-primary"></i>
+                                <h6 class="mb-1">{{ mascota.nombre }}</h6>
+                                <small class="text-muted">
+                                    {{ mascota.especie }} • {{ mascota.raza }}<br>
+                                    {{ mascota.edad }}
+                                </small>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Configurar fecha mínima (mañana)
+    const fechaInput = document.querySelector('input[type="date"]');
+    if (fechaInput) {
+        const tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        fechaInput.min = tomorrow.toISOString().split('T')[0];
+    }
+    
+    // Configurar horarios sugeridos
+    const horaInput = document.querySelector('input[type="time"]');
+    if (horaInput) {
+        horaInput.addEventListener('change', function() {
+            const hora = this.value;
+            const [horas, minutos] = hora.split(':');
+            const minutosNum = parseInt(minutos);
+            
+            // Redondear a intervalos de 15 minutos
+            const minutosRedondeados = Math.round(minutosNum / 15) * 15;
+            const nuevaHora = `${horas}:${minutosRedondeados.toString().padStart(2, '0')}`;
+            
+            if (nuevaHora !== hora) {
+                this.value = nuevaHora;
+            }
+        });
+    }
+});
+</script>
+{% endblock %} 

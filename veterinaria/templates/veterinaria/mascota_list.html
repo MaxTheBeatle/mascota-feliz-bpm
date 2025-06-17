@@ -22,36 +22,39 @@
                     <div class="card h-100 shadow-sm pet-card">
                         <div class="card-body">
                             <div class="d-flex justify-content-between align-items-center mb-3">
-                                <h5 class="card-title mb-0">{{ mascota.name }}</h5>
-                                <span class="badge {% if mascota.condition == 'Normal' %}bg-success{% elif mascota.condition == 'Enfermo' %}bg-warning{% else %}bg-info{% endif %}">
-                                    {{ mascota.condition }}
+                                <h5 class="card-title mb-0">{{ mascota.nombre }}</h5>
+                                <span class="badge {% if mascota.condicion == 'Normal' %}bg-success{% elif mascota.condicion == 'Herido' %}bg-warning{% else %}bg-info{% endif %}">
+                                    {{ mascota.condicion }}
                                 </span>
                             </div>
                             <div class="pet-info">
                                 <p class="mb-2">
-                                    <i class="fas fa-dog me-2 text-primary"></i>
-                                    <strong>Especie:</strong> {{ mascota.species }}
+                                    <i class="fas fa-{% if mascota.especie == 'Perro' %}dog{% else %}cat{% endif %} me-2 text-primary"></i>
+                                    <strong>Especie:</strong> {{ mascota.especie }}
                                 </p>
                                 <p class="mb-2">
                                     <i class="fas fa-tag me-2 text-primary"></i>
-                                    <strong>Raza:</strong> {{ mascota.breed }}
+                                    <strong>Raza:</strong> {{ mascota.raza }}
                                 </p>
                                 <p class="mb-2">
                                     <i class="fas fa-birthday-cake me-2 text-primary"></i>
-                                    <strong>Edad:</strong> {{ mascota.age_years }} años {{ mascota.age_months }} meses
+                                    <strong>Edad:</strong> {{ mascota.edad }}
                                 </p>
                                 <p class="mb-2">
                                     <i class="fas fa-palette me-2 text-primary"></i>
-                                    <strong>Color:</strong> {{ mascota.base_color }}
+                                    <strong>Color:</strong> {{ mascota.color }}
                                 </p>
                                 <p class="mb-0">
                                     <i class="fas fa-venus-mars me-2 text-primary"></i>
-                                    <strong>Sexo:</strong> {{ mascota.sex }}
+                                    <strong>Sexo:</strong> {{ mascota.sexo }}
                                 </p>
                             </div>
-                            <div class="mt-3">
-                                <a href="{% url 'pet_detail' mascota.id %}" class="btn btn-outline-primary btn-block btn-hover-effect">
-                                    <i class="fas fa-eye me-2"></i>Ver Detalles
+                            <div class="mt-3 d-grid gap-2">
+                                <a href="{% url 'mascota_update' mascota.id %}" class="btn btn-outline-primary btn-hover-effect">
+                                    <i class="fas fa-edit me-2"></i>Editar
+                                </a>
+                                <a href="{% url 'cita_create' %}" class="btn btn-success btn-hover-effect">
+                                    <i class="fas fa-calendar-plus me-2"></i>Agendar Cita
                                 </a>
                             </div>
                         </div>
@@ -60,10 +63,13 @@
             {% endfor %}
         </div>
     {% else %}
-        <div class="alert alert-info" role="alert">
-            <i class="fas fa-info-circle me-2"></i>
-            No tienes mascotas registradas. 
-            <a href="{% url 'mascota_create' %}" class="alert-link">¡Registra tu primera mascota!</a>
+        <div class="text-center py-5">
+            <i class="fas fa-paw fa-4x text-muted mb-4"></i>
+            <h4 class="text-muted">No tienes mascotas registradas</h4>
+            <p class="text-muted mb-4">¡Registra tu primera mascota para comenzar a usar nuestros servicios!</p>
+            <a href="{% url 'mascota_create' %}" class="btn btn-primary btn-lg btn-hover-effect">
+                <i class="fas fa-plus me-2"></i>Registrar Mi Primera Mascota
+            </a>
         </div>
     {% endif %}
 </div>
@@ -81,11 +87,12 @@
 .pet-card {
     transition: all 0.3s ease;
     border-radius: 15px;
+    border: none;
 }
 
 .pet-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
 }
 
 .pet-info i {
@@ -95,6 +102,20 @@
 .badge {
     padding: 8px 12px;
     border-radius: 20px;
+    font-size: 0.8rem;
+}
+
+.card-title {
+    color: #2c3e50;
+    font-weight: 600;
+}
+
+.pet-info p {
+    font-size: 0.9rem;
+}
+
+.pet-info strong {
+    color: #34495e;
 }
 </style>
 {% endblock %} 

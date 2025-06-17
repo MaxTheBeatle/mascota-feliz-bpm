@@ -139,29 +139,16 @@
                 </div>
             </div>
 
-            <!-- Notas del Veterinario -->
-            {% if cita.estado == 'completada' or cita.estado == 'en_curso' %}
+            <!-- Notas del Veterinario (Solo para citas completadas) -->
+            {% if cita.estado == 'completada' and cita.notas_veterinario %}
             <div class="card mb-4">
                 <div class="card-header bg-secondary text-white">
                     <h5 class="mb-0"><i class="fas fa-notes-medical me-2"></i>Notas del Veterinario</h5>
                 </div>
                 <div class="card-body">
-                    {% if cita.estado == 'en_curso' %}
-                        <form method="post">
-                            {% csrf_token %}
-                            <div class="mb-3">
-                                <label for="notas_veterinario" class="form-label">Notas de la consulta:</label>
-                                <textarea name="notas_veterinario" id="notas_veterinario" class="form-control" rows="5" placeholder="Escribe aquí las observaciones, diagnóstico, tratamiento recomendado, etc.">{{ cita.notas_veterinario }}</textarea>
-                            </div>
-                            <button type="submit" name="accion" value="completar" class="btn btn-success">
-                                <i class="fas fa-check-circle me-1"></i>Completar Cita
-                            </button>
-                        </form>
-                    {% else %}
-                        <div class="bg-light p-3 rounded">
-                            {{ cita.notas_veterinario|default:"No hay notas registradas." }}
-                        </div>
-                    {% endif %}
+                    <div class="bg-light p-3 rounded">
+                        {{ cita.notas_veterinario }}
+                    </div>
                 </div>
             </div>
             {% endif %}
@@ -274,12 +261,45 @@
                         <div class="alert alert-info">
                             <i class="fas fa-info-circle me-2"></i>
                             <strong>Consulta en curso</strong><br>
-                            Completa las notas médicas y finaliza la consulta.
+                            Puedes completar la cita con o sin receta médica.
                         </div>
+                        
+                        <!-- Opción principal: Completar cita -->
                         <div class="d-grid gap-2 mb-3">
-                            <a href="{% url 'crear_receta' cita.id %}" class="btn btn-success">
+                            <form method="post">
+                                {% csrf_token %}
+                                <div class="mb-3">
+                                    <label for="notas_veterinario_panel" class="form-label">
+                                        <i class="fas fa-notes-medical me-1"></i>Notas de la consulta (opcional):
+                                    </label>
+                                    <textarea name="notas_veterinario" id="notas_veterinario_panel" class="form-control" rows="4" placeholder="Observaciones, diagnóstico, recomendaciones...">{{ cita.notas_veterinario }}</textarea>
+                                    <div class="form-text">Estas notas se guardarán en el historial de la mascota.</div>
+                                </div>
+                                <button type="submit" name="accion" value="completar" class="btn btn-success btn-lg w-100">
+                                    <i class="fas fa-check-circle me-2"></i>Completar Cita
+                                </button>
+                            </form>
+                        </div>
+                        
+                        <div class="text-center mb-3">
+                            <small class="text-muted">- O si necesitas recetar medicamentos -</small>
+                        </div>
+                        
+                        <!-- Opción secundaria: Crear receta -->
+                        <div class="d-grid gap-2">
+                            <a href="{% url 'crear_receta' cita.id %}" class="btn btn-outline-primary">
                                 <i class="fas fa-prescription me-2"></i>Crear Receta Médica
                             </a>
+                        </div>
+                        
+                        <div class="mt-3">
+                            <div class="alert alert-light border">
+                                <small>
+                                    <i class="fas fa-lightbulb text-warning me-1"></i>
+                                    <strong>Tip:</strong> Puedes completar la cita directamente si no necesitas recetar medicamentos. 
+                                    Las recetas médicas son opcionales y se pueden crear después si es necesario.
+                                </small>
+                            </div>
                         </div>
                     {% elif cita.estado == 'completada' %}
                         <div class="alert alert-success">

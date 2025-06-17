@@ -1,0 +1,243 @@
+{% extends 'veterinaria/base.html' %}
+{% load static %}
+
+{% block title %}Dashboard Peluquero - {{ peluquero.user.get_full_name }}{% endblock %}
+
+{% block extra_css %}
+<style>
+    .dashboard-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 40px 0;
+        border-radius: 0 0 30px 30px;
+        margin-bottom: 30px;
+    }
+    
+    .stat-card {
+        background: white;
+        border-radius: 15px;
+        padding: 25px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        margin-bottom: 20px;
+        transition: transform 0.3s ease;
+        border-left: 5px solid;
+    }
+    
+    .stat-card:hover {
+        transform: translateY(-5px);
+    }
+    
+    .stat-card.primary { border-left-color: #667eea; }
+    .stat-card.success { border-left-color: #28a745; }
+    .stat-card.warning { border-left-color: #ffc107; }
+    .stat-card.info { border-left-color: #17a2b8; }
+    
+    .stat-number {
+        font-size: 2.5rem;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+    
+    .stat-label {
+        color: #6c757d;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+    
+    .appointment-card {
+        background: white;
+        border-radius: 15px;
+        padding: 20px;
+        margin-bottom: 15px;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+        border-left: 4px solid;
+        transition: all 0.3s ease;
+    }
+    
+    .appointment-card:hover {
+        box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        transform: translateX(5px);
+    }
+    
+    .appointment-card.programada { border-left-color: #3498db; }
+    .appointment-card.confirmada { border-left-color: #f39c12; }
+    .appointment-card.en_proceso { border-left-color: #9b59b6; }
+    .appointment-card.completada { border-left-color: #27ae60; }
+    
+    .profile-image {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 4px solid white;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Header -->
+<div class="dashboard-header">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                <h1 class="display-4 mb-3">¡Bienvenido, {{ peluquero.user.first_name }}!</h1>
+                <p class="lead mb-0">Gestiona tus citas y servicios de peluquería desde aquí.</p>
+            </div>
+            <div class="col-lg-4 text-lg-end">
+                <img src="{% if peluquero.foto_perfil %}{{ peluquero.foto_perfil.url }}{% else %}{% static 'img/default-profile.png' %}{% endif %}" 
+                     alt="{{ peluquero.user.get_full_name }}" 
+                     class="profile-image">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <!-- Estadísticas -->
+    <div class="row">
+        <div class="col-lg-3 col-md-6">
+            <div class="stat-card primary">
+                <div class="stat-number">{{ total_citas_hoy }}</div>
+                <div class="stat-label">Citas Hoy</div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <div class="stat-card success">
+                <div class="stat-number">{{ total_citas_semana }}</div>
+                <div class="stat-label">Citas Esta Semana</div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <div class="stat-card warning">
+                <div class="stat-number">{{ total_pendientes }}</div>
+                <div class="stat-label">Citas Pendientes</div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <div class="stat-card info">
+                <div class="stat-number">{{ peluquero.especialidades.count }}</div>
+                <div class="stat-label">Especialidades</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <!-- Citas de Hoy -->
+        <div class="col-lg-8">
+            <div class="card shadow-sm">
+                <div class="card-header bg-white py-3">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">
+                            <i class="fas fa-calendar-day text-primary me-2"></i>
+                            Citas de Hoy
+                        </h5>
+                        <a href="{% url 'peluquero_citas' %}" class="btn btn-outline-primary btn-sm">
+                            Ver Todas
+                        </a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    {% if citas_hoy %}
+                        {% for cita in citas_hoy %}
+                            <div class="appointment-card {{ cita.estado }}">
+                                <div class="row align-items-center">
+                                    <div class="col-lg-3">
+                                        <h6 class="mb-1">{{ cita.hora|time:"H:i" }}</h6>
+                                        <small class="text-muted">{{ cita.duracion_formateada }}</small>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <h6 class="mb-1">{{ cita.mascota.nombre }}</h6>
+                                        <small class="text-muted">
+                                            {{ cita.mascota.get_especie_display }} - {{ cita.mascota.raza }}
+                                        </small>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <span class="badge {% if cita.estado == 'programada' %}bg-primary{% elif cita.estado == 'confirmada' %}bg-warning{% elif cita.estado == 'en_proceso' %}bg-info{% elif cita.estado == 'completada' %}bg-success{% endif %}">
+                                            {{ cita.get_estado_display }}
+                                        </span>
+                                    </div>
+                                    <div class="col-lg-2 text-end">
+                                        <a href="{% url 'peluquero_cita_detalle' cita.id %}" class="btn btn-sm btn-outline-primary">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="text-center py-4">
+                            <i class="fas fa-calendar-xmark fa-3x text-muted mb-3"></i>
+                            <h5>No hay citas programadas para hoy</h5>
+                            <p class="text-muted mb-0">¡Disfruta tu día libre!</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Acciones Rápidas -->
+        <div class="col-lg-4">
+            <div class="card shadow-sm">
+                <div class="card-header bg-white py-3">
+                    <h5 class="mb-0">
+                        <i class="fas fa-bolt text-warning me-2"></i>
+                        Acciones Rápidas
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-grid gap-3">
+                        <a href="{% url 'peluquero_citas' %}" class="btn btn-outline-primary">
+                            <i class="fas fa-calendar-week me-2"></i>
+                            Ver Todas las Citas
+                        </a>
+                        <a href="{% url 'peluquero_profile' %}" class="btn btn-outline-info">
+                            <i class="fas fa-user-edit me-2"></i>
+                            Editar Perfil
+                        </a>
+                        <a href="{% url 'galeria_peluqueria' %}" class="btn btn-outline-success">
+                            <i class="fas fa-images me-2"></i>
+                            Ver Galería
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Próximas Citas -->
+            <div class="card shadow-sm mt-4">
+                <div class="card-header bg-white py-3">
+                    <h5 class="mb-0">
+                        <i class="fas fa-calendar-alt text-info me-2"></i>
+                        Próximas Citas
+                    </h5>
+                </div>
+                <div class="card-body">
+                    {% if citas_semana %}
+                        {% for cita in citas_semana|slice:":5" %}
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="flex-shrink-0">
+                                    <div class="bg-light rounded p-2">
+                                        <i class="fas fa-calendar text-primary"></i>
+                                    </div>
+                                </div>
+                                <div class="flex-grow-1 ms-3">
+                                    <h6 class="mb-1">{{ cita.mascota.nombre }}</h6>
+                                    <small class="text-muted">
+                                        {{ cita.fecha|date:"d/m/Y" }} - {{ cita.hora|time:"H:i" }}
+                                    </small>
+                                </div>
+                                <a href="{% url 'peluquero_cita_detalle' cita.id %}" class="btn btn-sm btn-outline-primary">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <p class="text-muted text-center mb-0">No hay citas programadas para esta semana</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 
