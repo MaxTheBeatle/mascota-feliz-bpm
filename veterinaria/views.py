@@ -1574,8 +1574,8 @@ def peluquero_completar_cita(request, cita_id):
 
 @login_required
 def peluquero_profile(request):
-    """Perfil del peluquero"""
-    from .models import Peluquero
+    """Perfil del peluquero con estadísticas completas"""
+    from .models import Peluquero, CitaPeluqueria
     from .forms import PeluqueroProfileForm
     
     try:
@@ -1593,9 +1593,25 @@ def peluquero_profile(request):
     else:
         form = PeluqueroProfileForm(instance=peluquero)
     
+    # Calcular estadísticas
+    total_citas = CitaPeluqueria.objects.filter(peluquero=peluquero).count()
+    citas_completadas = CitaPeluqueria.objects.filter(
+        peluquero=peluquero, 
+        estado='completada'
+    ).count()
+    citas_pendientes = CitaPeluqueria.objects.filter(
+        peluquero=peluquero,
+        estado__in=['programada', 'confirmada']
+    ).count()
+    especialidades_count = peluquero.especialidades.count()
+    
     context = {
         'peluquero': peluquero,
         'form': form,
+        'total_citas': total_citas,
+        'citas_completadas': citas_completadas,
+        'citas_pendientes': citas_pendientes,
+        'especialidades_count': especialidades_count,
     }
     
     return render(request, 'veterinaria/peluqueria/peluquero_profile.html', context)
