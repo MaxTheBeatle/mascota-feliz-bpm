@@ -1,0 +1,341 @@
+{% extends 'veterinaria/base.html' %}
+{% load static %}
+
+{% block title %}Editar Perfil - Mascota Feliz{% endblock %}
+
+{% block extra_css %}
+<style>
+    .edit-profile-container {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        padding: 60px 0;
+    }
+    
+    .edit-profile-card {
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        overflow: hidden;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+    
+    .card-header-custom {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 30px;
+        text-align: center;
+    }
+    
+    .card-header-custom h2 {
+        margin: 0;
+        font-weight: 600;
+        font-size: 2rem;
+    }
+    
+    .card-header-custom p {
+        margin: 10px 0 0 0;
+        opacity: 0.9;
+    }
+    
+    .form-section {
+        padding: 40px;
+    }
+    
+    .form-group {
+        margin-bottom: 25px;
+    }
+    
+    .form-label {
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 8px;
+        display: flex;
+        align-items: center;
+    }
+    
+    .form-label i {
+        margin-right: 8px;
+        color: #667eea;
+    }
+    
+    .form-control {
+        border: 2px solid #e9ecef;
+        border-radius: 10px;
+        padding: 12px 15px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+    }
+    
+    .form-control:focus {
+        border-color: #667eea;
+        box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+    }
+    
+    .btn-save {
+        background: linear-gradient(135deg, #28a745, #20c997);
+        border: none;
+        color: white;
+        padding: 12px 30px;
+        border-radius: 25px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        width: 100%;
+    }
+    
+    .btn-save:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(40, 167, 69, 0.3);
+        color: white;
+    }
+    
+    .btn-cancel {
+        background: linear-gradient(135deg, #6c757d, #495057);
+        border: none;
+        color: white;
+        padding: 12px 30px;
+        border-radius: 25px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        width: 100%;
+        text-decoration: none;
+        display: inline-block;
+        text-align: center;
+    }
+    
+    .btn-cancel:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(108, 117, 125, 0.3);
+        color: white;
+        text-decoration: none;
+    }
+    
+    .profile-avatar {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #ffeaa7, #fab1a0);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 20px;
+        font-size: 2.5rem;
+        color: white;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    }
+    
+    .alert-custom {
+        border-radius: 10px;
+        border: none;
+        padding: 15px 20px;
+        margin-bottom: 20px;
+    }
+    
+    .alert-success {
+        background: linear-gradient(135deg, #d4edda, #c3e6cb);
+        color: #155724;
+    }
+    
+    .alert-danger {
+        background: linear-gradient(135deg, #f8d7da, #f5c6cb);
+        color: #721c24;
+    }
+    
+    .required-field {
+        color: #dc3545;
+    }
+    
+    .form-row {
+        display: flex;
+        gap: 20px;
+    }
+    
+    .form-row .form-group {
+        flex: 1;
+    }
+    
+    @media (max-width: 768px) {
+        .form-row {
+            flex-direction: column;
+            gap: 0;
+        }
+        
+        .edit-profile-container {
+            padding: 20px 0;
+        }
+        
+        .form-section {
+            padding: 30px 20px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="edit-profile-container">
+    <div class="container">
+        <div class="edit-profile-card">
+            <!-- Header del formulario -->
+            <div class="card-header-custom">
+                <div class="profile-avatar">
+                    <i class="fas fa-user-edit"></i>
+                </div>
+                <h2>Editar Mi Perfil</h2>
+                <p>Actualiza tu información personal</p>
+            </div>
+            
+            <!-- Formulario -->
+            <div class="form-section">
+                <!-- Mensajes de éxito/error -->
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }} alert-custom">
+                            <i class="fas fa-{% if message.tags == 'success' %}check-circle{% else %}exclamation-triangle{% endif %} me-2"></i>
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+                
+                <form method="post" novalidate>
+                    {% csrf_token %}
+                    
+                    <!-- Información Personal -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">
+                                <i class="fas fa-user"></i>
+                                Nombre <span class="required-field">*</span>
+                            </label>
+                            <input type="text" 
+                                   name="first_name" 
+                                   class="form-control" 
+                                   value="{{ user.first_name }}"
+                                   placeholder="Ingresa tu nombre"
+                                   required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">
+                                <i class="fas fa-user"></i>
+                                Apellido <span class="required-field">*</span>
+                            </label>
+                            <input type="text" 
+                                   name="last_name" 
+                                   class="form-control" 
+                                   value="{{ user.last_name }}"
+                                   placeholder="Ingresa tu apellido"
+                                   required>
+                        </div>
+                    </div>
+                    
+                    <!-- Email -->
+                    <div class="form-group">
+                        <label class="form-label">
+                            <i class="fas fa-envelope"></i>
+                            Correo Electrónico <span class="required-field">*</span>
+                        </label>
+                        <input type="email" 
+                               name="email" 
+                               class="form-control" 
+                               value="{{ user.email }}"
+                               placeholder="correo@ejemplo.com"
+                               required>
+                    </div>
+                    
+                    <!-- Teléfono -->
+                    <div class="form-group">
+                        <label class="form-label">
+                            <i class="fas fa-phone"></i>
+                            Teléfono
+                        </label>
+                        <input type="tel" 
+                               name="phone" 
+                               class="form-control" 
+                               value="{{ user.phone|default:'' }}"
+                               placeholder="+56 9 1234 5678">
+                    </div>
+                    
+                    <!-- Región -->
+                    <div class="form-group">
+                        <label class="form-label">
+                            <i class="fas fa-map-marker-alt"></i>
+                            Región
+                        </label>
+                        <select name="region" class="form-control">
+                            <option value="">Selecciona tu región</option>
+                            <option value="Región de Arica y Parinacota" {% if user.region == "Región de Arica y Parinacota" %}selected{% endif %}>Región de Arica y Parinacota</option>
+                            <option value="Región de Tarapacá" {% if user.region == "Región de Tarapacá" %}selected{% endif %}>Región de Tarapacá</option>
+                            <option value="Región de Antofagasta" {% if user.region == "Región de Antofagasta" %}selected{% endif %}>Región de Antofagasta</option>
+                            <option value="Región de Atacama" {% if user.region == "Región de Atacama" %}selected{% endif %}>Región de Atacama</option>
+                            <option value="Región de Coquimbo" {% if user.region == "Región de Coquimbo" %}selected{% endif %}>Región de Coquimbo</option>
+                            <option value="Región de Valparaíso" {% if user.region == "Región de Valparaíso" %}selected{% endif %}>Región de Valparaíso</option>
+                            <option value="Región Metropolitana" {% if user.region == "Región Metropolitana" %}selected{% endif %}>Región Metropolitana</option>
+                            <option value="Región del Libertador Bernardo O'Higgins" {% if user.region == "Región del Libertador Bernardo O'Higgins" %}selected{% endif %}>Región del Libertador Bernardo O'Higgins</option>
+                            <option value="Región del Maule" {% if user.region == "Región del Maule" %}selected{% endif %}>Región del Maule</option>
+                            <option value="Región de Ñuble" {% if user.region == "Región de Ñuble" %}selected{% endif %}>Región de Ñuble</option>
+                            <option value="Región del Biobío" {% if user.region == "Región del Biobío" %}selected{% endif %}>Región del Biobío</option>
+                            <option value="Región de La Araucanía" {% if user.region == "Región de La Araucanía" %}selected{% endif %}>Región de La Araucanía</option>
+                            <option value="Región de Los Ríos" {% if user.region == "Región de Los Ríos" %}selected{% endif %}>Región de Los Ríos</option>
+                            <option value="Región de Los Lagos" {% if user.region == "Región de Los Lagos" %}selected{% endif %}>Región de Los Lagos</option>
+                            <option value="Región de Aysén" {% if user.region == "Región de Aysén" %}selected{% endif %}>Región de Aysén</option>
+                            <option value="Región de Magallanes" {% if user.region == "Región de Magallanes" %}selected{% endif %}>Región de Magallanes</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Botones -->
+                    <div class="form-row mt-4">
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-save">
+                                <i class="fas fa-save me-2"></i>
+                                Guardar Cambios
+                            </button>
+                        </div>
+                        
+                        <div class="form-group">
+                            <a href="{% url 'profile' %}" class="btn btn-cancel">
+                                <i class="fas fa-times me-2"></i>
+                                Cancelar
+                            </a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Validación del formulario
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.querySelector('form');
+        const inputs = form.querySelectorAll('input[required]');
+        
+        form.addEventListener('submit', function(e) {
+            let isValid = true;
+            
+            inputs.forEach(input => {
+                if (!input.value.trim()) {
+                    input.classList.add('is-invalid');
+                    isValid = false;
+                } else {
+                    input.classList.remove('is-invalid');
+                }
+            });
+            
+            if (!isValid) {
+                e.preventDefault();
+                alert('Por favor, completa todos los campos obligatorios.');
+            }
+        });
+        
+        // Remover clase de error al escribir
+        inputs.forEach(input => {
+            input.addEventListener('input', function() {
+                this.classList.remove('is-invalid');
+            });
+        });
+    });
+</script>
+{% endblock %} 

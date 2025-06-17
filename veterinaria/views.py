@@ -317,12 +317,199 @@ def detalle_pedido(request, pedido_id):
 
 @login_required
 def profile(request):
+    """Vista mejorada del perfil de usuario con mascotas y opciones de descarga"""
     user_mascotas = Mascota.objects.filter(propietario=request.user)
+    
+    # Obtener próximas citas del usuario
+    from datetime import date
+    proximas_citas = Cita.objects.filter(
+        mascota__propietario=request.user,
+        fecha__gte=date.today(),
+        estado__in=['programada', 'confirmada']
+    ).order_by('fecha', 'hora')[:5]
+    
+    # Obtener historial de citas recientes
+    historial_citas = Cita.objects.filter(
+        mascota__propietario=request.user,
+        estado='completada'
+    ).order_by('-fecha', '-hora')[:5]
+    
     context = {
-        'user': request.user,
-        'mascotas': user_mascotas
+        'user_mascotas': user_mascotas,
+        'proximas_citas': proximas_citas,
+        'historial_citas': historial_citas,
+        'total_mascotas': user_mascotas.count(),
+        'total_citas': Cita.objects.filter(mascota__propietario=request.user).count(),
     }
+    
     return render(request, 'veterinaria/profile.html', context)
+
+@login_required
+def edit_profile(request):
+    """Vista para editar el perfil del usuario"""
+    if request.method == 'POST':
+        # Actualizar datos del usuario
+        user = request.user
+        user.first_name = request.POST.get('first_name', '')
+        user.last_name = request.POST.get('last_name', '')
+        user.email = request.POST.get('email', '')
+        user.phone = request.POST.get('phone', '')
+        user.region = request.POST.get('region', '')
+        
+        try:
+            user.save()
+            messages.success(request, 'Perfil actualizado exitosamente.')
+            return redirect('profile')
+        except Exception as e:
+            messages.error(request, f'Error al actualizar el perfil: {e}')
+    
+    return render(request, 'veterinaria/edit_profile.html', {'user': request.user})
+
+@login_required
+def descargar_ficha_mascota(request, mascota_id):
+    """Descargar ficha médica de una mascota específica"""
+    mascota = get_object_or_404(Mascota, id=mascota_id, propietario=request.user)
+    
+    # Crear el PDF
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = f'attachment; filename="ficha_medica_{mascota.nombre}.pdf"'
+    
+    # Crear documento PDF
+    doc = SimpleDocTemplate(response, pagesize=A4)
+    story = []
+    styles = getSampleStyleSheet()
+    
+    # Estilo personalizado para el título
+    title_style = ParagraphStyle(
+        'CustomTitle',
+        parent=styles['Heading1'],
+        fontSize=24,
+        spaceAfter=30,
+        textColor=colors.HexColor('#2c3e50'),
+        alignment=1  # Centrado
+    )
+    
+    # Estilo para subtítulos
+    subtitle_style = ParagraphStyle(
+        'CustomSubtitle',
+        parent=styles['Heading2'],
+        fontSize=16,
+        spaceAfter=12,
+        textColor=colors.HexColor('#34495e'),
+    )
+    
+    # Título principal
+    story.append(Paragraph("🐾 FICHA MÉDICA VETERINARIA", title_style))
+    story.append(Spacer(1, 20))
+    
+    # Información de la clínica
+    clinic_info = [
+        ["CLÍNICA VETERINARIA MASCOTA FELIZ", ""],
+        ["Dirección: Av. Principal 123, Santiago", ""],
+        ["Teléfono: +56 2 2345 6789", ""],
+        ["Email: info@mascotafeliz.cl", ""],
+    ]
+    
+    clinic_table = Table(clinic_info, colWidths=[4*inch, 2*inch])
+    clinic_table.setStyle(TableStyle([
+        ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
+        ('FONTNAME', (0, 0), (-1, -1), 'Helvetica'),
+        ('FONTSIZE', (0, 0), (-1, -1), 10),
+        ('TEXTCOLOR', (0, 0), (-1, -1), colors.HexColor('#7f8c8d')),
+    ]))
+    story.append(clinic_table)
+    story.append(Spacer(1, 30))
+    
+    # Información del propietario
+    story.append(Paragraph("INFORMACIÓN DEL PROPIETARIO", subtitle_style))
+    
+    owner_data = [
+        ["Nombre:", f"{mascota.propietario.first_name} {mascota.propietario.last_name}"],
+        ["Email:", mascota.propietario.email],
+        ["Teléfono:", mascota.propietario.phone or "No especificado"],
+        ["Región:", mascota.propietario.region or "No especificada"],
+    ]
+    
+    owner_table = Table(owner_data, colWidths=[2*inch, 4*inch])
+    owner_table.setStyle(TableStyle([
+        ('ALIGN', (0, 0), (0, -1), 'RIGHT'),
+        ('ALIGN', (1, 0), (1, -1), 'LEFT'),
+        ('FONTNAME', (0, 0), (-1, -1), 'Helvetica'),
+        ('FONTSIZE', (0, 0), (-1, -1), 11),
+        ('GRID', (0, 0), (-1, -1), 1, colors.HexColor('#bdc3c7')),
+        ('BACKGROUND', (0, 0), (0, -1), colors.HexColor('#ecf0f1')),
+    ]))
+    story.append(owner_table)
+    story.append(Spacer(1, 20))
+    
+    # Información de la mascota
+    story.append(Paragraph("INFORMACIÓN DE LA MASCOTA", subtitle_style))
+    
+    pet_data = [
+        ["Nombre:", mascota.nombre],
+        ["Especie:", mascota.especie],
+        ["Raza:", mascota.raza],
+        ["Color:", mascota.color],
+        ["Sexo:", mascota.sexo],
+        ["Edad:", mascota.edad],
+        ["Condición:", mascota.condicion],
+        ["ID Mascota:", str(mascota.id)],
+    ]
+    
+    pet_table = Table(pet_data, colWidths=[2*inch, 4*inch])
+    pet_table.setStyle(TableStyle([
+        ('ALIGN', (0, 0), (0, -1), 'RIGHT'),
+        ('ALIGN', (1, 0), (1, -1), 'LEFT'),
+        ('FONTNAME', (0, 0), (-1, -1), 'Helvetica'),
+        ('FONTSIZE', (0, 0), (-1, -1), 11),
+        ('GRID', (0, 0), (-1, -1), 1, colors.HexColor('#bdc3c7')),
+        ('BACKGROUND', (0, 0), (0, -1), colors.HexColor('#e8f5e8')),
+    ]))
+    story.append(pet_table)
+    story.append(Spacer(1, 20))
+    
+    # Historial de citas
+    story.append(Paragraph("HISTORIAL MÉDICO", subtitle_style))
+    
+    citas = Cita.objects.filter(mascota=mascota).order_by('-fecha', '-hora')
+    
+    if citas.exists():
+        citas_data = [["Fecha", "Hora", "Veterinario", "Motivo", "Estado"]]
+        
+        for cita in citas[:10]:  # Últimas 10 citas
+            veterinario_nombre = cita.veterinario.user.get_full_name() if cita.veterinario else "No asignado"
+            citas_data.append([
+                cita.fecha.strftime("%d/%m/%Y"),
+                cita.hora.strftime("%H:%M"),
+                veterinario_nombre,
+                cita.motivo[:30] + "..." if len(cita.motivo) > 30 else cita.motivo,
+                cita.get_estado_display()
+            ])
+        
+        citas_table = Table(citas_data, colWidths=[1.2*inch, 0.8*inch, 1.5*inch, 2*inch, 1*inch])
+        citas_table.setStyle(TableStyle([
+            ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+            ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+            ('FONTNAME', (0, 1), (-1, -1), 'Helvetica'),
+            ('FONTSIZE', (0, 0), (-1, -1), 9),
+            ('GRID', (0, 0), (-1, -1), 1, colors.HexColor('#bdc3c7')),
+            ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor('#3498db')),
+            ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
+        ]))
+        story.append(citas_table)
+    else:
+        story.append(Paragraph("No hay historial médico registrado.", styles['Normal']))
+    
+    story.append(Spacer(1, 30))
+    
+    # Pie de página
+    footer_text = f"Documento generado el {datetime.now().strftime('%d/%m/%Y a las %H:%M')}"
+    story.append(Paragraph(footer_text, styles['Normal']))
+    
+    # Construir PDF
+    doc.build(story)
+    
+    return response
 
 @login_required
 def pet_detail(request, pet_id):

@@ -1,19 +1,16 @@
 #!/usr/bin/env python
 """
-Script para crear datos exactos de la base de datos local del Sistema Veterinario Mascota Feliz
-Replica exactamente los usuarios, productos, servicios y datos que ya tienes
-Incluye imágenes para productos y servicios, crea mascotas y citas para el home
+Script para crear datos de ejemplo del sistema Mascota Feliz
+Incluye Max Guzman con sus mascotas específicas: Nacho (gato) y Polo (perro)
 """
 
 import os
 import sys
 import django
+from datetime import date, timedelta, datetime
 from decimal import Decimal
-from datetime import datetime, timedelta, date
+from io import BytesIO
 from django.core.files.base import ContentFile
-from io import BytesIO
-import urllib.request
-from io import BytesIO
 
 def setup_django():
     """Configurar Django"""
@@ -21,64 +18,83 @@ def setup_django():
     django.setup()
 
 def crear_superuser():
-    """Crear superuser para administración"""
-    from veterinaria.models import User
+    """Crear superusuario si no existe"""
+    from django.contrib.auth import get_user_model
     
-    print("👑 Creando superuser...")
+    User = get_user_model()
     
-    # Superuser principal
-    if not User.objects.filter(username='superadmin').exists():
-        superuser = User.objects.create_superuser(
-            username='superadmin',
-            email='superadmin@mascotafeliz.com',
-            password='admin123',
-            first_name='Super',
-            last_name='Administrador',
-            region='Región Metropolitana',
-            phone='+56912345678'
-        )
-        print("✅ Superuser 'superadmin' creado (superadmin / admin123)")
-
-def crear_usuarios_reales():
-    """Crear usuarios exactos de la base de datos local"""
-    from veterinaria.models import User, Veterinario, Peluquero, Farmaceutico
-    
-    print("👥 Creando usuarios reales...")
-    
-    # Usuario admin
     if not User.objects.filter(username='admin').exists():
-        admin = User.objects.create_superuser(
+        User.objects.create_superuser(
             username='admin',
             email='admin@mascotafeliz.com',
             password='admin123',
-            first_name='',
-            last_name='',
+            first_name='Administrador',
+            last_name='Sistema',
             region='Región Metropolitana',
-            phone=''
+            phone='+56912345678'
         )
-        print("✅ Admin creado")
+        print("✅ Superusuario 'admin' creado")
+    else:
+        print("ℹ️ Superusuario 'admin' ya existe")
+
+def crear_usuarios_completos():
+    """Crear todos los usuarios del sistema incluyendo Max Guzman"""
+    from veterinaria.models import User, Veterinario, Peluquero, Farmaceutico
     
-    # Cliente de ejemplo
+    print("👥 Creando usuarios del sistema...")
+    
+    # Max Guzman - Cliente principal
     if not User.objects.filter(username='cliente1').exists():
         User.objects.create_user(
             username='cliente1',
-            email='cliente1@example.com',
+            email='max.guzman@example.com',
             password='cliente123',
-            first_name='Juan',
-            last_name='Pérez',
-            region='Región de Los Lagos',
+            first_name='Max',
+            last_name='Guzman',
+            region='Región Metropolitana',
             phone='+56912345678'
         )
-        print("✅ Cliente1 creado")
+        print("✅ Max Guzman (cliente1) creado")
+    else:
+        # Actualizar datos existentes
+        cliente1 = User.objects.get(username='cliente1')
+        cliente1.first_name = 'Max'
+        cliente1.last_name = 'Guzman'
+        cliente1.email = 'max.guzman@example.com'
+        cliente1.region = 'Región Metropolitana'
+        cliente1.save()
+        print("✅ Max Guzman (cliente1) actualizado")
+
+    # Clientes adicionales
+    clientes_data = [
+        ('cliente2', 'ana.martinez@example.com', 'Ana', 'Martínez', 'Región de Valparaíso'),
+        ('cliente3', 'carlos.lopez@example.com', 'Carlos', 'López', 'Región del Biobío'),
+        ('cliente4', 'maria.gonzalez@example.com', 'María', 'González', 'Región de Los Lagos'),
+        ('cliente5', 'pedro.rodriguez@example.com', 'Pedro', 'Rodríguez', 'Región de Coquimbo'),
+        ('cliente6', 'laura.fernandez@example.com', 'Laura', 'Fernández', 'Región de La Araucanía'),
+        ('cliente7', 'jose.silva@example.com', 'José', 'Silva', 'Región de Antofagasta'),
+        ('cliente8', 'sofia.torres@example.com', 'Sofía', 'Torres', 'Región de Atacama'),
+        ('cliente9', 'diego.morales@example.com', 'Diego', 'Morales', 'Región de Tarapacá'),
+    ]
     
+    for username, email, first_name, last_name, region in clientes_data:
+        if not User.objects.filter(username=username).exists():
+            User.objects.create_user(
+                username=username,
+                email=email,
+                password='cliente123',
+                first_name=first_name,
+                last_name=last_name,
+                region=region,
+                phone='+56987654321'
+            )
+            print(f"✅ Cliente {username} ({first_name} {last_name}) creado")
+
     # Veterinarios
     veterinarios_data = [
-        ('dr_martinez', 'carlos.martinez@mascotafeliz.cl', 'Carlos', 'Martínez', 'Medicina General', '+56 9 1234 5678'),
-        ('dra_rodriguez', 'maria.rodriguez@mascotafeliz.cl', 'María', 'Rodríguez', 'Cirugía Veterinaria', '+56 9 7654 3210'),
-        ('dr_gonzalez', 'pedro.gonzalez@mascotafeliz.cl', 'Pedro', 'González', 'Dermatología Veterinaria', '+56 9 6543 2109'),
-        ('dra_lopez', 'ana.lopez@mascotafeliz.cl', 'Ana', 'López', 'Cardiología Veterinaria', '+56 9 5432 1098'),
-        ('dr_silva', 'roberto.silva@mascotafeliz.cl', 'Roberto', 'Silva', 'Medicina Felina', '+56 9 4321 0987'),
-        ('veterinario1', 'veterinario@mascotafeliz.com', 'Carlos', 'Mendoza', 'Medicina General', '+56912345678')
+        ('veterinario1', 'carlos.mendoza@mascotafeliz.cl', 'Carlos', 'Mendoza', 'Medicina General', '+56912345678'),
+        ('veterinario2', 'maria.rodriguez@mascotafeliz.cl', 'María', 'Rodríguez', 'Cirugía Veterinaria', '+56987654321'),
+        ('veterinario3', 'pedro.gonzalez@mascotafeliz.cl', 'Pedro', 'González', 'Dermatología Veterinaria', '+56976543210'),
     ]
     
     for username, email, first_name, last_name, especialidad, telefono in veterinarios_data:
@@ -89,9 +105,9 @@ def crear_usuarios_reales():
                 password='vet123',
                 first_name=first_name,
                 last_name=last_name,
-                is_staff=True if username == 'veterinario1' else False,
-                region='Santiago' if username == 'veterinario1' else '',
-                phone='+56912345678' if username == 'veterinario1' else ''
+                is_staff=True,
+                region='Región Metropolitana',
+                phone=telefono
             )
             
             Veterinario.objects.create(
@@ -99,13 +115,13 @@ def crear_usuarios_reales():
                 especialidad=especialidad,
                 telefono=telefono
             )
-            print(f"✅ Veterinario {username} creado")
-    
+            print(f"✅ Veterinario {username} ({first_name} {last_name}) creado")
+
     # Peluqueros
     peluqueros_data = [
-        ('peluquero1', 'maria.gonzalez@mascotafeliz.com', 'María', 'González', '+56 9 8765 4321', 8),
-        ('peluquero2', 'carlos.rodriguez@mascotafeliz.com', 'Carlos', 'Rodríguez', '+56 9 7654 3210', 5),
-        ('peluquero3', 'ana.martinez@mascotafeliz.com', 'Ana', 'Martínez', '+56 9 6543 2109', 12)
+        ('peluquero1', 'maria.peluquera@mascotafeliz.cl', 'María', 'Estilista', '+56965432109', 8),
+        ('peluquero2', 'carlos.peluquero@mascotafeliz.cl', 'Carlos', 'Cortés', '+56954321098', 5),
+        ('peluquero3', 'ana.groomer@mascotafeliz.cl', 'Ana', 'Belleza', '+56943210987', 12)
     ]
     
     for username, email, first_name, last_name, telefono, experiencia in peluqueros_data:
@@ -116,8 +132,8 @@ def crear_usuarios_reales():
                 password='peluquero123',
                 first_name=first_name,
                 last_name=last_name,
-                region='',
-                phone=''
+                region='Región Metropolitana',
+                phone=telefono
             )
             
             Peluquero.objects.create(
@@ -125,44 +141,48 @@ def crear_usuarios_reales():
                 telefono=telefono,
                 experiencia_años=experiencia
             )
-            print(f"✅ Peluquero {username} creado")
-    
-    # Farmacéutico
-    if not User.objects.filter(username='farmaceutico1').exists():
-        farm_user = User.objects.create_user(
-            username='farmaceutico1',
-            email='farmaceutico@mascotafeliz.com',
-            password='farm123',
-            first_name='María',
-            last_name='González',
-            region='Santiago',
-            phone='+56987654321'
-        )
-        
-        Farmaceutico.objects.create(
-            user=farm_user,
-            telefono='+56987654321',
-            numero_registro='FARM001',
-            especialidad='Farmacia General',
-            experiencia_años=5
-        )
-        print("✅ Farmacéutico creado")
+            print(f"✅ Peluquero {username} ({first_name} {last_name}) creado")
 
-def crear_categorias_reales():
-    """Crear categorías exactas"""
+    # Farmacéuticos
+    farmaceuticos_data = [
+        ('farmaceutico1', 'lucia.farmacia@mascotafeliz.cl', 'Lucía', 'Medicamentos', '+56932109876', 'FARM001'),
+        ('farmaceutico2', 'roberto.farmacia@mascotafeliz.cl', 'Roberto', 'Recetas', '+56921098765', 'FARM002'),
+    ]
+    
+    for username, email, first_name, last_name, telefono, registro in farmaceuticos_data:
+        if not User.objects.filter(username=username).exists():
+            user = User.objects.create_user(
+                username=username,
+                email=email,
+                password='farm123',
+                first_name=first_name,
+                last_name=last_name,
+                region='Región Metropolitana',
+                phone=telefono
+            )
+            
+            Farmaceutico.objects.create(
+                user=user,
+                telefono=telefono,
+                numero_registro=registro,
+                especialidad='Farmacia Veterinaria',
+                experiencia_años=6
+            )
+            print(f"✅ Farmacéutico {username} ({first_name} {last_name}) creado")
+
+def crear_categorias():
+    """Crear todas las categorías del sistema"""
     from veterinaria.models import Categoria, CategoriaServicioPeluqueria, CategoriaFarmacia
     
     print("📂 Creando categorías...")
     
     # Categorías de productos
     categorias_productos = [
-        ('Comida para perros', 'Alimentos especializados para perros'),
-        ('Juguetes', 'Juguetes y entretenimiento para mascotas'),
+        ('Alimentos', 'Alimentos para mascotas'),
+        ('Juguetes', 'Juguetes y entretenimiento'),
         ('Cuidado', 'Productos de cuidado e higiene'),
         ('Accesorios', 'Accesorios y complementos'),
-        ('Alimentos', 'Alimentos para mascotas'),
         ('Salud', 'Productos de salud y medicina'),
-        ('Higiene', 'Productos de higiene')
     ]
     
     for nombre, descripcion in categorias_productos:
@@ -183,7 +203,7 @@ def crear_categorias_reales():
     for nombre, descripcion in categorias_peluqueria:
         CategoriaServicioPeluqueria.objects.get_or_create(
             nombre=nombre,
-            defaults={'descripcion': descripcion}
+            defaults={'descripcion': descripcion, 'activo': True}
         )
     
     # Categorías de farmacia
@@ -203,147 +223,234 @@ def crear_categorias_reales():
     
     print("✅ Categorías creadas")
 
-def crear_imagen_placeholder(nombre_archivo):
-    """Crear imagen placeholder simple"""
-    try:
-        # Crear una imagen simple de color sólido usando PIL si está disponible
-        from PIL import Image, ImageDraw, ImageFont
-        
-        # Crear imagen de 300x300 con color de fondo
-        img = Image.new('RGB', (300, 300), color='#f0f0f0')
-        draw = ImageDraw.Draw(img)
-        
-        # Agregar texto simple
-        try:
-            # Usar fuente por defecto
-            draw.text((150, 150), nombre_archivo[:20], fill='#666666', anchor='mm')
-        except:
-            pass
-        
-        # Guardar en memoria
-        img_io = BytesIO()
-        img.save(img_io, format='JPEG', quality=85)
-        img_io.seek(0)
-        
-        return ContentFile(img_io.getvalue(), name=f'{nombre_archivo}.jpg')
-    except ImportError:
-        # Si PIL no está disponible, crear archivo vacío
-        return ContentFile(b'placeholder', name=f'{nombre_archivo}.jpg')
-
-def crear_productos_reales():
-    """Crear productos exactos de la base de datos local con imágenes"""
+def crear_productos():
+    """Crear productos de la tienda"""
     from veterinaria.models import Producto, Categoria
     
-    print("🛒 Creando productos reales con imágenes...")
+    print("🛒 Creando productos...")
     
-    # Productos reales de tu base de datos
     productos_data = [
-        ('Nómade Adulto Razas Medianas y Grandes 20 kg', 'Alimento premium para perros adultos de razas medianas y grandes', '28990.00', 'Comida para perros', 50, 'nomade_adulto'),
-        ('Pelota porfiada para gatos', 'Juguete interactivo para gatos', '2490.00', 'Juguetes', 15, 'pelota_gatos'),
-        ('Shampoo Hipoalergénico Premium', 'Shampoo especial para pieles sensibles', '12500.00', 'Cuidado', 29, 'shampoo_premium'),
-        ('Collar GPS Inteligente', 'Collar con GPS para seguimiento de mascotas', '89990.00', 'Accesorios', 8, 'collar_gps'),
-        ('Cama Ortopédica para Perros', 'Cama ortopédica para el descanso de perros', '45990.00', 'Accesorios', 12, 'cama_ortopedica'),
-        ('PURINA® DENTALIFE® snacks de salmón para gatos', 'Snacks dentales para gatos sabor salmón', '3990.00', 'Alimentos', 40, 'dentalife_salmon'),
-        ('Royal Canin Adult', 'Alimento premium para perros adultos', '25990.00', 'Alimentos', 50, 'royal_canin'),
-        ('Whiskas Gatitos', 'Alimento húmedo para gatitos', '1890.00', 'Alimentos', 100, 'whiskas_gatitos'),
-        ('Pelota Kong Classic', 'Juguete resistente para perros', '8990.00', 'Juguetes', 30, 'kong_classic'),
-        ('Collar Antipulgas', 'Collar antipulgas de larga duración', '12990.00', 'Salud', 25, 'collar_antipulgas'),
-        ('Shampoo Canino', 'Shampoo especial para perros', '6990.00', 'Higiene', 40, 'shampoo_canino')
+        ('Royal Canin Adult', 'Alimento premium para perros adultos', '25990', 'Alimentos', True),
+        ('Whiskas Gatitos', 'Alimento húmedo para gatitos', '1890', 'Alimentos', False),
+        ('Pelota Kong Classic', 'Juguete resistente para perros', '8990', 'Juguetes', True),
+        ('Rascador para Gatos', 'Torre rascadora con juguetes', '15990', 'Juguetes', False),
+        ('Shampoo Hipoalergénico', 'Shampoo especial para pieles sensibles', '12500', 'Cuidado', True),
+        ('Collar GPS Inteligente', 'Collar con GPS para seguimiento', '89990', 'Accesorios', True),
+        ('Cama Ortopédica', 'Cama ortopédica para perros grandes', '45990', 'Accesorios', False),
+        ('Snacks Dentales', 'Snacks para limpieza dental', '3990', 'Salud', False),
+        ('Vitaminas para Cachorros', 'Suplemento vitamínico completo', '18990', 'Salud', False),
+        ('Transportadora Premium', 'Transportadora para viajes seguros', '35990', 'Accesorios', False),
+        ('Alimento Gatos Senior', 'Alimento especializado para gatos mayores', '22990', 'Alimentos', False),
     ]
     
-    for nombre, descripcion, precio, categoria_nombre, stock, imagen_nombre in productos_data:
+    for nombre, descripcion, precio, categoria_nombre, destacado in productos_data:
         try:
             categoria = Categoria.objects.get(nombre=categoria_nombre)
-            if not Producto.objects.filter(nombre=nombre).exists():
-                producto = Producto.objects.create(
-                    nombre=nombre,
-                    descripcion=descripcion,
-                    precio=Decimal(precio),
-                    categoria=categoria,
-                    stock=stock,
-                    es_destacado=False
-                )
-                
-                # Agregar imagen placeholder
-                try:
-                    imagen = crear_imagen_placeholder(imagen_nombre)
-                    producto.imagen.save(f'{imagen_nombre}.jpg', imagen, save=True)
-                except Exception as e:
-                    print(f"  ⚠️ No se pudo crear imagen para {nombre}: {e}")
-                
+            producto, created = Producto.objects.get_or_create(
+                nombre=nombre,
+                defaults={
+                    'categoria': categoria,
+                    'descripcion': descripcion,
+                    'precio': Decimal(precio),
+                    'stock': 50,
+                    'es_destacado': destacado
+                }
+            )
+            if created:
                 print(f"  ✅ {nombre}")
         except Categoria.DoesNotExist:
             print(f"  ⚠️ Categoría {categoria_nombre} no encontrada para {nombre}")
 
-def crear_servicios_peluqueria_reales():
-    """Crear servicios de peluquería exactos con imágenes"""
-    from veterinaria.models import ServicioPeluqueria, CategoriaServicioPeluqueria
+def crear_medicamentos():
+    """Crear medicamentos de farmacia"""
+    from veterinaria.models import Medicamento, CategoriaFarmacia
     
-    print("✂️ Creando servicios de peluquería reales con imágenes...")
+    print("💊 Creando medicamentos...")
     
-    # Servicios reales de tu base de datos
-    servicios_data = [
-        ('Baño Básico', 'Baño básico con shampoo estándar', '15000.00', 45, 'Baño y Secado', 'Baño con shampoo, secado básico', 'bano_basico'),
-        ('Baño Completo', 'Baño completo con productos premium', '15000.00', 60, 'Baño y Secado', 'Baño completo, secado y cepillado', 'bano_completo'),
-        ('Baño Medicado', 'Baño con shampoo medicado especial', '30000.00', 75, 'Baño y Secado', 'Baño medicado para pieles sensibles', 'bano_medicado'),
-        ('Baño Premium', 'Baño premium con productos de lujo', '25000.00', 60, 'Baño y Secado', 'Baño premium con productos de alta gama', 'bano_premium'),
-        ('Corte Creativo', 'Corte creativo y estilismo avanzado', '40000.00', 120, 'Corte y Estilismo', 'Corte creativo según preferencias', 'corte_creativo'),
-        ('Hidratación Profunda', 'Tratamiento de hidratación profunda', '35000.00', 90, 'Cuidado de Uñas', 'Tratamiento hidratante intensivo', 'hidratacion'),
-        ('Tratamiento Antipulgas', 'Tratamiento especializado antipulgas', '20000.00', 60, 'Limpieza', 'Tratamiento contra pulgas y parásitos', 'antipulgas'),
-        ('Paquete Básico', 'Paquete básico de servicios', '35000.00', 90, 'Paquetes', 'Baño + corte básico', 'paquete_basico'),
-        ('Paquete Premium', 'Paquete premium completo', '60000.00', 150, 'Paquetes', 'Servicios premium completos', 'paquete_premium'),
-        ('Paquete VIP', 'Paquete VIP con todos los servicios', '80000.00', 180, 'Paquetes', 'Todos los servicios incluidos', 'paquete_vip'),
-        ('Limpieza de Oídos', 'Limpieza profunda de oídos', '10000.00', 30, 'Limpieza', 'Limpieza especializada de oídos', 'limpieza_oidos'),
-        ('Paquete Completo', 'Paquete completo de servicios', '45000.00', 180, 'Paquetes', 'Baño, corte, uñas y limpieza completa', 'paquete_completo')
+    medicamentos_data = [
+        ('Amoxicilina 250mg', 'Antibióticos', 'antibiotico', 'tableta', '250mg', 'LabVet', 'Antibiótico de amplio espectro', '8990', True),
+        ('Meloxicam 5mg', 'Antiinflamatorios', 'antiinflamatorio', 'tableta', '5mg', 'PetPharma', 'Antiinflamatorio no esteroidal', '12500', True),
+        ('Ivermectina 1%', 'Antiparasitarios', 'antiparasitario', 'inyectable', '1%', 'AnimalHealth', 'Antiparasitario interno y externo', '15990', True),
+        ('Vitamina B Complex', 'Suplementos', 'vitamina', 'jarabe', '100ml', 'VitaPet', 'Complejo vitamínico B', '9990', False),
+        ('Shampoo Medicado', 'Dermatológicos', 'dermatologico', 'suspension', '250ml', 'DermaPet', 'Shampoo para dermatitis', '18990', False),
+        ('Dipirona 500mg', 'Antiinflamatorios', 'analgesico', 'tableta', '500mg', 'PainFree', 'Analgésico y antipirético', '6990', False),
+        ('Drontal Plus', 'Antiparasitarios', 'desparasitante', 'tableta', '1 tab', 'Bayer', 'Desparasitante interno', '4990', False),
+        ('Suero Fisiológico', 'Suplementos', 'otro', 'inyectable', '500ml', 'MedVet', 'Solución salina estéril', '3990', False),
+        ('Gentamicina Gotas', 'Antibióticos', 'oftalmico', 'gotas', '10ml', 'EyeCare', 'Antibiótico oftálmico', '11990', True),
+        ('Cortisona Crema', 'Dermatológicos', 'dermatologico', 'crema', '30g', 'SkinVet', 'Antiinflamatorio tópico', '14990', False),
+        ('Vacuna Antirrábica', 'Suplementos', 'vacuna', 'inyectable', '1 dosis', 'VaccPet', 'Vacuna contra la rabia', '25990', True),
+        ('Omeprazol 20mg', 'Suplementos', 'digestivo', 'capsula', '20mg', 'GastroPet', 'Protector gástrico', '16990', False),
+        ('Furosemida 40mg', 'Suplementos', 'cardiaco', 'tableta', '40mg', 'CardioVet', 'Diurético para problemas cardíacos', '13990', True),
+        ('Colirio Lubricante', 'Suplementos', 'oftalmico', 'gotas', '15ml', 'EyeComfort', 'Lubricante ocular', '8990', False),
     ]
     
-    for nombre, descripcion, precio, duracion, categoria_nombre, incluye, imagen_nombre in servicios_data:
+    for nombre, categoria_nombre, tipo, presentacion, concentracion, laboratorio, descripcion, precio, requiere_receta in medicamentos_data:
+        try:
+            categoria = CategoriaFarmacia.objects.get(nombre=categoria_nombre)
+            medicamento, created = Medicamento.objects.get_or_create(
+                nombre=nombre,
+                defaults={
+                    'categoria': categoria,
+                    'tipo': tipo,
+                    'presentacion': presentacion,
+                    'concentracion': concentracion,
+                    'laboratorio': laboratorio,
+                    'descripcion': descripcion,
+                    'indicaciones': f'Indicaciones para {nombre}',
+                    'dosis_recomendada': 'Según prescripción veterinaria',
+                    'precio': Decimal(precio),
+                    'stock': 25,
+                    'requiere_receta': requiere_receta,
+                    'activo': True
+                }
+            )
+            if created:
+                print(f"  ✅ {nombre}")
+        except CategoriaFarmacia.DoesNotExist:
+            print(f"  ⚠️ Categoría {categoria_nombre} no encontrada para {nombre}")
+
+def crear_servicios_peluqueria():
+    """Crear servicios de peluquería"""
+    from veterinaria.models import ServicioPeluqueria, CategoriaServicioPeluqueria
+    
+    print("✂️ Creando servicios de peluquería...")
+    
+    servicios_data = [
+        ('Baño Completo', 'Baño y Secado', 'Baño con shampoo especializado y secado', '15000', 60, 'ambos'),
+        ('Corte de Pelo Básico', 'Corte y Estilismo', 'Corte básico de mantenimiento', '20000', 45, 'ambos'),
+        ('Corte de Uñas', 'Cuidado de Uñas', 'Corte profesional de uñas', '8000', 20, 'ambos'),
+        ('Limpieza de Oídos', 'Limpieza', 'Limpieza profunda de oídos', '10000', 25, 'ambos'),
+        ('Paquete Completo', 'Paquetes', 'Baño, corte, uñas y limpieza de oídos', '45000', 120, 'ambos'),
+        ('Corte Estilo Poodle', 'Corte y Estilismo', 'Corte estilo poodle profesional', '35000', 90, 'perro'),
+        ('Baño Medicado', 'Baño y Secado', 'Baño con shampoo medicado especial', '25000', 75, 'ambos'),
+        ('Desenredado Profundo', 'Cuidado', 'Desenredado para pelo largo y enredado', '30000', 60, 'ambos'),
+        ('Corte Higiénico', 'Corte y Estilismo', 'Corte en zonas íntimas e higiénicas', '12000', 30, 'ambos'),
+        ('Limpieza Dental', 'Limpieza', 'Limpieza básica de dientes', '15000', 35, 'ambos'),
+        ('Pedicure Completo', 'Cuidado de Uñas', 'Corte de uñas y limado', '12000', 30, 'ambos'),
+        ('Baño Anti-Pulgas', 'Baño y Secado', 'Baño especializado anti-pulgas', '20000', 70, 'ambos'),
+        ('Corte de Verano', 'Corte y Estilismo', 'Corte corto para época de calor', '18000', 50, 'perro'),
+        ('Spa Relajante', 'Paquetes', 'Tratamiento spa completo', '60000', 150, 'ambos'),
+        ('Limpieza de Glándulas', 'Limpieza', 'Limpieza de glándulas anales', '18000', 25, 'perro'),
+        ('Corte Felino Especial', 'Corte y Estilismo', 'Corte especializado para gatos', '25000', 60, 'gato'),
+        ('Tratamiento Antipulgas', 'Limpieza', 'Aplicación de tratamiento antipulgas', '22000', 40, 'ambos'),
+        ('Paquete Premium', 'Paquetes', 'Servicio premium con todos los tratamientos', '80000', 180, 'ambos'),
+    ]
+    
+    for nombre, categoria_nombre, descripcion, precio, duracion, tipo_mascota in servicios_data:
         try:
             categoria = CategoriaServicioPeluqueria.objects.get(nombre=categoria_nombre)
-            if not ServicioPeluqueria.objects.filter(nombre=nombre).exists():
-                servicio = ServicioPeluqueria.objects.create(
-                    nombre=nombre,
-                    descripcion=descripcion,
-                    precio_base=Decimal(precio),
-                    duracion_estimada=duracion,
-                    categoria=categoria,
-                    tipo_mascota='ambos',
-                    tamaño_mascota='todos',
-                    incluye=incluye,
-                    recomendaciones='',
-                    activo=True
-                )
-                
-                # Agregar imagen placeholder
-                try:
-                    imagen = crear_imagen_placeholder(imagen_nombre)
-                    servicio.imagen.save(f'{imagen_nombre}.jpg', imagen, save=True)
-                except Exception as e:
-                    print(f"  ⚠️ No se pudo crear imagen para {nombre}: {e}")
-                
+            servicio, created = ServicioPeluqueria.objects.get_or_create(
+                nombre=nombre,
+                defaults={
+                    'categoria': categoria,
+                    'descripcion': descripcion,
+                    'precio_base': Decimal(precio),
+                    'duracion_estimada': duracion,
+                    'tipo_mascota': tipo_mascota,
+                    'tamaño_mascota': 'todos',
+                    'incluye': f'Incluye {nombre.lower()}',
+                    'activo': True
+                }
+            )
+            if created:
                 print(f"  ✅ {nombre}")
         except CategoriaServicioPeluqueria.DoesNotExist:
             print(f"  ⚠️ Categoría {categoria_nombre} no encontrada para {nombre}")
 
-def crear_mascotas_reales():
-    """Crear mascotas de ejemplo para mostrar en el home"""
-    from veterinaria.models import Mascota, User
+def crear_mascotas_max_guzman():
+    """Crear las mascotas específicas de Max Guzman"""
+    from veterinaria.models import Mascota, Pet, User
     
-    print("🐕 Creando mascotas de ejemplo...")
+    print("🐕 Creando mascotas de Max Guzman...")
     
     try:
-        cliente = User.objects.get(username='cliente1')
+        max_guzman = User.objects.get(username='cliente1')
         
+        # Eliminar mascotas existentes del cliente1
+        Mascota.objects.filter(propietario=max_guzman).delete()
+        Pet.objects.filter(owner=max_guzman).delete()
+        
+        # Crear las dos mascotas específicas
         mascotas_data = [
-            (1, 'Max', 'Perro', 'Golden Retriever', 'Dorado', 'Normal', '3 años', 'Macho'),
-            (2, 'Luna', 'Gato', 'Persa', 'Blanco', 'Normal', '2 años', 'Hembra'),
-            (3, 'Rocky', 'Perro', 'Bulldog', 'Marrón', 'Normal', '4 años', 'Macho'),
-            (4, 'Mia', 'Gato', 'Siamés', 'Crema', 'Normal', '1 año', 'Hembra')
+            (1, 'Nacho', 'Gato', 'Mestizo', 'Naranja', 'Normal', '2 años', 'Macho'),
+            (2, 'Polo', 'Perro', 'Labrador', 'Negro', 'Normal', '3 años', 'Macho')
         ]
         
         for id_mascota, nombre, especie, raza, color, condicion, edad, sexo in mascotas_data:
+            # Crear Mascota
+            mascota = Mascota.objects.create(
+                id=id_mascota,
+                nombre=nombre,
+                especie=especie,
+                raza=raza,
+                color=color,
+                condicion=condicion,
+                edad=edad,
+                sexo=sexo,
+                propietario=max_guzman
+            )
+            
+            # Crear Pet correspondiente
+            Pet.objects.create(
+                id=str(id_mascota),
+                owner=max_guzman,
+                name=nombre,
+                species=especie,
+                breed=raza,
+                base_color=color,
+                condition=condicion,
+                age_years=int(edad.split()[0]) if edad.split()[0].isdigit() else 2,
+                age_months=0,
+                sex=sexo,
+                service_history=[]
+            )
+            
+            print(f"  ✅ {nombre} ({especie}) creado")
+            
+    except User.DoesNotExist:
+        print("  ⚠️ Max Guzman no encontrado")
+
+def crear_mascotas_otros_clientes():
+    """Crear mascotas para otros clientes"""
+    from veterinaria.models import Mascota, Pet, User
+    
+    print("🐕 Creando mascotas para otros clientes...")
+    
+    # Datos de mascotas para otros clientes
+    mascotas_otros = [
+        # Cliente2 - Ana Martínez
+        (3, 'cliente2', 'Luna', 'Perro', 'Golden Retriever', 'Dorado', 'Normal', '4 años', 'Hembra'),
+        (4, 'cliente2', 'Simba', 'Gato', 'Persa', 'Blanco', 'Normal', '3 años', 'Macho'),
+        
+        # Cliente3 - Carlos López
+        (5, 'cliente3', 'Rocky', 'Perro', 'Bulldog', 'Marrón', 'Normal', '5 años', 'Macho'),
+        (6, 'cliente3', 'Mia', 'Gato', 'Siamés', 'Crema', 'Normal', '2 años', 'Hembra'),
+        
+        # Cliente4 - María González
+        (7, 'cliente4', 'Max', 'Perro', 'Pastor Alemán', 'Negro y café', 'Normal', '6 años', 'Macho'),
+        
+        # Cliente5 - Pedro Rodríguez
+        (8, 'cliente5', 'Bella', 'Perro', 'Cocker Spaniel', 'Café', 'Normal', '3 años', 'Hembra'),
+        (9, 'cliente5', 'Whiskers', 'Gato', 'Angora', 'Gris', 'Normal', '4 años', 'Macho'),
+        
+        # Cliente6 - Laura Fernández
+        (10, 'cliente6', 'Charlie', 'Perro', 'Beagle', 'Tricolor', 'Normal', '2 años', 'Macho'),
+        
+        # Cliente7 - José Silva
+        (11, 'cliente7', 'Daisy', 'Perro', 'Chihuahua', 'Blanco', 'Normal', '1 año', 'Hembra'),
+        (12, 'cliente7', 'Shadow', 'Gato', 'Negro Común', 'Negro', 'Normal', '5 años', 'Macho'),
+        
+        # Cliente8 - Sofía Torres
+        (13, 'cliente8', 'Lola', 'Perro', 'Pug', 'Beige', 'Normal', '3 años', 'Hembra'),
+    ]
+    
+    for id_mascota, username, nombre, especie, raza, color, condicion, edad, sexo in mascotas_otros:
+        try:
+            propietario = User.objects.get(username=username)
+            
+            # Crear Mascota solo si no existe
             if not Mascota.objects.filter(id=id_mascota).exists():
-                Mascota.objects.create(
+                mascota = Mascota.objects.create(
                     id=id_mascota,
                     nombre=nombre,
                     especie=especie,
@@ -352,149 +459,156 @@ def crear_mascotas_reales():
                     condicion=condicion,
                     edad=edad,
                     sexo=sexo,
-                    propietario=cliente
+                    propietario=propietario
                 )
-                print(f"  ✅ {nombre} ({especie})")
                 
-    except User.DoesNotExist:
-        print("  ⚠️ Cliente no encontrado, saltando creación de mascotas")
+                # Crear Pet correspondiente
+                Pet.objects.create(
+                    id=str(id_mascota),
+                    owner=propietario,
+                    name=nombre,
+                    species=especie,
+                    breed=raza,
+                    base_color=color,
+                    condition=condicion,
+                    age_years=int(edad.split()[0]) if edad.split()[0].isdigit() else 2,
+                    age_months=0,
+                    sex=sexo,
+                    service_history=[]
+                )
+                
+                print(f"  ✅ {nombre} ({especie}) para {propietario.first_name}")
+            
+        except User.DoesNotExist:
+            print(f"  ⚠️ Usuario {username} no encontrado")
 
 def crear_citas_ejemplo():
-    """Crear citas de ejemplo para mostrar en el home"""
-    from veterinaria.models import Cita, Mascota, Veterinario, User
+    """Crear citas de ejemplo"""
+    from veterinaria.models import Cita, Mascota, Veterinario, CitaPeluqueria, Peluquero
     
     print("📅 Creando citas de ejemplo...")
     
+    # Citas veterinarias
     try:
-        cliente = User.objects.get(username='cliente1')
         veterinario = Veterinario.objects.first()
-        mascotas = Mascota.objects.filter(propietario=cliente)
+        mascotas = Mascota.objects.all()[:8]  # Primeras 8 mascotas
         
-        if veterinario and mascotas.exists():
-            # Citas futuras para mostrar en "Próximas citas"
+        if veterinario and mascotas:
             citas_data = [
-                {
-                    'fecha': date.today() + timedelta(days=3),
-                    'hora': '10:00',
-                    'motivo': 'Control de rutina',
-                    'mascota': mascotas[0],  # Max
-                },
-                {
-                    'fecha': date.today() + timedelta(days=7),
-                    'hora': '15:30',
-                    'motivo': 'Vacunación anual',
-                    'mascota': mascotas[1],  # Luna
-                },
-                {
-                    'fecha': date.today() + timedelta(days=10),
-                    'hora': '09:15',
-                    'motivo': 'Revisión dental',
-                    'mascota': mascotas[2] if len(mascotas) > 2 else mascotas[0],  # Rocky o Max
-                }
+                (mascotas[0], date.today() + timedelta(days=3), '10:00', 'Control de rutina para Nacho'),
+                (mascotas[1], date.today() + timedelta(days=5), '14:30', 'Vacunación anual para Polo'),
+                (mascotas[2], date.today() + timedelta(days=7), '09:15', 'Revisión general para Luna'),
+                (mascotas[3], date.today() + timedelta(days=10), '16:00', 'Control dental para Simba'),
+                (mascotas[4], date.today() + timedelta(days=12), '11:30', 'Chequeo de rutina para Rocky'),
+                (mascotas[5], date.today() + timedelta(days=15), '15:45', 'Consulta por alergias para Mia'),
             ]
             
-            for cita_data in citas_data:
-                # Verificar si ya existe una cita similar
-                existing_cita = Cita.objects.filter(
-                    mascota=cita_data['mascota'],
-                    fecha=cita_data['fecha'],
-                    hora=cita_data['hora']
-                ).first()
-                
-                if not existing_cita:
+            for mascota, fecha, hora, motivo in citas_data:
+                if not Cita.objects.filter(mascota=mascota, fecha=fecha, hora=hora).exists():
                     Cita.objects.create(
-                        mascota=cita_data['mascota'],
+                        mascota=mascota,
                         veterinario=veterinario,
-                        fecha=cita_data['fecha'],
-                        hora=cita_data['hora'],
-                        motivo=cita_data['motivo'],
+                        fecha=fecha,
+                        hora=hora,
+                        motivo=motivo,
                         estado='programada'
                     )
-                    print(f"  ✅ Cita para {cita_data['mascota'].nombre} - {cita_data['fecha']}")
-        else:
-            print("  ⚠️ No se encontró veterinario o mascotas para crear citas")
+                    print(f"  ✅ Cita para {mascota.nombre} - {fecha}")
+    
+    except Exception as e:
+        print(f"  ⚠️ Error creando citas veterinarias: {e}")
+    
+    # Citas de peluquería
+    try:
+        peluquero = Peluquero.objects.first()
+        if peluquero and mascotas:
+            citas_peluqueria = [
+                (mascotas[0], date.today() + timedelta(days=8), '10:00', '25000'),  # Nacho
+                (mascotas[1], date.today() + timedelta(days=14), '14:00', '35000'), # Polo
+                (mascotas[2], date.today() + timedelta(days=20), '11:30', '30000'), # Luna
+            ]
             
-    except User.DoesNotExist:
-        print("  ⚠️ Cliente no encontrado, saltando creación de citas")
-
-def sincronizar_mascotas_con_pet():
-    """Sincronizar mascotas del modelo Mascota con el modelo Pet"""
-    from veterinaria.models import Mascota, Pet
+            for mascota, fecha, hora, total in citas_peluqueria:
+                if not CitaPeluqueria.objects.filter(mascota=mascota, fecha=fecha, hora=hora).exists():
+                    CitaPeluqueria.objects.create(
+                        cliente=mascota.propietario,
+                        mascota=mascota,
+                        peluquero=peluquero,
+                        fecha=fecha,
+                        hora=hora,
+                        estado='programada',
+                        total=Decimal(total),
+                        telefono_contacto=mascota.propietario.phone or '+56912345678'
+                    )
+                    print(f"  ✅ Cita peluquería para {mascota.nombre} - {fecha}")
     
-    print("🔄 Sincronizando mascotas con modelo Pet...")
-    
-    mascotas = Mascota.objects.all()
-    
-    for mascota in mascotas:
-        # Verificar si ya existe un Pet con este ID
-        if not Pet.objects.filter(id=str(mascota.id)).exists():
-            # Crear objeto Pet correspondiente
-            Pet.objects.create(
-                id=str(mascota.id),
-                owner=mascota.propietario,
-                name=mascota.nombre,
-                species=mascota.especie,
-                breed=mascota.raza,
-                base_color=mascota.color,
-                condition=mascota.condicion,
-                age_years=int(mascota.edad.split()[0]) if mascota.edad.split()[0].isdigit() else 1,
-                age_months=0,  # Por defecto 0 meses
-                sex=mascota.sexo,
-                service_history=[]
-            )
-            print(f"  ✅ Pet creado para {mascota.nombre} (ID: {mascota.id})")
-        else:
-            print(f"  ⚠️ Pet ya existe para {mascota.nombre} (ID: {mascota.id})")
+    except Exception as e:
+        print(f"  ⚠️ Error creando citas de peluquería: {e}")
 
 def main():
     """Función principal"""
-    print("🐾 Configurando Sistema Veterinario Mascota Feliz con DATOS REALES...")
-    print("=" * 70)
+    print("🐾 CONFIGURANDO SISTEMA MASCOTA FELIZ")
+    print("=" * 60)
+    print("👤 Incluye: Max Guzman con Nacho (gato) y Polo (perro)")
+    print("=" * 60)
     
     # Configurar Django
     setup_django()
     
     try:
         # Aplicar migraciones
-        print("📋 1. Aplicando migraciones...")
+        print("\n📋 1. Aplicando migraciones...")
         from django.core.management import execute_from_command_line
         execute_from_command_line(['manage.py', 'migrate'])
-        print("✅ Migraciones aplicadas\n")
+        print("✅ Migraciones aplicadas")
         
-        # Crear datos reales
+        # Crear datos
+        print("\n👥 2. Creando usuarios...")
         crear_superuser()
-        crear_categorias_reales()
-        crear_usuarios_reales()
-        crear_productos_reales()
-        crear_servicios_peluqueria_reales()
-        crear_mascotas_reales()
+        crear_usuarios_completos()
+        
+        print("\n📂 3. Creando categorías...")
+        crear_categorias()
+        
+        print("\n🛒 4. Creando productos...")
+        crear_productos()
+        
+        print("\n💊 5. Creando medicamentos...")
+        crear_medicamentos()
+        
+        print("\n✂️ 6. Creando servicios de peluquería...")
+        crear_servicios_peluqueria()
+        
+        print("\n🐕 7. Creando mascotas...")
+        crear_mascotas_max_guzman()
+        crear_mascotas_otros_clientes()
+        
+        print("\n📅 8. Creando citas...")
         crear_citas_ejemplo()
-        sincronizar_mascotas_con_pet()
         
-        print("\n🎉 ¡Configuración completada con DATOS REALES!")
-        print("=" * 70)
-        print("🚀 Para iniciar el servidor ejecuta: python manage.py runserver")
-        print("🌐 Luego visita: http://127.0.0.1:8000/")
-        print("\n👥 Usuarios disponibles:")
-        print("   👑 superadmin / admin123 (Super Administrador)")
+        print("\n🎉 ¡CONFIGURACIÓN COMPLETADA!")
+        print("=" * 60)
+        print("🚀 Para iniciar: python manage.py runserver")
+        print("🌐 Visita: http://127.0.0.1:8000/")
+        print("\n👥 USUARIOS PRINCIPALES:")
         print("   🔑 admin / admin123 (Administrador)")
-        print("   👨‍⚕️ dr_martinez / vet123 (Dr. Carlos Martínez)")
-        print("   👨‍⚕️ dra_rodriguez / vet123 (Dra. María Rodríguez)")
-        print("   👨‍⚕️ dr_gonzalez / vet123 (Dr. Pedro González)")
-        print("   👨‍⚕️ dra_lopez / vet123 (Dra. Ana López)")
-        print("   👨‍⚕️ dr_silva / vet123 (Dr. Roberto Silva)")
-        print("   👨‍⚕️ veterinario1 / vet123 (Dr. Carlos Mendoza)")
-        print("   ✂️ peluquero1 / peluquero123 (María González)")
-        print("   ✂️ peluquero2 / peluquero123 (Carlos Rodríguez)")
-        print("   ✂️ peluquero3 / peluquero123 (Ana Martínez)")
-        print("   💊 farmaceutico1 / farm123 (María González)")
-        print("   👤 cliente1 / cliente123 (Juan Pérez - con mascotas y citas)")
+        print("   👤 cliente1 / cliente123 (Max Guzman)")
+        print("   👨‍⚕️ veterinario1 / vet123 (Carlos Mendoza)")
+        print("   ✂️ peluquero1 / peluquero123 (María Estilista)")
+        print("   💊 farmaceutico1 / farm123 (Lucía Medicamentos)")
         
-        print("\n🏠 El home ahora muestra:")
-        print("   🐕 Mascotas reales del cliente1")
-        print("   📅 Próximas citas programadas")
-        print("   🖼️ Productos y servicios con imágenes")
-        print("   📄 Fichas médicas descargables")
+        print("\n🐾 MASCOTAS DE MAX GUZMAN:")
+        print("   🐱 Nacho (Gato Mestizo Naranja)")
+        print("   🐕 Polo (Perro Labrador Negro)")
+        
+        print("\n📊 RESUMEN DE DATOS:")
+        from veterinaria.models import User, Mascota, Producto, Medicamento, ServicioPeluqueria, Cita
+        print(f"   👥 Usuarios: {User.objects.count()}")
+        print(f"   🐕 Mascotas: {Mascota.objects.count()}")
+        print(f"   🛒 Productos: {Producto.objects.count()}")
+        print(f"   💊 Medicamentos: {Medicamento.objects.count()}")
+        print(f"   ✂️ Servicios: {ServicioPeluqueria.objects.count()}")
+        print(f"   📅 Citas: {Cita.objects.count()}")
         
     except Exception as e:
         print(f"❌ Error durante la configuración: {e}")
