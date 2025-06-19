@@ -4,34 +4,34 @@ Sistema completo de gestión veterinaria desarrollado en Django que incluye clí
 
 ## 🌟 Características Principales
 
-### 🏥 Clínica Veterinaria
+### Clínica Veterinaria
 - **Gestión de mascotas** y propietarios
 - **Sistema de citas médicas** con veterinarios
 - **Fichas médicas** completas con historial
 - **Panel de veterinario** con control total de citas
 - **Gestión de recetas** médicas
 
-### ✂️ Peluquería Profesional
+### Peluquería Profesional
 - **Catálogo de servicios** de peluquería canina
 - **Sistema de citas** especializadas
 - **Panel de peluquero** con gestión completa
 - **Control de estados** de citas (programada, confirmada, en proceso, completada)
 - **Subida de fotos** antes/después del servicio
 
-### 🛒 Tienda de Productos
+###  Tienda de Productos
 - **Catálogo de productos** para mascotas
 - **Sistema de carrito** de compras
 - **Gestión de pedidos** y envíos
 - **Categorización** de productos
 - **Control de inventario**
 
-### 💊 Farmacia Veterinaria
+###  Farmacia Veterinaria
 - **Catálogo de medicamentos** veterinarios
 - **Sistema de recetas** médicas
 - **Reserva de medicamentos** con y sin receta
 - **Control de stock** y disponibilidad
 
-## 🚀 Tecnologías Utilizadas
+## Tecnologías Utilizadas
 
 - **Backend:** Django 5.0.1
 - **Frontend:** Bootstrap 5 + HTML/CSS/JavaScript
@@ -217,18 +217,3 @@ mascota_feliz/
 
 Este proyecto está bajo la Licencia MIT - ver el archivo [LICENSE](LICENSE) para detalles.
 
-## 👨‍💻 Autor
-
-**Tu Nombre**
-- GitHub: [@tu-usuario](https://github.com/tu-usuario)
-- Email: tu-email@ejemplo.com
-
-## 🙏 Agradecimientos
-
-- Django Community por el excelente framework
-- Bootstrap team por el sistema de diseño
-- Todos los contribuidores del proyecto
-
----
-
-⭐ **¡No olvides dar una estrella al proyecto si te fue útil!** ⭐ 
